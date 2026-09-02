@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IS Career Launchpad</title>
+<style>
+  :root{
+    /* Atomic-Era retrofuturist palette: warm/cool contrast on ink & parchment,
+       modeled on 1960s-70s space-program graphics (Vignelli-era NASA standards,
+       Braun/Rams industrial color) rather than a synthwave/neon-on-black look. */
+    --bg:#20233b;
+    --bg-alt:#262a46;
+    --card:#2a2e4d;
+    --card-hi:#313559;
+    --border:rgba(236,226,197,0.14);
+    --border-hi:rgba(236,226,197,0.30);
+    --text:#ece2c5;
+    --text-dim:#a79f8b;
+    --text-faint:#726c5c;
+    --cyan:#cf6b58;      /* primary accent — terracotta */
+    --amber:#7fa79e;     /* secondary accent — pewter teal */
+    --danger:#cf6b58;
+    --success:#7fa79e;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace;
+    --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* soft capsule/porthole shape system — rounded cards, pill controls, elevation via shadow */
+    --r-lg:22px;
+    --r-md:16px;
+    --r-sm:10px;
+    --r-pill:999px;
+    --shadow-card:0 1px 2px rgba(10,11,20,0.35), 0 12px 28px -8px rgba(10,11,20,0.45);
+    --shadow-soft:0 1px 2px rgba(10,11,20,0.3), 0 6px 16px -6px rgba(10,11,20,0.4);
+    --shadow-pop:0 4px 10px -2px rgba(10,11,20,0.45), 0 20px 40px -12px rgba(10,11,20,0.5);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      linear-gradient(var(--bg), var(--bg)),
+      repeating-linear-gradient(0deg, rgba(236,226,197,0.025) 0px, rgba(236,226,197,0.025) 1px, transparent 1px, transparent 56px),
+      repeating-linear-gradient(90deg, rgba(236,226,197,0.025) 0px, rgba(236,226,197,0.025) 1px, transparent 1px, transparent 56px);
+    background-color:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    min-height:100vh;
+    line-height:1.5;
+  }
+  .hidden{display:none !important;}
+  a{color:inherit;}
+  ::selection{background:var(--cyan);color:#1a1c2e;}
+
+  /* ---------- layout shells ---------- */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  header.topbar{
+    position:sticky;top:0;z-index:40;
+    background:transparent;
+    padding:18px 28px 0;
+  }
+  .topbar-inner{
+    display:flex;align-items:center;justify-content:center;padding:10px 10px;max-width:640px;margin:0 auto;
+    background:rgba(38,42,70,0.88);
+    backdrop-filter:blur(10px);
+    border:1px solid var(--border);
+    border-radius:var(--r-pill);
+    box-shadow:var(--shadow-soft);
+  }
+  nav.tabs{display:flex;align-items:center;gap:6px;width:100%;justify-content:center;}
+  .tab-btn{
+    font-family:var(--mono);font-size:12px;letter-spacing:0.4px;
+    background:transparent;border:1px solid transparent;color:var(--text-dim);
+    padding:10px 18px;cursor:pointer;transition:all .15s ease;text-transform:uppercase;
+    border-radius:var(--r-pill);
+  }
+  .tab-btn:hover{background:rgba(236,226,197,0.06);color:var(--text);}
+  .tab-btn.active{background:rgba(207,107,88,0.14);color:var(--cyan);}
+  .tab-btn.home-btn{
+    font-size:13.5px;font-weight:700;padding:12px 30px;border:none;
+    background:var(--card-hi);letter-spacing:1px;
+  }
+  .tab-btn.home-btn:hover{background:var(--card-hi);color:var(--cyan);}
+  .tab-btn.home-btn.active{background:var(--cyan);color:#1a1c2e;box-shadow:var(--shadow-soft);}
+
+  main{padding:48px 0 80px;}
+  section.view{animation:fadein .18s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  h1,h2,h3,h4{font-family:var(--sans);font-weight:800;letter-spacing:-0.01em;margin:0 0 12px;}
+  .eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 10px;
+  }
+  p{color:var(--text-dim);margin:0 0 14px;}
+
+  .btn{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:0.4px;text-transform:uppercase;
+    padding:14px 26px;border:1.5px solid var(--cyan);background:transparent;color:var(--cyan);
+    cursor:pointer;transition:background .15s ease,color .15s ease,transform .15s ease;display:inline-flex;align-items:center;gap:8px;
+    border-radius:var(--r-pill);
+  }
+  .btn:hover{background:rgba(207,107,88,0.12);}
+  .btn:active{transform:scale(0.97);}
+  .btn.primary{background:var(--cyan);color:#1a1c2e;font-weight:700;box-shadow:var(--shadow-soft);}
+  .btn.primary:hover{background:#e08571;}
+  .btn.amber{border-color:var(--amber);color:var(--amber);}
+  .btn.amber:hover{background:rgba(127,167,158,0.12);}
+  .btn.ghost{border-color:var(--border-hi);color:var(--text-dim);}
+  .btn.ghost:hover{color:var(--text);border-color:var(--text-dim);}
+  .btn.block{width:100%;justify-content:center;}
+  .btn:disabled{opacity:0.35;cursor:not-allowed;}
+
+  .badge{
+    display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;
+    padding:5px 12px;border:1px solid var(--border-hi);color:var(--text-dim);border-radius:var(--r-pill);
+  }
+  .badge.cyan{border-color:transparent;background:rgba(207,107,88,0.16);color:var(--cyan);}
+  .badge.amber{border-color:transparent;background:rgba(127,167,158,0.16);color:var(--amber);}
+
+  /* ---------- landing ---------- */
+  .hero{
+    border:1px solid var(--border);background:var(--card);padding:64px 48px;margin-bottom:56px;
+    position:relative;overflow:hidden;border-radius:var(--r-lg);box-shadow:var(--shadow-card);
+  }
+  .hero:before, .hero:after, .hero .blob-3{
+    content:"";position:absolute;border-radius:50%;
+  }
+  .hero:before{width:340px;height:340px;top:-140px;right:-60px;background:var(--cyan);opacity:0.14;}
+  .hero:after{width:220px;height:220px;top:80px;right:220px;background:var(--amber);opacity:0.10;}
+  .hero .blob-3{width:120px;height:120px;top:-30px;right:340px;background:var(--amber);opacity:0.08;}
+  .hero h1{font-size:38px;max-width:720px;margin-bottom:16px;position:relative;}
+  .hero p.lead{font-size:16px;max-width:600px;color:var(--text-dim);position:relative;}
+  .hero-actions{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;position:relative;}
+  .hero .eyebrow{position:relative;}
+
+  .step-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:56px;}
+  .step-card{border:1px solid var(--border);background:var(--card);padding:26px;position:relative;border-radius:var(--r-md);box-shadow:var(--shadow-soft);}
+  .step-num{font-family:var(--mono);color:var(--amber);font-size:13px;margin-bottom:14px;}
+  .step-card h3{font-size:16px;margin-bottom:8px;}
+  .step-card p{font-size:13.5px;margin:0;}
+
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:56px;}
+  .stat-cell{background:var(--card);padding:22px 20px;border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--shadow-soft);}
+  .stat-cell .num{font-family:var(--mono);font-size:24px;color:var(--cyan);}
+  .stat-cell .label{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
+
+  /* ---------- discovery ---------- */
+  .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:10px;}
+  .section-header h2{font-size:22px;margin:0;}
+
+  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:64px;counter-reset:cardnum;}
+  .flip-outer{perspective:1400px;height:250px;counter-increment:cardnum;}
+  .flip-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;cursor:pointer;}
+  .flip-outer.flipped .flip-inner{transform:rotateY(180deg);}
+  .flip-face{
+    position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--border);background:var(--card);
+    padding:22px;display:flex;flex-direction:column;border-radius:var(--r-md);box-shadow:var(--shadow-soft);
+  }
+  .flip-face.back{transform:rotateY(180deg);}
+  .flip-face:hover{border-color:var(--border-hi);box-shadow:var(--shadow-card);}
+  .flip-face.front:before{
+    content:counter(cardnum,decimal-leading-zero) "/06";
+    position:absolute;top:24px;right:24px;font-family:var(--mono);font-size:10px;
+    letter-spacing:1px;color:var(--text-faint);
+  }
+  .flip-face .role-title{font-size:17px;margin:12px 0 8px;max-width:80%;}
+  .flip-face .hook{font-size:13px;color:var(--text-dim);margin:0;}
+  .flip-hint{margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;}
+  .flip-face.back p.desc{font-size:12.5px;margin-bottom:10px;}
+  .pc-row{display:flex;gap:14px;margin-bottom:14px;flex:1;}
+  .pc-col{flex:1;}
+  .pc-col .pc-label{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+  .pc-col.pro .pc-label{color:var(--success);}
+  .pc-col.con .pc-label{color:var(--danger);}
+  .pc-col ul{margin:0;padding-left:14px;font-size:11.5px;color:var(--text-dim);}
+  .pc-col li{margin-bottom:3px;}
+  .flip-face.back .btn{margin-top:auto;}
+
+  .quiz-panel{border:1px solid var(--border);background:var(--card);padding:36px;border-radius:var(--r-lg);box-shadow:var(--shadow-card);}
+  .quiz-q{margin-bottom:26px;}
+  .quiz-q label{display:flex;justify-content:space-between;font-size:13.5px;color:var(--text);margin-bottom:10px;}
+  .quiz-q .qval{font-family:var(--mono);color:var(--cyan);}
+  .quiz-q .scale-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text-faint);margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;}
+  input[type=range]{
+    -webkit-appearance:none;width:100%;height:6px;background:var(--border-hi);outline:none;cursor:pointer;border-radius:var(--r-pill);
+  }
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--cyan);border-radius:50%;border:3px solid var(--card);box-shadow:var(--shadow-soft);cursor:pointer;}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;background:var(--cyan);border:3px solid var(--card);border-radius:50%;box-shadow:var(--shadow-soft);cursor:pointer;}
+
+  .quiz-result{border:1px solid var(--border);background:var(--bg-alt);padding:26px;margin-top:24px;border-radius:var(--r-md);box-shadow:var(--shadow-soft);}
+  .quiz-result .match-pct{font-family:var(--mono);font-size:34px;color:var(--cyan);}
+  .quiz-result .match-role{font-size:19px;margin:2px 0 12px;}
+  .rank-list{margin-top:16px;display:flex;flex-direction:column;gap:8px;}
+  .rank-row{display:flex;align-items:center;gap:12px;font-size:12.5px;}
+  .rank-row .rname{width:190px;color:var(--text-dim);flex-shrink:0;}
+  .rank-bar-track{flex:1;height:7px;background:var(--border);position:relative;border-radius:var(--r-pill);overflow:hidden;}
+  .rank-bar-fill{height:100%;background:var(--amber);border-radius:var(--r-pill);}
+  .rank-row .rpct{font-family:var(--mono);width:44px;text-align:right;color:var(--text-faint);}
+
+  /* ---------- modal ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(4,6,12,0.82);z-index:100;
+    display:flex;align-items:flex-start;justify-content:center;padding:50px 20px;overflow-y:auto;
+  }
+  .modal-box{width:100%;max-width:760px;background:var(--bg-alt);border:1px solid var(--border-hi);position:relative;border-radius:var(--r-lg);box-shadow:var(--shadow-pop);overflow:hidden;}
+  .modal-head{padding:30px 34px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;}
+  .modal-head h2{font-size:24px;margin-bottom:6px;}
+  .modal-close{background:var(--card);border:1px solid var(--border-hi);color:var(--text-dim);width:34px;height:34px;border-radius:50%;cursor:pointer;font-family:var(--mono);font-size:11px;flex-shrink:0;}
+  .modal-close:hover{color:var(--text);border-color:var(--text-dim);}
+  .modal-body{padding:30px 34px;}
+  .detail-block{margin-bottom:26px;}
+  .detail-block h4{font-family:var(--mono);font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
+  .detail-block ul{margin:0;padding-left:18px;color:var(--text-dim);font-size:13.5px;}
+  .detail-block li{margin-bottom:5px;}
+  .detail-block p{font-size:13.5px;margin:0;}
+  .salary-box{border:1px solid var(--border);padding:16px 18px;display:flex;gap:32px;flex-wrap:wrap;border-radius:var(--r-md);background:var(--card);}
+  .salary-box .sitem .snum{font-family:var(--mono);color:var(--cyan);font-size:15px;}
+  .salary-box .sitem .slabel{font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.5px;margin-top:3px;}
+  .source-note{font-size:11.5px;color:var(--text-faint);border-top:1px solid var(--border);padding-top:16px;margin-top:6px;}
+  .modal-cta{padding:24px 34px;border-top:1px solid var(--border);}
+
+  /* ---------- interview ---------- */
+  .context-banner{border:1px solid var(--border);background:var(--card);padding:22px 26px;margin-bottom:32px;border-radius:var(--r-md);box-shadow:var(--shadow-soft);}
+  .context-banner h3{color:var(--amber);font-size:14px;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+  .par-row{display:flex;gap:24px;margin-top:12px;flex-wrap:wrap;}
+  .par-item{flex:1;min-width:150px;}
+  .par-item .pk{font-family:var(--mono);color:var(--cyan);font-size:12px;letter-spacing:1px;}
+  .par-item p{font-size:12.5px;margin:4px 0 0;}
+
+  .role-select-row{display:flex;align-items:center;gap:14px;margin-bottom:32px;flex-wrap:wrap;}
+  .role-select-row label{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;}
+  select{
+    background:var(--card);border:1px solid var(--border-hi);color:var(--text);font-family:var(--sans);
+    font-size:13.5px;padding:10px 18px;cursor:pointer;min-width:280px;border-radius:var(--r-pill);
+  }
+  .progress-dots{display:flex;gap:7px;margin-left:auto;}
+  .pdot{width:9px;height:9px;border:1px solid var(--border-hi);border-radius:50%;}
+  .pdot.done{background:var(--cyan);border-color:var(--cyan);}
+  .pdot.current{border-color:var(--amber);}
+
+  .q-panel{border:1px solid var(--border);background:var(--card);padding:32px;margin-bottom:20px;border-radius:var(--r-lg);box-shadow:var(--shadow-card);}
+  .q-meta{display:flex;gap:10px;margin-bottom:16px;}
+  .q-text{font-size:17px;font-weight:600;margin-bottom:20px;max-width:640px;}
+  textarea{
+    width:100%;min-height:150px;background:var(--bg-alt);border:1px solid var(--border-hi);color:var(--text);
+    font-family:var(--sans);font-size:13.5px;padding:16px;resize:vertical;line-height:1.6;border-radius:var(--r-md);
+  }
+  textarea:focus{outline:none;border-color:var(--cyan);}
+  .ta-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+  .word-count{font-family:var(--mono);font-size:11.5px;color:var(--text-faint);}
+  .word-count.ok{color:var(--success);}
+
+  .feedback-box{border:1px solid var(--border-hi);background:var(--bg-alt);padding:24px;margin-top:20px;border-radius:var(--r-md);box-shadow:var(--shadow-soft);}
+  .fb-score-row{display:flex;align-items:center;gap:16px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border);}
+  .fb-score{font-family:var(--mono);font-size:30px;color:var(--cyan);}
+  .fb-score-label{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;}
+  .fb-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:18px;}
+  .fb-col h5{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .fb-col.good h5{color:var(--success);}
+  .fb-col.gap h5{color:var(--danger);}
+  .fb-col ul{margin:0;padding-left:16px;font-size:12.5px;color:var(--text-dim);}
+  .fb-col li{margin-bottom:4px;}
+  .model-answer{border-top:1px solid var(--border);padding-top:16px;}
+  .model-answer h5{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
+  .model-answer p{font-size:13px;color:var(--text-dim);margin:0;}
+
+  .q-nav{display:flex;justify-content:flex-end;gap:12px;margin-top:20px;}
+
+  .scorecard{border:1px solid var(--border);background:var(--card);padding:34px;border-radius:var(--r-lg);box-shadow:var(--shadow-card);}
+  .scorecard-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;flex-wrap:wrap;gap:16px;}
+  .readiness-num{font-family:var(--mono);font-size:44px;color:var(--cyan);}
+  .readiness-label{font-size:14px;margin-top:2px;}
+  .sc-row{border:1px solid var(--border);background:var(--bg-alt);padding:18px 20px;margin-bottom:12px;border-radius:var(--r-md);}
+  .sc-row-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .sc-row-head .sqtext{font-size:13px;font-weight:600;max-width:520px;}
+  .sc-row-head .sscore{font-family:var(--mono);color:var(--amber);font-size:15px;flex-shrink:0;}
+  .sc-row .stip{font-size:12px;color:var(--text-dim);margin:0;}
+
+  footer{border-top:1px solid var(--border);padding:28px 0;margin-top:40px;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  footer p{font-size:11.5px;color:var(--text-faint);margin:0;}
+
+  @media(max-width:880px){
+    .card-grid{grid-template-columns:repeat(2,1fr);}
+    .step-grid{grid-template-columns:1fr;}
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+    .fb-cols{grid-template-columns:1fr;}
+  }
+  @media(max-width:600px){
+    .card-grid{grid-template-columns:1fr;}
+    .topbar-inner{flex-wrap:wrap;gap:10px;}
+    .hero{padding:36px 24px;}
+    .hero h1{font-size:28px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <nav class="tabs">
+      <button class="tab-btn" data-view="discovery">Explore Careers</button>
+      <button class="tab-btn home-btn" data-view="landing">Home</button>
+      <button class="tab-btn" data-view="interview">Mock Interview</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ================= VIEW 1: LANDING ================= -->
+    <section id="view-landing" class="view">
+      <div class="hero">
+        <div class="blob-3"></div>
+        <div class="eyebrow">Fall 2026 Recruiting Season</div>
+        <h1>Know the path. Nail the interview.</h1>
+        <p class="lead">Built for incoming BYU IS students heading into the STEM Fair and internship
+        cycle. Explore six real IS career tracks, find the one that fits how you think, and run
+        through role-specific mock interviews before you're in the room.</p>
+        <div class="hero-actions">
+          <button class="btn primary" data-goto="discovery">Explore Career Paths</button>
+          <button class="btn ghost" data-goto="interview">Jump to Mock Interview</button>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-cell"><div class="num">6</div><div class="label">Career Paths Covered</div></div>
+        <div class="stat-cell"><div class="num">24</div><div class="label">Practice Questions</div></div>
+        <div class="stat-cell"><div class="num">5</div><div class="label">Min Fit Quiz</div></div>
+        <div class="stat-cell"><div class="num">0</div><div class="label">External APIs Required</div></div>
+      </div>
+
+      <div class="section-header"><h2>How to use this tool</h2></div>
+      <div class="step-grid">
+        <div class="step-card">
+          <div class="step-num">STEP 01</div>
+          <h3>Explore Career Paths</h3>
+          <p>Flip through six IS career tracks — day-to-day work, required skills, entry-level
+          expectations, and realistic salary ranges for each.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">STEP 02</div>
+          <h3>Take the Fit Quiz</h3>
+          <p>Answer five quick questions about how you like to work. Get a ranked match across all
+          six paths, not just one guess.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">STEP 03</div>
+          <h3>Practice Role-Specific Interviews</h3>
+          <p>Answer real behavioral and technical questions for your role, get instant structured
+          feedback, and see a model answer.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 2: DISCOVERY ================= -->
+    <section id="view-discovery" class="view hidden">
+
+      <div class="section-header">
+        <div>
+          <div class="eyebrow">Section A</div>
+          <h2>Career Path Flashcards</h2>
+        </div>
+        <p style="max-width:320px;margin:0;font-size:12.5px;">Click a card to flip it. Open full
+        details for day-to-day duties, required skills, salary data, and how to become a strong
+        candidate.</p>
+      </div>
+      <div class="card-grid" id="flashcard-grid"></div>
+
+      <div class="section-header">
+        <div>
+          <div class="eyebrow">Section B</div>
+          <h2>Role Match Quiz</h2>
+        </div>
+      </div>
+      <div class="quiz-panel">
+        <div id="quiz-questions"></div>
+        <button class="btn primary" id="calc-fit-btn">Calculate Fit</button>
+        <div id="quiz-result" class="quiz-result hidden"></div>
+      </div>
+    </section>
+
+    <!-- ================= VIEW 3: INTERVIEW ================= -->
+    <section id="view-interview" class="view hidden">
+      <div class="section-header">
+        <div>
+          <div class="eyebrow">Interview Prep Module</div>
+          <h2>Mock Interview Practice</h2>
+        </div>
+      </div>
+
+      <div class="context-banner">
+        <h3>The PAR Method</h3>
+        <p style="margin:0;">Structure behavioral answers around three parts. This tool checks your
+        answers for all three, plus role-specific technical terms.</p>
+        <div class="par-row">
+          <div class="par-item"><div class="pk">P — PROBLEM</div><p>The situation or challenge you faced.</p></div>
+          <div class="par-item"><div class="pk">A — ACTION</div><p>What you specifically did about it.</p></div>
+          <div class="par-item"><div class="pk">R — RESULT</div><p>The outcome, ideally with a number.</p></div>
+        </div>
+      </div>
+
+      <div class="role-select-row">
+        <label for="role-select">Practicing for:</label>
+        <select id="role-select"></select>
+        <div class="progress-dots" id="progress-dots"></div>
+      </div>
+
+      <div id="interview-question-area"></div>
+      <div id="scorecard-area"></div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>IS Career Launchpad — built for the BYU IS Junior Core Case, Fall 2026.</p>
+    <p>Salary ranges and role data are illustrative estimates for prototype purposes, modeled on
+    typical patterns reported by sources such as the BLS Occupational Outlook Handbook, Glassdoor,
+    Levels.fyi, and informal BYU IS alumni reports. Verify current figures before relying on them.</p>
+  </div>
+</footer>
+
+<div id="modal-root"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* =====================================================================
+   DATA
+   ===================================================================== */
+const ROLES = [
+  {
+    id:"app-dev",
+    title:"Software / Application Developer",
+    category:"Build & Engineering",
+    hook:"You turn requirements into working, shippable code.",
+    description:"Application developers design, build, test, and maintain the software that runs a company's products or internal systems — everything from web apps to backend services.",
+    pros:["High demand across every industry","Clear, learnable skill progression"],
+    cons:["Can require constant tool/framework upkeep","Debugging under deadline pressure is common"],
+    dayToDay:[
+      "Write, test, and review code against tickets/user stories in an agile sprint",
+      "Debug production issues and trace root causes across the stack",
+      "Collaborate with QA, product, and design on feature scope",
+      "Participate in code reviews and stand-ups",
+      "Maintain and refactor existing systems, not just build new features"
+    ],
+    skills:["JavaScript/Python/Java or similar", "Git & version control", "SQL basics", "REST/API concepts", "Testing & debugging", "Agile/Scrum familiarity"],
+    entryLevel:[
+      "1-2 completed projects (class or personal) you can walk through in depth",
+      "Comfort with at least one language well enough to whiteboard logic",
+      "Basic understanding of data structures and time complexity",
+      "Some exposure to Git workflows (branches, PRs)"
+    ],
+    salaryLow:"$65K", salaryHigh:"$85K", salaryGrowth:"Senior/staff engineers commonly reach $130K-$180K+ within 5-8 years",
+    strongCandidate:[
+      "Can explain the 'why' behind code decisions, not just the 'what'",
+      "Has debugged something nontrivial and can narrate the process",
+      "Shows curiosity — side projects, contributions, or self-directed learning",
+      "Communicates technical tradeoffs in plain language"
+    ],
+    sourcingNote:"Illustrative range modeled on typical BLS Software Developer data and public new-grad offer reports (e.g., Glassdoor, Levels.fyi) for non-FAANG entry-level roles; actual offers vary widely by company tier and location.",
+    quizIdeal:{coding:10,data:4,security:3,sysDesign:6,peopleDesign:3},
+    questions:[
+      {type:"behavioral", q:"Tell me about a time a project or assignment didn't go the way you planned. What did you do?",
+        keywords:["deadline","bug","scope","pivot","refactor","debug","team","learned"],
+        modelAnswer:"In a group project, our API integration broke two days before the deadline (Problem). I isolated the failure with logging, found a mismatched data type, and paired with a teammate to patch and re-test it (Action). We shipped on time and I documented the fix so it wouldn't recur (Result)."},
+      {type:"behavioral", q:"Describe a time you had to learn a new tool or language quickly.",
+        keywords:["documentation","tutorial","practice","deadline","stack overflow","learned","applied"],
+        modelAnswer:"For a class project I had never used React before with a one-week deadline (Problem). I worked through the official docs and rebuilt a small component from a tutorial to internalize the patterns before touching the real codebase (Action). I shipped my feature on time and used the same approach to ramp up a teammate (Result)."},
+      {type:"technical", q:"What's the difference between an array and a linked list, and when would you use each?",
+        keywords:["array","linked list","memory","index","o(1)","insertion","contiguous","pointer"],
+        modelAnswer:"Arrays store elements in contiguous memory, giving O(1) index access but O(n) insertion/deletion in the middle. Linked lists use pointers between nodes, giving O(1) insertion/deletion at a known position but O(n) access by index. I'd use an array when I need fast random access and know the size roughly in advance, and a linked list when I'm doing frequent insertions/deletions and don't need random access."},
+      {type:"technical", q:"Walk me through what happens when you type a URL into a browser and hit enter.",
+        keywords:["dns","tcp","http","request","server","render","ip address","handshake"],
+        modelAnswer:"The browser resolves the domain to an IP via DNS, opens a TCP connection (with a TLS handshake if HTTPS), sends an HTTP request, the server processes it and returns a response, and the browser parses the HTML/CSS/JS to render the page, firing off additional requests for assets along the way."}
+    ]
+  },
+  {
+    id:"biz-analyst",
+    title:"Business / Systems Analyst",
+    category:"Strategy & Process",
+    hook:"You translate business problems into systems requirements.",
+    description:"Business/Systems analysts sit between stakeholders and technical teams, gathering requirements, mapping processes, and making sure the systems being built actually solve the business problem.",
+    pros:["Direct exposure to both business and tech sides","Strong path into product management or consulting"],
+    cons:["Can get pulled between conflicting stakeholder priorities","Success is harder to point to than shipped code"],
+    dayToDay:[
+      "Interview stakeholders to gather and document requirements",
+      "Map current-state and future-state business processes",
+      "Write user stories, functional specs, or process diagrams",
+      "Bridge communication between business units and developers",
+      "Validate that delivered systems meet the original business need"
+    ],
+    skills:["Requirements gathering", "Process mapping (BPMN/flowcharts)", "SQL for basic data pulls", "Excel/data analysis", "Stakeholder communication", "Basic project management concepts"],
+    entryLevel:[
+      "Ability to write a clear, structured user story or requirement",
+      "Comfort presenting findings to a non-technical audience",
+      "Basic SQL/Excel proficiency",
+      "Some group project experience translating vague asks into deliverables"
+    ],
+    salaryLow:"$60K", salaryHigh:"$78K", salaryGrowth:"Senior/lead BAs and BA-to-PM transitions often reach $100K-$140K within 5-7 years",
+    strongCandidate:[
+      "Asks clarifying questions instead of assuming intent",
+      "Can summarize a messy conversation into a clear written requirement",
+      "Comfortable pushing back on stakeholders diplomatically",
+      "Shows structured thinking (frameworks, prioritization) under ambiguity"
+    ],
+    sourcingNote:"Illustrative range based on typical BLS Management Analyst data and entry-level business/systems analyst postings; actual pay depends heavily on industry (consulting vs. in-house) and location.",
+    quizIdeal:{coding:3,data:6,security:3,sysDesign:5,peopleDesign:8},
+    questions:[
+      {type:"behavioral", q:"Tell me about a time you had to gather information from someone who wasn't giving you clear answers.",
+        keywords:["stakeholder","clarify","questions","requirements","ambiguous","documented","confirmed"],
+        modelAnswer:"On a group case, our 'client' contact gave vague, shifting requirements (Problem). I built a short list of specific yes/no clarifying questions and scheduled a 15-minute follow-up instead of guessing (Action). We documented confirmed requirements in writing and avoided a rebuild later in the project (Result)."},
+      {type:"behavioral", q:"Describe a situation where you had to explain something technical to a non-technical audience.",
+        keywords:["simplified","analogy","non-technical","presentation","stakeholder","understood"],
+        modelAnswer:"I needed to explain a database schema change to classmates outside the IS major (Problem). I dropped the technical vocabulary and used a filing-cabinet analogy with a simple diagram instead of the ER diagram (Action). They understood the tradeoff well enough to weigh in on the decision, which improved the final proposal (Result)."},
+      {type:"technical", q:"How would you document a requirement so a developer can't misinterpret it?",
+        keywords:["user story","acceptance criteria","specific","measurable","edge case","stakeholder sign-off"],
+        modelAnswer:"I'd write it as a user story with explicit acceptance criteria — who the user is, what they need, and why — plus concrete, testable conditions for 'done,' including edge cases. I'd also get stakeholder sign-off on the written version before development starts to avoid rework."},
+      {type:"technical", q:"What's the difference between a functional and a non-functional requirement? Give an example of each.",
+        keywords:["functional","non-functional","performance","security","behavior","system"],
+        modelAnswer:"A functional requirement describes what the system should do — e.g., 'users can reset their password via email.' A non-functional requirement describes how well it should do it — e.g., 'the password reset email must send within 5 seconds.' Both matter, but non-functional requirements are more often missed because they're less obvious to stakeholders."}
+    ]
+  },
+  {
+    id:"data",
+    title:"Data Analyst / Data Scientist",
+    category:"Data & Insight",
+    hook:"You find the signal in the noise and make it actionable.",
+    description:"Data analysts and scientists clean, query, and model data to answer business questions — from a straightforward sales dashboard to a predictive churn model.",
+    pros:["Extremely transferable across industries","Work is directly tied to measurable business impact"],
+    cons:["Data is often messy; cleaning eats real time","Findings can be politically sensitive to communicate"],
+    dayToDay:[
+      "Write SQL queries to pull and aggregate data",
+      "Clean and validate datasets before analysis",
+      "Build dashboards or reports for stakeholders",
+      "Run statistical tests or basic models to answer specific questions",
+      "Present findings and recommendations, not just numbers"
+    ],
+    skills:["SQL", "Python or R", "Excel/BI tools (Tableau, Power BI)", "Statistics fundamentals", "Data visualization", "Basic ML concepts (for DS-leaning roles)"],
+    entryLevel:[
+      "Can write intermediate SQL (joins, group by, subqueries)",
+      "Has built at least one dashboard or analysis end-to-end",
+      "Understands mean/median/distribution/correlation vs. causation",
+      "Can explain a chart's takeaway in one sentence"
+    ],
+    salaryLow:"$62K", salaryHigh:"$85K", salaryGrowth:"Senior analysts and data scientists often reach $115K-$160K+ within 5-7 years, more at DS-heavy tech companies",
+    strongCandidate:[
+      "Leads with the business question, not the tool",
+      "Distinguishes correlation from causation unprompted",
+      "Can defend a methodology choice when challenged",
+      "Visualizes data cleanly instead of dumping raw numbers"
+    ],
+    sourcingNote:"Illustrative range modeled on typical BLS Data Scientist/Operations Research Analyst data and entry-level analyst postings on major job boards; data science roles at tech-heavy firms often skew higher.",
+    quizIdeal:{coding:6,data:10,security:2,sysDesign:3,peopleDesign:3},
+    questions:[
+      {type:"behavioral", q:"Tell me about a time your analysis led to a decision that surprised someone.",
+        keywords:["data","analysis","recommendation","stakeholder","evidence","surprised","result"],
+        modelAnswer:"For a class project, our initial assumption was that a marketing channel was underperforming (Problem). I pulled the actual conversion data and controlled for seasonality before presenting, rather than trusting the surface-level metric (Action). The data showed the opposite — the channel was our best performer once seasonality was removed — and the team reallocated budget based on it (Result)."},
+      {type:"behavioral", q:"Describe a time you found an error in your own data or analysis before presenting it.",
+        keywords:["error","validated","double-check","caught","fixed","integrity"],
+        modelAnswer:"While building a dashboard, my totals didn't reconcile with a source report (Problem). I traced it back to a duplicate join key inflating row counts and rebuilt the query with a deduplication step (Action). I caught it before the stakeholder meeting, which protected the team's credibility with leadership (Result)."},
+      {type:"technical", q:"Write (in words or pseudocode) how you'd find the second-highest salary in a table using SQL.",
+        keywords:["order by","limit","offset","distinct","subquery","max"],
+        modelAnswer:"One approach: SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 1 OFFSET 1. Alternatively, use a subquery that selects MAX(salary) where salary is less than the overall MAX(salary), which avoids issues with duplicate top salaries."},
+      {type:"technical", q:"How would you explain the difference between correlation and causation to a stakeholder who wants to act on a correlation?",
+        keywords:["correlation","causation","confounding","experiment","control","variable"],
+        modelAnswer:"I'd explain that two things moving together doesn't mean one causes the other — there could be a confounding variable driving both. I'd ask what decision they want to make and whether we can test it more rigorously, e.g., with an A/B test or by controlling for other variables, before committing resources based on the correlation alone."}
+    ]
+  },
+  {
+    id:"cyber",
+    title:"Cybersecurity Analyst",
+    category:"Risk & Defense",
+    hook:"You find the gaps before someone else exploits them.",
+    description:"Cybersecurity analysts monitor systems for threats, respond to incidents, and help harden an organization's defenses against attackers.",
+    pros:["Extremely high demand, low unemployment in the field","Work has clear, tangible stakes"],
+    cons:["On-call/incident response can disrupt normal hours","Constantly evolving threat landscape requires ongoing learning"],
+    dayToDay:[
+      "Monitor security alerts and logs (SIEM tools) for suspicious activity",
+      "Investigate and respond to potential incidents",
+      "Run vulnerability scans and help prioritize remediation",
+      "Support security awareness training and policy enforcement",
+      "Document incidents and contribute to post-mortems"
+    ],
+    skills:["Networking fundamentals (TCP/IP, firewalls)", "Security frameworks (NIST, OWASP Top 10)", "SIEM/log analysis tools", "Basic scripting (Python/Bash)", "Linux fundamentals", "Risk assessment basics"],
+    entryLevel:[
+      "Understands common attack types (phishing, SQL injection, DDoS) and basic defenses",
+      "Familiarity with the OWASP Top 10",
+      "Some hands-on lab exposure (CTFs, TryHackMe, home lab, or coursework)",
+      "Security+ or working toward it is a strong signal, not always required"
+    ],
+    salaryLow:"$65K", salaryHigh:"$88K", salaryGrowth:"Senior analysts, security engineers, and architects often reach $130K-$170K+ within 6-8 years",
+    strongCandidate:[
+      "Thinks like an attacker, not just a defender, when evaluating a system",
+      "Stays calm and methodical describing incident response steps",
+      "Keeps up with current threats/CVEs, not just textbook knowledge",
+      "Can explain risk in business terms, not just technical severity"
+    ],
+    sourcingNote:"Illustrative range modeled on typical BLS Information Security Analyst data and entry-level SOC analyst postings; figures vary substantially by industry (finance/defense tend to pay above average).",
+    quizIdeal:{coding:5,data:5,security:10,sysDesign:5,peopleDesign:2},
+    questions:[
+      {type:"behavioral", q:"Tell me about a time you noticed something 'off' before it became a bigger problem.",
+        keywords:["noticed","investigated","escalated","risk","flagged","monitoring"],
+        modelAnswer:"While reviewing logs in a lab exercise, I noticed a login pattern from an unusual location outside normal hours (Problem). I flagged it, cross-referenced it against expected user activity, and escalated with the specific evidence rather than a vague hunch (Action). It turned out to be a credential-testing pattern, and the early flag meant it was contained before further access (Result)."},
+      {type:"behavioral", q:"Describe how you'd handle disagreeing with a colleague about how serious a vulnerability is.",
+        keywords:["risk","severity","evidence","escalate","framework","cvss","disagree"],
+        modelAnswer:"I'd bring objective criteria to the conversation instead of just opinion — likelihood of exploitation, potential impact, and a scoring framework like CVSS — and walk through the reasoning together (Action-focused). If we still disagreed, I'd document both positions and escalate to whoever owns the risk decision, since the goal is the right call, not winning the argument."},
+      {type:"technical", q:"Explain what a SQL injection attack is and one way to prevent it.",
+        keywords:["sql injection","input validation","parameterized","sanitize","query"],
+        modelAnswer:"SQL injection happens when untrusted user input is inserted directly into a SQL query, letting an attacker manipulate the query to access or modify data they shouldn't. The main prevention is using parameterized queries/prepared statements instead of string-concatenating input directly into SQL, combined with input validation."},
+      {type:"technical", q:"What's the difference between a vulnerability and an exploit?",
+        keywords:["vulnerability","exploit","weakness","code","risk","patch"],
+        modelAnswer:"A vulnerability is a weakness in a system — a flaw in code, configuration, or process — that could potentially be abused. An exploit is the actual code or technique used to take advantage of that vulnerability. A system can have a vulnerability with no known exploit yet, which is why patching promptly still matters."}
+    ]
+  },
+  {
+    id:"ux-pm",
+    title:"UX Designer / Product Manager",
+    category:"Product & Experience",
+    hook:"You decide what gets built and how it should feel to use.",
+    description:"UX designers and product managers define what a product should do and how it should feel — researching users, prioritizing features, and shaping the experience end to end.",
+    pros:["High influence over what actually gets built","Deeply cross-functional, rarely repetitive"],
+    cons:["Success often depends on others' execution, not just your own work","Prioritization decisions are frequently contested"],
+    dayToDay:[
+      "Conduct or review user research and usability testing",
+      "Prioritize a backlog based on user needs and business goals",
+      "Create wireframes, prototypes, or PRDs (product requirement docs)",
+      "Align engineering, design, and business stakeholders on scope",
+      "Analyze usage data to see what's working post-launch"
+    ],
+    skills:["User research methods", "Wireframing/prototyping (Figma)", "Prioritization frameworks (RICE, MoSCoW)", "Basic data literacy", "Roadmapping", "Cross-functional communication"],
+    entryLevel:[
+      "Has done at least one structured user research or usability exercise",
+      "Can articulate a prioritization decision with real tradeoffs",
+      "Comfortable presenting and defending a design/product decision",
+      "Basic familiarity with Figma or similar prototyping tools"
+    ],
+    salaryLow:"$60K", salaryHigh:"$82K", salaryGrowth:"Senior PMs/designers often reach $120K-$160K+ within 5-7 years, higher at large tech companies",
+    strongCandidate:[
+      "Grounds opinions in user evidence, not just personal preference",
+      "Can say no to a stakeholder request and explain why clearly",
+      "Thinks in tradeoffs (scope vs. time vs. quality) rather than absolutes",
+      "Shows genuine curiosity about how real users actually behave"
+    ],
+    sourcingNote:"Illustrative range modeled on typical BLS Market Research Analyst and entry-level Associate PM/UX postings; product roles at large tech firms typically pay well above this baseline.",
+    quizIdeal:{coding:2,data:4,security:2,sysDesign:4,peopleDesign:10},
+    questions:[
+      {type:"behavioral", q:"Tell me about a time you had to say no to a feature request or idea someone was excited about.",
+        keywords:["prioritize","tradeoff","said no","evidence","scope","stakeholder"],
+        modelAnswer:"A teammate wanted to add a feature late in our project timeline that wasn't in our original scope (Problem). I walked through the tradeoff explicitly — what we'd cut or delay to fit it in — using our prioritization criteria instead of just saying 'no' (Action). We agreed to defer it to a 'v2' list, which kept us on schedule for the core deliverable (Result)."},
+      {type:"behavioral", q:"Describe a time you got user feedback that contradicted what you expected.",
+        keywords:["user feedback","assumption","tested","surprised","iterated","learned"],
+        modelAnswer:"I assumed users would prefer a streamlined single-page flow (Problem/assumption). When I tested a low-fidelity prototype with a few classmates, most got confused about where they were in the process (Action: tested it). I redesigned it with clearer step indicators, and the follow-up test showed much less confusion (Result)."},
+      {type:"technical", q:"How would you prioritize a backlog of ten feature requests with limited engineering time?",
+        keywords:["rice","impact","effort","priority","framework","tradeoff","user value"],
+        modelAnswer:"I'd score each item on a framework like RICE — reach, impact, confidence, and effort — to get a comparable ranking rather than prioritizing by whoever asked loudest. I'd also sanity-check the top items against strategic goals, not just the raw score, before finalizing the list with stakeholders."},
+      {type:"technical", q:"Walk me through how you'd approach a usability test for a new feature with a limited budget.",
+        keywords:["usability test","participants","task","observe","think aloud","iterate"],
+        modelAnswer:"I'd recruit 5-6 representative users (enough to catch most major issues per standard usability research), give them realistic tasks rather than leading questions, and use a think-aloud protocol while observing. I'd look for where they hesitate or fail, prioritize fixing the most common friction points, and re-test cheaply with a clickable prototype before full development."}
+    ]
+  },
+  {
+    id:"cloud",
+    title:"Cloud / Infrastructure Engineer",
+    category:"Systems & Infrastructure",
+    hook:"You build and run the systems everything else depends on.",
+    description:"Cloud and infrastructure engineers design, deploy, and maintain the servers, networks, and cloud environments that applications run on — keeping systems available, scalable, and secure.",
+    pros:["Strong pay and demand as companies move to cloud-first","Deep, transferable technical foundation"],
+    cons:["On-call rotations for outages are common","Mistakes can have wide, visible blast radius"],
+    dayToDay:[
+      "Provision and manage cloud resources (AWS/Azure/GCP)",
+      "Write infrastructure-as-code (Terraform, CloudFormation)",
+      "Monitor system health and respond to outages/incidents",
+      "Automate deployment pipelines (CI/CD)",
+      "Optimize systems for cost, performance, and reliability"
+    ],
+    skills:["AWS/Azure/GCP fundamentals", "Linux administration", "Networking basics", "Infrastructure-as-code (Terraform)", "CI/CD pipelines", "Scripting (Python/Bash)"],
+    entryLevel:[
+      "Basic familiarity with at least one cloud provider (free-tier project counts)",
+      "Understands the difference between IaaS, PaaS, and SaaS",
+      "Comfortable in a Linux command line",
+      "Some exposure to containers (Docker) is a strong plus"
+    ],
+    salaryLow:"$68K", salaryHigh:"$90K", salaryGrowth:"Senior cloud/infra/DevOps engineers often reach $135K-$175K+ within 5-8 years",
+    strongCandidate:[
+      "Can explain a system's failure mode, not just how it works when healthy",
+      "Comfortable with ambiguity during an outage — methodical under pressure",
+      "Understands cost tradeoffs of infrastructure decisions, not just technical ones",
+      "Automates repetitive work rather than doing it manually every time"
+    ],
+    sourcingNote:"Illustrative range modeled on typical BLS Network/Systems Administrator and entry-level Cloud/DevOps Engineer postings; certifications (AWS/Azure) and hands-on project experience meaningfully shift offers.",
+    quizIdeal:{coding:7,data:3,security:6,sysDesign:10,peopleDesign:2},
+    questions:[
+      {type:"behavioral", q:"Tell me about a time something you set up broke or went down. What did you do?",
+        keywords:["outage","incident","monitoring","root cause","fixed","documented","postmortem"],
+        modelAnswer:"During a class project demo prep, our deployed app went down the night before (Problem). I checked logs, found we'd hit a free-tier resource limit, and reconfigured the deployment with better resource limits and basic monitoring (Action). It was back up within an hour, and I added an alert so we'd catch it earlier next time (Result)."},
+      {type:"behavioral", q:"Describe a time you had to automate a repetitive manual task.",
+        keywords:["automated","script","manual","repetitive","efficiency","time saved"],
+        modelAnswer:"I was manually redeploying a project after every small code change (Problem). I wrote a basic CI/CD script that ran tests and redeployed automatically on push (Action). It cut a five-minute manual process down to a few seconds and removed room for manual error (Result)."},
+      {type:"technical", q:"What's the difference between horizontal and vertical scaling?",
+        keywords:["horizontal","vertical","scaling","load balancer","server","capacity"],
+        modelAnswer:"Vertical scaling means adding more resources (CPU/RAM) to a single server. Horizontal scaling means adding more servers/instances and distributing load across them, typically behind a load balancer. Horizontal scaling generally offers better fault tolerance and near-limitless growth, but adds complexity around state and coordination."},
+      {type:"technical", q:"What is infrastructure as code, and why does it matter?",
+        keywords:["infrastructure as code","terraform","version control","reproducible","automation"],
+        modelAnswer:"Infrastructure as code means defining servers, networks, and cloud resources in version-controlled config files (like Terraform) instead of manually clicking through a console. It matters because it makes environments reproducible, reviewable, and auditable, and lets you recreate or roll back infrastructure the same way you would application code."}
+    ]
+  }
+];
+
+const QUIZ_QUESTIONS = [
+  {key:"coding", label:"Writing and debugging code all day", low:"Not for me", high:"Love it"},
+  {key:"data", label:"Digging into data to find patterns and answer questions", low:"Not for me", high:"Love it"},
+  {key:"security", label:"Thinking like an attacker to find and close security gaps", low:"Not for me", high:"Love it"},
+  {key:"sysDesign", label:"Designing and running the systems/infrastructure everything depends on", low:"Not for me", high:"Love it"},
+  {key:"peopleDesign", label:"Talking to users/stakeholders and shaping the product experience", low:"Not for me", high:"Love it"}
+];
+
+/* =====================================================================
+   STATE
+   ===================================================================== */
+const appState = {
+  currentRole: "app-dev",
+  quizResults: null,
+  interviewAnswers: {}   // { roleId: { qIndex: {text, score, feedback} } }
+};
+
+function getRole(id){ return ROLES.find(r => r.id === id); }
+
+/* =====================================================================
+   VIEW ROUTING
+   ===================================================================== */
+function goToView(name){
+  document.querySelectorAll("section.view").forEach(v => v.classList.add("hidden"));
+  document.getElementById("view-" + name).classList.remove("hidden");
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.view === name));
+  window.scrollTo({top:0, behavior:"instant"});
+  if(name === "interview"){ renderInterview(); }
+}
+
+document.querySelectorAll(".tab-btn").forEach(b => b.addEventListener("click", () => goToView(b.dataset.view)));
+document.querySelectorAll("[data-goto]").forEach(b => b.addEventListener("click", () => goToView(b.dataset.goto)));
+
+/* =====================================================================
+   SECTION A — FLASHCARDS + MODAL
+   ===================================================================== */
+function renderFlashcards(){
+  const grid = document.getElementById("flashcard-grid");
+  grid.innerHTML = ROLES.map(r => `
+    <div class="flip-outer" data-role="${r.id}">
+      <div class="flip-inner">
+        <div class="flip-face front">
+          <span class="badge cyan">${r.category}</span>
+          <div class="role-title">${r.title}</div>
+          <p class="hook">${r.hook}</p>
+          <div class="flip-hint">Click to flip &rarr;</div>
+        </div>
+        <div class="flip-face back">
+          <p class="desc">${r.description}</p>
+          <div class="pc-row">
+            <div class="pc-col pro"><div class="pc-label">Pros</div><ul>${r.pros.map(p=>`<li>${p}</li>`).join("")}</ul></div>
+            <div class="pc-col con"><div class="pc-label">Cons</div><ul>${r.cons.map(c=>`<li>${c}</li>`).join("")}</ul></div>
+          </div>
+          <button class="btn amber block" data-detail="${r.id}">View Full Career Details</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+
+  grid.querySelectorAll(".flip-outer").forEach(card => {
+    card.addEventListener("click", (e) => {
+      if(e.target.closest("[data-detail]")) return;
+      card.classList.toggle("flipped");
+    });
+  });
+  grid.querySelectorAll("[data-detail]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      openModal(btn.dataset.detail);
+    });
+  });
+}
+
+function openModal(roleId){
+  const r = getRole(roleId);
+  const root = document.getElementById("modal-root");
+  root.innerHTML = `
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-head">
+          <div>
+            <span class="badge cyan">${r.category}</span>
+            <h2>${r.title}</h2>
+            <p style="margin:0;font-size:13.5px;">${r.description}</p>
+          </div>
+          <button class="modal-close" id="modal-close-btn">CLOSE</button>
+        </div>
+        <div class="modal-body">
+          <div class="detail-block">
+            <h4>Day-to-Day Duties</h4>
+            <ul>${r.dayToDay.map(d=>`<li>${d}</li>`).join("")}</ul>
+          </div>
+          <div class="detail-block">
+            <h4>Required Technical Skills &amp; Tools</h4>
+            <ul>${r.skills.map(s=>`<li>${s}</li>`).join("")}</ul>
+          </div>
+          <div class="detail-block">
+            <h4>Entry-Level &amp; Internship Expectations</h4>
+            <ul>${r.entryLevel.map(s=>`<li>${s}</li>`).join("")}</ul>
+          </div>
+          <div class="detail-block">
+            <h4>Realistic Salary Range &amp; Growth</h4>
+            <div class="salary-box">
+              <div class="sitem"><div class="snum">${r.salaryLow} &ndash; ${r.salaryHigh}</div><div class="slabel">Entry-Level Range</div></div>
+            </div>
+            <p style="margin-top:10px;">${r.salaryGrowth}</p>
+          </div>
+          <div class="detail-block">
+            <h4>Strong Candidate Profile</h4>
+            <ul>${r.strongCandidate.map(s=>`<li>${s}</li>`).join("")}</ul>
+          </div>
+          <div class="source-note">
+            <strong>Data sourcing note:</strong> ${r.sourcingNote}
+          </div>
+        </div>
+        <div class="modal-cta">
+          <button class="btn primary block" id="modal-practice-btn">Practice Interview for ${r.title}</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById("modal-close-btn").addEventListener("click", closeModal);
+  document.getElementById("modal-overlay").addEventListener("click", (e) => { if(e.target.id === "modal-overlay") closeModal(); });
+  document.getElementById("modal-practice-btn").addEventListener("click", () => {
+    appState.currentRole = roleId;
+    closeModal();
+    goToView("interview");
+  });
+}
+function closeModal(){ document.getElementById("modal-root").innerHTML = ""; }
+
+/* =====================================================================
+   SECTION B — QUIZ
+   ===================================================================== */
+function renderQuiz(){
+  const container = document.getElementById("quiz-questions");
+  container.innerHTML = QUIZ_QUESTIONS.map((q,i) => `
+    <div class="quiz-q">
+      <label>
+        <span>${q.label}</span>
+        <span class="qval" id="qval-${q.key}">5</span>
+      </label>
+      <input type="range" min="1" max="10" value="5" id="slider-${q.key}" data-key="${q.key}">
+      <div class="scale-labels"><span>${q.low}</span><span>${q.high}</span></div>
+    </div>
+  `).join("");
+
+  QUIZ_QUESTIONS.forEach(q => {
+    const slider = document.getElementById("slider-" + q.key);
+    const val = document.getElementById("qval-" + q.key);
+    slider.addEventListener("input", () => { val.textContent = slider.value; });
+  });
+}
+
+document.getElementById("calc-fit-btn").addEventListener("click", () => {
+  const answers = {};
+  QUIZ_QUESTIONS.forEach(q => {
+    answers[q.key] = parseInt(document.getElementById("slider-" + q.key).value, 10);
+  });
+
+  const ranked = ROLES.map(r => {
+    let diffSum = 0;
+    QUIZ_QUESTIONS.forEach(q => { diffSum += Math.abs(answers[q.key] - r.quizIdeal[q.key]); });
+    const maxDiff = 9 * QUIZ_QUESTIONS.length;
+    const match = Math.round(100 - (diffSum / maxDiff) * 100);
+    return {role:r, match: Math.max(match, 0)};
+  }).sort((a,b) => b.match - a.match);
+
+  appState.quizResults = {answers, ranked};
+  renderQuizResult(ranked);
+});
+
+function renderQuizResult(ranked){
+  const top = ranked[0];
+  const box = document.getElementById("quiz-result");
+  box.classList.remove("hidden");
+  box.innerHTML = `
+    <div class="eyebrow" style="color:var(--text-dim);">Top Match</div>
+    <div class="match-pct">${top.match}%</div>
+    <div class="match-role">${top.role.title}</div>
+    <p style="margin-bottom:18px;">Your answers lean closest to this role's day-to-day mix. ${top.role.hook}</p>
+    <button class="btn primary" id="quiz-goto-interview">Start Mock Interview for ${top.role.title}</button>
+    <div class="rank-list">
+      ${ranked.map(r => `
+        <div class="rank-row">
+          <div class="rname">${r.role.title}</div>
+          <div class="rank-bar-track"><div class="rank-bar-fill" style="width:${r.match}%;"></div></div>
+          <div class="rpct">${r.match}%</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+  document.getElementById("quiz-goto-interview").addEventListener("click", () => {
+    appState.currentRole = top.role.id;
+    goToView("interview");
+  });
+  box.scrollIntoView({behavior:"smooth", block:"nearest"});
+}
+
+/* =====================================================================
+   VIEW 3 — MOCK INTERVIEW
+   ===================================================================== */
+function renderRoleSelect(){
+  const sel = document.getElementById("role-select");
+  sel.innerHTML = ROLES.map(r => `<option value="${r.id}">${r.title}</option>`).join("");
+  sel.value = appState.currentRole;
+  sel.addEventListener("change", () => {
+    appState.currentRole = sel.value;
+    renderInterview();
+  });
+}
+
+function getCurrentQIndex(roleId){
+  const answered = appState.interviewAnswers[roleId] || {};
+  const role = getRole(roleId);
+  for(let i=0; i<role.questions.length; i++){
+    if(!answered[i]) return i;
+  }
+  return role.questions.length; // all answered -> scorecard
+}
+
+function renderInterview(){
+  document.getElementById("role-select").value = appState.currentRole;
+  const role = getRole(appState.currentRole);
+  if(!appState.interviewAnswers[role.id]) appState.interviewAnswers[role.id] = {};
+
+  renderProgressDots(role);
+  const qIndex = getCurrentQIndex(role.id);
+
+  if(qIndex >= role.questions.length){
+    document.getElementById("interview-question-area").innerHTML = "";
+    renderScorecard(role);
+  } else {
+    document.getElementById("scorecard-area").innerHTML = "";
+    renderQuestion(role, qIndex);
+  }
+}
+
+function renderProgressDots(role){
+  const answered = appState.interviewAnswers[role.id] || {};
+  const cur = getCurrentQIndex(role.id);
+  document.getElementById("progress-dots").innerHTML = role.questions.map((q,i) => {
+    let cls = "pdot";
+    if(answered[i]) cls += " done";
+    else if(i === cur) cls += " current";
+    return `<div class="${cls}"></div>`;
+  }).join("");
+}
+
+function renderQuestion(role, qIndex){
+  const q = role.questions[qIndex];
+  const area = document.getElementById("interview-question-area");
+  area.innerHTML = `
+    <div class="q-panel">
+      <div class="q-meta">
+        <span class="badge ${q.type === 'behavioral' ? 'amber' : 'cyan'}">${q.type}</span>
+        <span class="badge">Question ${qIndex+1} of ${role.questions.length}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <textarea id="answer-input" placeholder="Type your answer here...">${(appState.interviewAnswers[role.id][qIndex] && appState.interviewAnswers[role.id][qIndex].text) || ""}</textarea>
+      <div class="ta-foot">
+        <span class="word-count" id="word-count">0 words</span>
+        <button class="btn primary" id="submit-answer-btn">Submit Answer</button>
+      </div>
+      <div id="feedback-area"></div>
+    </div>
+  `;
+
+  const textarea = document.getElementById("answer-input");
+  const wc = document.getElementById("word-count");
+  function updateWC(){
+    const words = textarea.value.trim().split(/\s+/).filter(Boolean).length;
+    wc.textContent = words + " words";
+    wc.classList.toggle("ok", words >= 35);
+  }
+  textarea.addEventListener("input", updateWC);
+  updateWC();
+
+  const existing = appState.interviewAnswers[role.id][qIndex];
+  if(existing){ renderFeedback(role, qIndex, existing); }
+
+  document.getElementById("submit-answer-btn").addEventListener("click", () => {
+    const text = textarea.value.trim();
+    if(text.length === 0) return;
+    const evalResult = evaluateAnswer(text, q);
+    appState.interviewAnswers[role.id][qIndex] = {text, ...evalResult};
+    renderFeedback(role, qIndex, appState.interviewAnswers[role.id][qIndex]);
+    renderProgressDots(role);
+  });
+}
+
+/* ---------- client-side evaluation logic ---------- */
+const PROBLEM_MARKERS = ["problem","challenge","issue","situation","goal","task","struggled","difficult","conflict"];
+const ACTION_MARKERS = ["i did","i built","i wrote","i created","i led","i analyzed","i developed","i designed","i implemented","i fixed","i automated","i collaborated","i managed","i decided","i reached out","i proposed","i tested"];
+const RESULT_MARKERS = ["result","resulted","outcome","improved","increased","decreased","reduced","saved","achieved","led to","which meant","ended up","successfully","on time","%"];
+
+function containsAny(text, list){
+  return list.some(term => text.includes(term));
+}
+
+function evaluateAnswer(text, q){
+  const lower = text.toLowerCase();
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  const wordCount = words.length;
+  const lengthOK = wordCount >= 35;
+
+  const hasProblem = containsAny(lower, PROBLEM_MARKERS);
+  const hasAction = containsAny(lower, ACTION_MARKERS);
+  const hasResult = containsAny(lower, RESULT_MARKERS);
+  const parCount = [hasProblem, hasAction, hasResult].filter(Boolean).length;
+
+  const matchedKeywords = q.keywords.filter(k => lower.includes(k.toLowerCase()));
+  const keywordRatio = matchedKeywords.length / q.keywords.length;
+  const missingKeywords = q.keywords.filter(k => !lower.includes(k.toLowerCase())).slice(0, 4);
+
+  // scoring: 2 pts length, 4 pts PAR (up to), 4 pts keyword coverage
+  let score = 0;
+  score += lengthOK ? 2 : (wordCount >= 15 ? 1 : 0);
+  score += parCount * 1.33;
+  score += keywordRatio * 4;
+  score = Math.max(1, Math.min(10, Math.round(score)));
+
+  const strengths = [];
+  const gaps = [];
+  if(lengthOK) strengths.push(`Solid length (${wordCount} words) — enough room to show detail.`);
+  else gaps.push(`Answer is short (${wordCount} words). Aim for 35+ words to show real depth.`);
+
+  if(hasProblem) strengths.push("Clearly frames a problem/situation.");
+  else gaps.push("Add a clear Problem/Situation statement up front.");
+  if(hasAction) strengths.push("Describes a specific action you personally took.");
+  else gaps.push("Be explicit about what YOU did (‘I did X’), not just what happened.");
+  if(hasResult) strengths.push("Includes a result or outcome.");
+  else gaps.push("Close with a concrete Result — ideally a number or measurable outcome.");
+
+  if(matchedKeywords.length > 0) strengths.push(`Hits relevant terms: ${matchedKeywords.slice(0,4).join(", ")}.`);
+  if(missingKeywords.length > 0) gaps.push(`Consider referencing: ${missingKeywords.join(", ")}.`);
+
+  return {score, strengths, gaps, wordCount, parCount};
+}
+
+function renderFeedback(role, qIndex, result){
+  const q = role.questions[qIndex];
+  const area = document.getElementById("feedback-area");
+  const isLast = qIndex === role.questions.length - 1;
+  area.innerHTML = `
+    <div class="feedback-box">
+      <div class="fb-score-row">
+        <div class="fb-score">${result.score}/10</div>
+        <div class="fb-score-label">Automated Answer Score<br>${result.wordCount} words &middot; ${result.parCount}/3 PAR elements &middot; keyword match logged</div>
+      </div>
+      <div class="fb-cols">
+        <div class="fb-col good"><h5>Strengths</h5><ul>${result.strengths.map(s=>`<li>${s}</li>`).join("")}</ul></div>
+        <div class="fb-col gap"><h5>Gaps To Close</h5><ul>${result.gaps.map(s=>`<li>${s}</li>`).join("")}</ul></div>
+      </div>
+      <div class="model-answer">
+        <h5>Model Answer</h5>
+        <p>${q.modelAnswer}</p>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="btn primary" id="next-q-btn">${isLast ? "See Interview Scorecard" : "Next Question"}</button>
+    </div>
+  `;
+  document.getElementById("next-q-btn").addEventListener("click", () => renderInterview());
+}
+
+function renderScorecard(role){
+  const answers = appState.interviewAnswers[role.id];
+  const scores = role.questions.map((q,i) => answers[i].score);
+  const avg = scores.reduce((a,b)=>a+b,0) / scores.length;
+  let readinessLabel, readinessColor;
+  if(avg >= 8){ readinessLabel = "Interview-Ready"; }
+  else if(avg >= 5.5){ readinessLabel = "Developing — close the gaps below"; }
+  else { readinessLabel = "Needs More Practice"; }
+
+  const area = document.getElementById("scorecard-area");
+  area.innerHTML = `
+    <div class="scorecard">
+      <div class="scorecard-head">
+        <div>
+          <div class="eyebrow">Interview Recap &mdash; ${role.title}</div>
+          <div class="readiness-num">${avg.toFixed(1)}<span style="font-size:20px;color:var(--text-faint);">/10</span></div>
+          <div class="readiness-label">${readinessLabel}</div>
+        </div>
+        <button class="btn ghost" id="retry-role-btn">Retry This Role</button>
+      </div>
+      ${role.questions.map((q,i) => `
+        <div class="sc-row">
+          <div class="sc-row-head">
+            <span class="sqtext">${i+1}. ${q.q}</span>
+            <span class="sscore">${answers[i].score}/10</span>
+          </div>
+          <p class="stip">${answers[i].gaps[0] || "Strong, well-rounded answer."}</p>
+        </div>
+      `).join("")}
+    </div>
+  `;
+  document.getElementById("retry-role-btn").addEventListener("click", () => {
+    appState.interviewAnswers[role.id] = {};
+    renderInterview();
+  });
+}
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+renderFlashcards();
+renderQuiz();
+renderRoleSelect();
+goToView("landing");
+
+})();
+</script>
+</body>
+</html>
