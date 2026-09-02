@@ -6,22 +6,23 @@
 <title>IS Career Launchpad</title>
 <style>
   :root{
-    /* Atomic-Era retrofuturist palette: warm/cool contrast on ink & parchment,
-       modeled on 1960s-70s space-program graphics (Vignelli-era NASA standards,
-       Braun/Rams industrial color) rather than a synthwave/neon-on-black look. */
-    --bg:#20233b;
-    --bg-alt:#262a46;
-    --card:#2a2e4d;
-    --card-hi:#313559;
-    --border:rgba(236,226,197,0.14);
-    --border-hi:rgba(236,226,197,0.30);
-    --text:#ece2c5;
-    --text-dim:#a79f8b;
-    --text-faint:#726c5c;
-    --cyan:#cf6b58;      /* primary accent — terracotta */
-    --amber:#7fa79e;     /* secondary accent — pewter teal */
-    --danger:#cf6b58;
-    --success:#7fa79e;
+    /* Atomic-Era retrofuturist palette, rebuilt from the team's five brand hexes:
+       deep navy ground, cream ink, rust-red and olive-gold accents, muted
+       lavender-grey for secondary text — still warm/cool contrast on dark,
+       still no neon/synthwave glow. */
+    --bg:#232e4a;
+    --bg-alt:#2c395c;
+    --card:#3d4969;
+    --card-hi:#505b78;
+    --border:rgba(222,222,210,0.14);
+    --border-hi:rgba(222,222,210,0.30);
+    --text:#deded2;
+    --text-dim:#a2a0b3;
+    --text-faint:#797c95;
+    --cyan:#a92717;      /* primary accent — rust red */
+    --amber:#b9a727;     /* secondary accent — olive gold */
+    --danger:#a92717;
+    --success:#b9a727;
     --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace;
     --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     /* soft capsule/porthole shape system — rounded cards, pill controls, elevation via shadow */
@@ -38,8 +39,8 @@
   body{
     background:
       linear-gradient(var(--bg), var(--bg)),
-      repeating-linear-gradient(0deg, rgba(236,226,197,0.025) 0px, rgba(236,226,197,0.025) 1px, transparent 1px, transparent 56px),
-      repeating-linear-gradient(90deg, rgba(236,226,197,0.025) 0px, rgba(236,226,197,0.025) 1px, transparent 1px, transparent 56px);
+      repeating-linear-gradient(0deg, rgba(222,222,210,0.025) 0px, rgba(222,222,210,0.025) 1px, transparent 1px, transparent 56px),
+      repeating-linear-gradient(90deg, rgba(222,222,210,0.025) 0px, rgba(222,222,210,0.025) 1px, transparent 1px, transparent 56px);
     background-color:var(--bg);
     color:var(--text);
     font-family:var(--sans);
@@ -48,7 +49,7 @@
   }
   .hidden{display:none !important;}
   a{color:inherit;}
-  ::selection{background:var(--cyan);color:#1a1c2e;}
+  ::selection{background:var(--cyan);color:#1d253c;}
 
   /* ---------- layout shells ---------- */
   .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
@@ -72,14 +73,14 @@
     padding:10px 18px;cursor:pointer;transition:all .15s ease;text-transform:uppercase;
     border-radius:var(--r-pill);
   }
-  .tab-btn:hover{background:rgba(236,226,197,0.06);color:var(--text);}
-  .tab-btn.active{background:rgba(207,107,88,0.14);color:var(--cyan);}
+  .tab-btn:hover{background:rgba(222,222,210,0.06);color:var(--text);}
+  .tab-btn.active{background:rgba(169,39,23,0.14);color:var(--cyan);}
   .tab-btn.home-btn{
     font-size:13.5px;font-weight:700;padding:12px 30px;border:none;
     background:var(--card-hi);letter-spacing:1px;
   }
   .tab-btn.home-btn:hover{background:var(--card-hi);color:var(--cyan);}
-  .tab-btn.home-btn.active{background:var(--cyan);color:#1a1c2e;box-shadow:var(--shadow-soft);}
+  .tab-btn.home-btn.active{background:var(--cyan);color:#1d253c;box-shadow:var(--shadow-soft);}
 
   main{padding:48px 0 80px;}
   section.view{animation:fadein .18s ease;}
@@ -98,12 +99,12 @@
     cursor:pointer;transition:background .15s ease,color .15s ease,transform .15s ease;display:inline-flex;align-items:center;gap:8px;
     border-radius:var(--r-pill);
   }
-  .btn:hover{background:rgba(207,107,88,0.12);}
+  .btn:hover{background:rgba(169,39,23,0.12);}
   .btn:active{transform:scale(0.97);}
-  .btn.primary{background:var(--cyan);color:#1a1c2e;font-weight:700;box-shadow:var(--shadow-soft);}
-  .btn.primary:hover{background:#e08571;}
+  .btn.primary{background:var(--cyan);color:#1d253c;font-weight:700;box-shadow:var(--shadow-soft);}
+  .btn.primary:hover{background:#bc574a;}
   .btn.amber{border-color:var(--amber);color:var(--amber);}
-  .btn.amber:hover{background:rgba(127,167,158,0.12);}
+  .btn.amber:hover{background:rgba(185,167,39,0.12);}
   .btn.ghost{border-color:var(--border-hi);color:var(--text-dim);}
   .btn.ghost:hover{color:var(--text);border-color:var(--text-dim);}
   .btn.block{width:100%;justify-content:center;}
@@ -113,8 +114,8 @@
     display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;
     padding:5px 12px;border:1px solid var(--border-hi);color:var(--text-dim);border-radius:var(--r-pill);
   }
-  .badge.cyan{border-color:transparent;background:rgba(207,107,88,0.16);color:var(--cyan);}
-  .badge.amber{border-color:transparent;background:rgba(127,167,158,0.16);color:var(--amber);}
+  .badge.cyan{border-color:transparent;background:rgba(169,39,23,0.16);color:var(--cyan);}
+  .badge.amber{border-color:transparent;background:rgba(185,167,39,0.16);color:var(--amber);}
 
   /* ---------- landing ---------- */
   .hero{
@@ -147,14 +148,18 @@
   .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:10px;}
   .section-header h2{font-size:22px;margin:0;}
 
-  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:64px;counter-reset:cardnum;}
-  .flip-outer{perspective:1400px;height:250px;counter-increment:cardnum;}
+  .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:64px;counter-reset:cardnum;align-items:stretch;}
+  .flip-outer{perspective:1400px;height:380px;counter-increment:cardnum;}
   .flip-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;cursor:pointer;}
   .flip-outer.flipped .flip-inner{transform:rotateY(180deg);}
   .flip-face{
     position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--border);background:var(--card);
     padding:22px;display:flex;flex-direction:column;border-radius:var(--r-md);box-shadow:var(--shadow-soft);
+    overflow-y:auto;overflow-x:hidden;
   }
+  .flip-face::-webkit-scrollbar{width:5px;}
+  .flip-face::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:var(--r-pill);}
+  .flip-face{scrollbar-width:thin;scrollbar-color:var(--border-hi) transparent;}
   .flip-face.back{transform:rotateY(180deg);}
   .flip-face:hover{border-color:var(--border-hi);box-shadow:var(--shadow-card);}
   .flip-face.front:before{
@@ -162,36 +167,40 @@
     position:absolute;top:24px;right:24px;font-family:var(--mono);font-size:10px;
     letter-spacing:1px;color:var(--text-faint);
   }
-  .flip-face .role-title{font-size:17px;margin:12px 0 8px;max-width:80%;}
-  .flip-face .hook{font-size:13px;color:var(--text-dim);margin:0;}
-  .flip-hint{margin-top:auto;font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;}
-  .flip-face.back p.desc{font-size:12.5px;margin-bottom:10px;}
-  .pc-row{display:flex;gap:14px;margin-bottom:14px;flex:1;}
-  .pc-col{flex:1;}
+  .flip-face .role-title{font-size:17px;margin:12px 0 8px;max-width:80%;overflow-wrap:break-word;}
+  .flip-face .hook{font-size:13px;color:var(--text-dim);margin:0;overflow-wrap:break-word;}
+  .flip-hint{margin-top:auto;padding-top:14px;font-family:var(--mono);font-size:10px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
+  .flip-face.back p.desc{font-size:12.5px;margin-bottom:10px;overflow-wrap:break-word;}
+  .pc-row{display:flex;gap:14px;margin-bottom:14px;}
+  .pc-col{flex:1;min-width:0;}
   .pc-col .pc-label{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
   .pc-col.pro .pc-label{color:var(--success);}
   .pc-col.con .pc-label{color:var(--danger);}
-  .pc-col ul{margin:0;padding-left:14px;font-size:11.5px;color:var(--text-dim);}
+  .pc-col ul{margin:0;padding-left:14px;font-size:11.5px;color:var(--text-dim);overflow-wrap:break-word;}
   .pc-col li{margin-bottom:3px;}
-  .flip-face.back .btn{margin-top:auto;}
+  .flip-face.back .btn{margin-top:auto;flex-shrink:0;}
 
   .quiz-panel{border:1px solid var(--border);background:var(--card);padding:36px;border-radius:var(--r-lg);box-shadow:var(--shadow-card);}
-  .quiz-q{margin-bottom:26px;}
-  .quiz-q label{display:flex;justify-content:space-between;font-size:13.5px;color:var(--text);margin-bottom:10px;}
-  .quiz-q .qval{font-family:var(--mono);color:var(--cyan);}
-  .quiz-q .scale-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text-faint);margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;}
-  input[type=range]{
-    -webkit-appearance:none;width:100%;height:6px;background:var(--border-hi);outline:none;cursor:pointer;border-radius:var(--r-pill);
-  }
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--cyan);border-radius:50%;border:3px solid var(--card);box-shadow:var(--shadow-soft);cursor:pointer;}
-  input[type=range]::-moz-range-thumb{width:18px;height:18px;background:var(--cyan);border:3px solid var(--card);border-radius:50%;box-shadow:var(--shadow-soft);cursor:pointer;}
+  .likert-section{margin-bottom:30px;padding-bottom:6px;}
+  .likert-section:not(:last-of-type){border-bottom:1px solid var(--border);padding-bottom:26px;}
+  .likert-section-title{font-family:var(--mono);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:16px;}
+  .likert-q{margin-bottom:18px;}
+  .likert-q:last-child{margin-bottom:0;}
+  .likert-q-text{font-size:13.5px;color:var(--text);margin-bottom:10px;overflow-wrap:break-word;}
+  .likert-scale{display:flex;gap:8px;}
+  .likert-opt{flex:1;position:relative;}
+  .likert-opt input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer;}
+  .likert-opt span{display:flex;align-items:center;justify-content:center;height:40px;border:1px solid var(--border-hi);border-radius:var(--r-sm);font-family:var(--mono);font-size:13px;color:var(--text-dim);transition:all .15s ease;pointer-events:none;}
+  .likert-opt input:checked ~ span{background:var(--cyan);border-color:var(--cyan);color:#1d253c;font-weight:700;}
+  .likert-opt input:hover ~ span{border-color:var(--text-dim);}
+  .likert-scale-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-faint);margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;}
 
   .quiz-result{border:1px solid var(--border);background:var(--bg-alt);padding:26px;margin-top:24px;border-radius:var(--r-md);box-shadow:var(--shadow-soft);}
   .quiz-result .match-pct{font-family:var(--mono);font-size:34px;color:var(--cyan);}
   .quiz-result .match-role{font-size:19px;margin:2px 0 12px;}
   .rank-list{margin-top:16px;display:flex;flex-direction:column;gap:8px;}
   .rank-row{display:flex;align-items:center;gap:12px;font-size:12.5px;}
-  .rank-row .rname{width:190px;color:var(--text-dim);flex-shrink:0;}
+  .rank-row .rname{width:210px;color:var(--text-dim);flex-shrink:0;overflow-wrap:break-word;}
   .rank-bar-track{flex:1;height:7px;background:var(--border);position:relative;border-radius:var(--r-pill);overflow:hidden;}
   .rank-bar-fill{height:100%;background:var(--amber);border-radius:var(--r-pill);}
   .rank-row .rpct{font-family:var(--mono);width:44px;text-align:right;color:var(--text-faint);}
@@ -209,9 +218,10 @@
   .modal-body{padding:30px 34px;}
   .detail-block{margin-bottom:26px;}
   .detail-block h4{font-family:var(--mono);font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
-  .detail-block ul{margin:0;padding-left:18px;color:var(--text-dim);font-size:13.5px;}
+  .detail-block ul{margin:0;padding-left:18px;color:var(--text-dim);font-size:13.5px;overflow-wrap:break-word;}
   .detail-block li{margin-bottom:5px;}
-  .detail-block p{font-size:13.5px;margin:0;}
+  .detail-block p{font-size:13.5px;margin:0;overflow-wrap:break-word;}
+  .modal-body{overflow-wrap:break-word;}
   .salary-box{border:1px solid var(--border);padding:16px 18px;display:flex;gap:32px;flex-wrap:wrap;border-radius:var(--r-md);background:var(--card);}
   .salary-box .sitem .snum{font-family:var(--mono);color:var(--cyan);font-size:15px;}
   .salary-box .sitem .slabel{font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.5px;margin-top:3px;}
@@ -232,14 +242,14 @@
     background:var(--card);border:1px solid var(--border-hi);color:var(--text);font-family:var(--sans);
     font-size:13.5px;padding:10px 18px;cursor:pointer;min-width:280px;border-radius:var(--r-pill);
   }
-  .progress-dots{display:flex;gap:7px;margin-left:auto;}
-  .pdot{width:9px;height:9px;border:1px solid var(--border-hi);border-radius:50%;}
+  .progress-dots{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap;max-width:340px;justify-content:flex-end;}
+  .pdot{width:7px;height:7px;border:1px solid var(--border-hi);border-radius:50%;flex-shrink:0;}
   .pdot.done{background:var(--cyan);border-color:var(--cyan);}
   .pdot.current{border-color:var(--amber);}
 
   .q-panel{border:1px solid var(--border);background:var(--card);padding:32px;margin-bottom:20px;border-radius:var(--r-lg);box-shadow:var(--shadow-card);}
   .q-meta{display:flex;gap:10px;margin-bottom:16px;}
-  .q-text{font-size:17px;font-weight:600;margin-bottom:20px;max-width:640px;}
+  .q-text{font-size:17px;font-weight:600;margin-bottom:20px;max-width:640px;overflow-wrap:break-word;}
   textarea{
     width:100%;min-height:150px;background:var(--bg-alt);border:1px solid var(--border-hi);color:var(--text);
     font-family:var(--sans);font-size:13.5px;padding:16px;resize:vertical;line-height:1.6;border-radius:var(--r-md);
@@ -271,9 +281,9 @@
   .readiness-label{font-size:14px;margin-top:2px;}
   .sc-row{border:1px solid var(--border);background:var(--bg-alt);padding:18px 20px;margin-bottom:12px;border-radius:var(--r-md);}
   .sc-row-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-  .sc-row-head .sqtext{font-size:13px;font-weight:600;max-width:520px;}
+  .sc-row-head .sqtext{font-size:13px;font-weight:600;max-width:520px;overflow-wrap:break-word;}
   .sc-row-head .sscore{font-family:var(--mono);color:var(--amber);font-size:15px;flex-shrink:0;}
-  .sc-row .stip{font-size:12px;color:var(--text-dim);margin:0;}
+  .sc-row .stip{font-size:12px;color:var(--text-dim);margin:0;overflow-wrap:break-word;}
 
   footer{border-top:1px solid var(--border);padding:28px 0;margin-top:40px;}
   footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
@@ -323,6 +333,13 @@
         </div>
       </div>
 
+      <div class="stat-row">
+        <div class="stat-cell"><div class="num">6</div><div class="label">Career Paths Covered</div></div>
+        <div class="stat-cell"><div class="num">90</div><div class="label">Practice Questions</div></div>
+        <div class="stat-cell"><div class="num">18</div><div class="label">Fit Quiz Statements</div></div>
+        <div class="stat-cell"><div class="num">0</div><div class="label">External APIs Required</div></div>
+      </div>
+
       <div class="section-header"><h2>How to use this tool</h2></div>
       <div class="step-grid">
         <div class="step-card">
@@ -334,8 +351,8 @@
         <div class="step-card">
           <div class="step-num">STEP 02</div>
           <h3>Take the Fit Quiz</h3>
-          <p>Answer five quick questions about how you like to work. Get a ranked match across all
-          six paths, not just one guess.</p>
+          <p>Rate 18 statements on how you like to work, 3 per career path. Get a ranked match across
+          all six paths, not just one guess.</p>
         </div>
         <div class="step-card">
           <div class="step-num">STEP 03</div>
@@ -365,6 +382,8 @@
           <div class="eyebrow">Section B</div>
           <h2>Role Match Quiz</h2>
         </div>
+        <p style="max-width:340px;margin:0;font-size:12.5px;">18 statements, 3 per career path. Rate each
+        from 1 (Strongly Disagree) to 5 (Strongly Agree) — the highest-scoring path is your top match.</p>
       </div>
       <div class="quiz-panel">
         <div id="quiz-questions"></div>
@@ -393,6 +412,19 @@
         </div>
       </div>
 
+      <div class="context-banner">
+        <h3>No Full-Time Experience? Answer Anyway</h3>
+        <p style="margin:0 0 12px;">Entry-level interviewers evaluate your thinking process, not your
+        resume depth. Substitute real experience with these five pivots.</p>
+        <ul style="margin:0;padding-left:18px;color:var(--text-dim);font-size:12.5px;overflow-wrap:break-word;">
+          <li style="margin-bottom:6px;"><strong style="color:var(--text);">Pivot to academic &amp; group projects</strong> — a capstone design disagreement demonstrates the same conflict-resolution skill as a workplace one.</li>
+          <li style="margin-bottom:6px;"><strong style="color:var(--text);">Highlight personal projects</strong> — a portfolio scraper, dashboard, or game shows self-motivation and real problem-solving.</li>
+          <li style="margin-bottom:6px;"><strong style="color:var(--text);">Use the hypothetical pivot</strong> — "I haven't hit that professionally yet, but here's the exact framework I'd use."</li>
+          <li style="margin-bottom:6px;"><strong style="color:var(--text);">Draw from non-tech jobs</strong> — de-escalating a frustrated customer transfers directly to IT support or stakeholder management.</li>
+          <li><strong style="color:var(--text);">Focus on the how, not the what</strong> — narrate your specific troubleshooting steps, not just the final answer.</li>
+        </ul>
+      </div>
+
       <div class="role-select-row">
         <label for="role-select">Practicing for:</label>
         <select id="role-select"></select>
@@ -409,9 +441,10 @@
 <footer>
   <div class="wrap">
     <p>IS Career Launchpad — built for the BYU IS Junior Core Case, Fall 2026.</p>
-    <p>Salary ranges and role data are illustrative estimates for prototype purposes, modeled on
-    typical patterns reported by sources such as the BLS Occupational Outlook Handbook, Glassdoor,
-    Levels.fyi, and informal BYU IS alumni reports. Verify current figures before relying on them.</p>
+    <p>Role descriptions are adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer).
+    Salary ranges are illustrative estimates for prototype purposes — verify current figures before
+    relying on them. Behavioral interview structure is grounded in the STAR method (DDI) and NACE
+    career-readiness competencies; technical question sourcing is noted per role in its full details.</p>
   </div>
 </footer>
 
@@ -429,138 +462,237 @@ const ROLES = [
     id:"app-dev",
     title:"Software / Application Developer",
     category:"Build & Engineering",
-    hook:"You turn requirements into working, shippable code.",
-    description:"Application developers design, build, test, and maintain the software that runs a company's products or internal systems — everything from web apps to backend services.",
-    pros:["High demand across every industry","Clear, learnable skill progression"],
-    cons:["Can require constant tool/framework upkeep","Debugging under deadline pressure is common"],
+    hook:"You write the code that turns requirements into a working product.",
+    description:"Software Developers are the makers of the digital world — writing the code that powers everything from mobile apps to enterprise systems, and turning business requirements into working software.",
+    intro:"While Business Analysts design the blueprints, Software Developers are the ones who actually build the house. As an IS student going into development, you understand the business reasons why a piece of software is being built, which makes you valuable when writing the code — you'll focus on full-stack web apps, enterprise software, and backend systems that are both functional and scalable.",
+    pros:["High demand across every industry, with a clear, learnable skill progression","IS background gives you an edge — you understand why the software is being built, not just how"],
+    cons:["Code breaks often; expect to spend hours hunting a single logic error","Constant tool/framework churn means continuous self-teaching"],
     dayToDay:[
-      "Write, test, and review code against tickets/user stories in an agile sprint",
-      "Debug production issues and trace root causes across the stack",
-      "Collaborate with QA, product, and design on feature scope",
-      "Participate in code reviews and stand-ups",
-      "Maintain and refactor existing systems, not just build new features"
+      "Start the day in a stand-up meeting to align with the team on what you're building",
+      "Write new features and hunt down and fix bugs",
+      "Connect the front-end (what users see) to the back-end (server and database)",
+      "Review other developers' code before it ships to production"
     ],
-    skills:["JavaScript/Python/Java or similar", "Git & version control", "SQL basics", "REST/API concepts", "Testing & debugging", "Agile/Scrum familiarity"],
+    skills:["Programming Languages: JavaScript/TypeScript, Python, Java, or C#", "Web Frameworks: React, Angular, or Vue (front-end); Node.js, Spring Boot, or .NET (back-end)", "Version Control: Git, GitHub, or GitLab", "Databases & APIs: SQL, MongoDB, RESTful APIs, Postman"],
     entryLevel:[
-      "1-2 completed projects (class or personal) you can walk through in depth",
-      "Comfort with at least one language well enough to whiteboard logic",
-      "Basic understanding of data structures and time complexity",
-      "Some exposure to Git workflows (branches, PRs)"
+      "Solid grasp of Object-Oriented Programming and basic data structures",
+      "Understand how the internet works — how a browser talks to a server",
+      "Can write a basic SQL query and use Git to manage code",
+      "Know how to build or consume a REST API, and how to read docs when you get stuck"
     ],
-    salaryLow:"$65K", salaryHigh:"$85K", salaryGrowth:"Senior/staff engineers commonly reach $130K-$180K+ within 5-8 years",
+    salaryLow:"$85K", salaryHigh:"$110K", salaryGrowth:"Developers typically move from Junior to Mid-Level to Senior, then split toward a highly technical Staff/Principal Engineer or Software Architect track, or into management as an Engineering Manager or CTO — mid/senior roles often reach $120K-$180K+.",
     strongCandidate:[
-      "Can explain the 'why' behind code decisions, not just the 'what'",
-      "Has debugged something nontrivial and can narrate the process",
-      "Shows curiosity — side projects, contributions, or self-directed learning",
-      "Communicates technical tradeoffs in plain language"
+      "Has immense resilience and a high tolerance for frustration",
+      "Loves logic puzzles and gets satisfaction from a program finally running",
+      "Is a continuous learner, comfortable picking up new languages and frameworks on the fly",
+      "Can explain the 'why' behind a code decision, not just the 'what'"
     ],
-    sourcingNote:"Illustrative range modeled on typical BLS Software Developer data and public new-grad offer reports (e.g., Glassdoor, Levels.fyi) for non-FAANG entry-level roles; actual offers vary widely by company tier and location.",
-    quizIdeal:{coding:10,data:4,security:3,sysDesign:6,peopleDesign:3},
+    sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates modeled on entry-level developer offer data — confirm current figures before presenting.",
+    qSource:"Questions and paradigms grounded in ACM/IEEE Computer Society curricula, classic algorithmic complexity analysis (Big-O), and Roy Fielding's dissertation defining REST.",
     questions:[
-      {type:"behavioral", q:"Tell me about a time a project or assignment didn't go the way you planned. What did you do?",
-        keywords:["deadline","bug","scope","pivot","refactor","debug","team","learned"],
-        modelAnswer:"In a group project, our API integration broke two days before the deadline (Problem). I isolated the failure with logging, found a mismatched data type, and paired with a teammate to patch and re-test it (Action). We shipped on time and I documented the fix so it wouldn't recur (Result)."},
-      {type:"behavioral", q:"Describe a time you had to learn a new tool or language quickly.",
-        keywords:["documentation","tutorial","practice","deadline","stack overflow","learned","applied"],
+      {type:"behavioral", q:"Tell me about a difficult bug you encountered that took hours or days to track down. How did you isolate and resolve it?",
+        keywords:["debug","isolate","logging","root cause","tested","fixed","reproduce"],
+        modelAnswer:"In a group project our API integration broke two days before the deadline (Problem). I isolated the failure with logging, reproduced it in a minimal test case, and found a mismatched data type between the client and server (Action). I patched it, added a test to catch the case, and we shipped on time (Result)."},
+      {type:"behavioral", q:"How do you handle constructive criticism during code reviews, or disagreements on architectural choices?",
+        keywords:["code review","feedback","disagree","architecture","tradeoff","explained"],
+        modelAnswer:"I treat code review feedback as information, not a verdict — I ask the reviewer to explain their reasoning so I understand the tradeoff, not just the preference. When I disagree on an architectural choice, I lay out the tradeoffs of each option in writing so the decision is about the code, not the people."},
+      {type:"behavioral", q:"Describe a time you had to learn a completely new language, framework, or tool under a tight delivery schedule.",
+        keywords:["documentation","tutorial","deadline","learned","applied","ramped up"],
         modelAnswer:"For a class project I had never used React before with a one-week deadline (Problem). I worked through the official docs and rebuilt a small component from a tutorial to internalize the patterns before touching the real codebase (Action). I shipped my feature on time and used the same approach to ramp up a teammate (Result)."},
-      {type:"technical", q:"What's the difference between an array and a linked list, and when would you use each?",
-        keywords:["array","linked list","memory","index","o(1)","insertion","contiguous","pointer"],
-        modelAnswer:"Arrays store elements in contiguous memory, giving O(1) index access but O(n) insertion/deletion in the middle. Linked lists use pointers between nodes, giving O(1) insertion/deletion at a known position but O(n) access by index. I'd use an array when I need fast random access and know the size roughly in advance, and a linked list when I'm doing frequent insertions/deletions and don't need random access."},
-      {type:"technical", q:"Walk me through what happens when you type a URL into a browser and hit enter.",
-        keywords:["dns","tcp","http","request","server","render","ip address","handshake"],
-        modelAnswer:"The browser resolves the domain to an IP via DNS, opens a TCP connection (with a TLS handshake if HTTPS), sends an HTTP request, the server processes it and returns a response, and the browser parses the HTML/CSS/JS to render the page, firing off additional requests for assets along the way."}
+      {type:"behavioral", q:"Tell me about a time you had to make a trade-off between writing clean, scalable code and shipping quickly to hit a business deadline.",
+        keywords:["technical debt","deadline","tradeoff","refactor","shipped","documented"],
+        modelAnswer:"With a demo deadline two days out, I chose a simpler, slightly duplicated implementation over a more elegant abstraction that would've taken longer to get right (Action). I flagged it clearly as technical debt in the code and a follow-up ticket rather than pretending it was final, and we shipped on time with a documented plan to clean it up (Result)."},
+      {type:"behavioral", q:"How do you approach reading and understanding a massive, unfamiliar codebase with minimal documentation?",
+        keywords:["codebase","trace","entry point","debugger","tests","incrementally"],
+        modelAnswer:"I start from a known entry point — like the main route or the test suite — and trace execution outward rather than trying to read everything linearly. I run the code with a debugger or print statements to confirm my mental model, and I make small, safe changes early to validate my understanding before touching anything critical."},
+      {type:"behavioral", q:"Walk me through a project where you collaborated with teammates using Git. How did you resolve merge conflicts?",
+        keywords:["git","branch","merge conflict","pull request","communicated","resolved"],
+        modelAnswer:"On a team project we each worked on feature branches and opened pull requests before merging into main (Action). When two of us edited the same file, I pulled the latest main, resolved the conflict locally by talking through which version was correct with my teammate, and re-tested before pushing (Result) — communicating early kept conflicts small instead of one big mess at the end."},
+      {type:"behavioral", q:"How do you prioritize writing automated tests versus building out feature functionality?",
+        keywords:["unit testing","priority","coverage","regression","tradeoff","time"],
+        modelAnswer:"I prioritize tests for the logic most likely to break silently — data transformations, edge cases, anything with a bug history — over exhaustively testing simple UI. Under real time pressure I'll ship a feature with lighter coverage on the low-risk paths, but I don't skip tests on anything a regression there would be expensive to catch late."},
+      {type:"technical", q:"Explain the differences between Object-Oriented Programming (OOP) and Functional Programming paradigms.",
+        keywords:["oop","functional programming","state","immutable","objects","side effects"],
+        modelAnswer:"OOP organizes code around objects that bundle state and behavior together, using patterns like inheritance and encapsulation. Functional programming treats computation as the evaluation of pure functions, avoiding shared state and mutable data. OOP tends to model real-world entities naturally; functional style tends to produce code that's easier to reason about and test because functions don't have hidden side effects."},
+      {type:"technical", q:"What is Big-O notation, and why is analyzing time and space complexity critical in software design?",
+        keywords:["big-o","time complexity","space complexity","scalability","algorithm"],
+        modelAnswer:"Big-O describes how an algorithm's runtime or memory use grows as input size grows, independent of hardware. It matters because code that works fine on a small test dataset can become unusable at scale — an O(n²) algorithm that's fine for 100 records can grind to a halt at a million, so understanding complexity helps you choose the right approach before it becomes a production problem."},
+      {type:"technical", q:"Explain the concepts of abstraction, encapsulation, inheritance, and polymorphism with real-world examples.",
+        keywords:["abstraction","encapsulation","inheritance","polymorphism","class","object"],
+        modelAnswer:"Abstraction hides implementation details behind a simple interface — like a car's steering wheel hiding the mechanics. Encapsulation bundles data with the methods that operate on it and restricts direct access, like a bank account object only allowing balance changes through deposit/withdraw methods. Inheritance lets a class reuse and extend another's behavior, like a SavingsAccount inheriting from a base Account class. Polymorphism lets different classes respond to the same method call in their own way, like different shapes each implementing their own area() calculation."},
+      {type:"technical", q:"What is the difference between synchronous and asynchronous code execution, and how do event loops or threading models handle concurrency?",
+        keywords:["synchronous","asynchronous","event loop","callback","promise","concurrency"],
+        modelAnswer:"Synchronous code runs one operation at a time, blocking until each finishes. Asynchronous code lets a long-running operation, like a network request, continue in the background while the program keeps running, resuming via a callback, promise, or async/await when it completes. JavaScript handles this with a single-threaded event loop that queues callbacks; other languages use actual multi-threading, which adds power but also the risk of race conditions."},
+      {type:"technical", q:"Explain how RESTful APIs work, including the primary HTTP methods (GET, POST, PUT, DELETE, PATCH) and status code categories (2xx, 4xx, 5xx).",
+        keywords:["rest api","http methods","get","post","status code","endpoint"],
+        modelAnswer:"A RESTful API exposes resources through URLs, and HTTP methods define the action: GET reads a resource, POST creates one, PUT/PATCH update one (fully or partially), and DELETE removes one. Status codes tell you the outcome: 2xx means success, 4xx means the client made a bad request (like a 404 for a resource that doesn't exist), and 5xx means the server failed to handle a valid request."},
+      {type:"technical", q:"What is the difference between a stack and a queue data structure, and what are their typical use cases?",
+        keywords:["stack","queue","lifo","fifo","push","pop"],
+        modelAnswer:"A stack is Last-In-First-Out — you push and pop from the same end, like undo history in an editor. A queue is First-In-First-Out — items are added at the back and removed from the front, like a print job queue or task scheduler. I'd reach for a stack for anything needing 'most recent first' behavior and a queue for anything needing fair, ordered processing."},
+      {type:"technical", q:"How does dependency injection improve code maintainability and testability?",
+        keywords:["dependency injection","testability","mock","decoupled","interface"],
+        modelAnswer:"Dependency injection means a class receives the objects it depends on from the outside instead of creating them itself, which decouples it from specific implementations. That makes testing much easier — I can inject a mock database or API client in a test instead of hitting the real one — and it makes swapping implementations later a config change instead of a rewrite."},
+      {type:"technical", q:"What are the key differences between SQL (relational) and NoSQL databases, and when would you choose one over the other?",
+        keywords:["sql","nosql","relational","schema","scalability","joins"],
+        modelAnswer:"SQL databases use a fixed schema and tables with relationships enforced through joins and constraints, which is great for structured data with clear relationships, like financial records. NoSQL databases (document, key-value, graph) trade strict schema and joins for flexibility and horizontal scalability, which suits rapidly changing or unstructured data, like user activity logs. I'd default to SQL unless I have a specific reason — scale, schema flexibility — to reach for NoSQL."}
     ]
   },
   {
     id:"biz-analyst",
     title:"Business / Systems Analyst",
     category:"Strategy & Process",
-    hook:"You translate business problems into systems requirements.",
-    description:"Business/Systems analysts sit between stakeholders and technical teams, gathering requirements, mapping processes, and making sure the systems being built actually solve the business problem.",
-    pros:["Direct exposure to both business and tech sides","Strong path into product management or consulting"],
-    cons:["Can get pulled between conflicting stakeholder priorities","Success is harder to point to than shipped code"],
+    hook:"You translate between what the business needs and what developers can build.",
+    description:"Business/Systems Analysts act as the translator between stakeholders and engineering — analyzing the business problem, pulling data, and designing a technical solution developers can actually build.",
+    intro:"A Business or Systems Analyst acts as the ultimate translator within a company. Business leaders know what they want to achieve, and developers know how to build it, but the two groups often speak completely different languages — Analysts sit in the middle, turning a vague business ask into a solution engineering can execute.",
+    pros:["Incredibly flexible career path into PM, data analytics, or IT leadership","Sits at the center of every major decision, with constant stakeholder exposure"],
+    cons:["Success depends on communication as much as analysis — technical skill alone isn't enough","Mediating scope disagreements between stakeholders is a recurring part of the job"],
     dayToDay:[
-      "Interview stakeholders to gather and document requirements",
-      "Map current-state and future-state business processes",
-      "Write user stories, functional specs, or process diagrams",
-      "Bridge communication between business units and developers",
-      "Validate that delivered systems meet the original business need"
+      "Interview a business team to understand why their current process or software is slowing them down",
+      "Map out the current workflow and design a more efficient process",
+      "Write SQL queries to pull data proving the current system is inefficient",
+      "Write detailed technical requirement documents the engineering team will build from"
     ],
-    skills:["Requirements gathering", "Process mapping (BPMN/flowcharts)", "SQL for basic data pulls", "Excel/data analysis", "Stakeholder communication", "Basic project management concepts"],
+    skills:["Data Querying & Analysis: SQL (a must), Advanced Excel, Python (helpful)", "Process Modeling & Diagramming: Lucidchart, Microsoft Visio, UML", "Data Visualization: Tableau, Power BI", "Project Management: Jira, Confluence, Microsoft Project"],
     entryLevel:[
-      "Ability to write a clear, structured user story or requirement",
-      "Comfort presenting findings to a non-technical audience",
-      "Basic SQL/Excel proficiency",
-      "Some group project experience translating vague asks into deliverables"
+      "Highly proficient in SQL — know how to join tables and extract meaningful data",
+      "Understand the Software Development Life Cycle (SDLC)",
+      "Can create basic process flowcharts, like entity-relationship diagrams",
+      "Excellent written and verbal communication — you'll be running meetings from day one"
     ],
-    salaryLow:"$60K", salaryHigh:"$78K", salaryGrowth:"Senior/lead BAs and BA-to-PM transitions often reach $100K-$140K within 5-7 years",
+    salaryLow:"$70K", salaryHigh:"$90K", salaryGrowth:"Analysts have flexible career paths — you can move up to Senior Systems Analyst, pivot into IT Project Management, transition into Data Analytics, or eventually become an IT Director or CIO; mid/senior roles often reach $100K-$140K+.",
     strongCandidate:[
-      "Asks clarifying questions instead of assuming intent",
-      "Can summarize a messy conversation into a clear written requirement",
-      "Comfortable pushing back on stakeholders diplomatically",
-      "Shows structured thinking (frameworks, prioritization) under ambiguity"
+      "A naturally inquisitive problem solver who loves optimizing things",
+      "Deeply analytical and comfortable in complex spreadsheets and databases",
+      "Highly emotionally intelligent — actively listens to frustrated business users",
+      "Can explain complex technical concepts to people who don't know how to code"
     ],
-    sourcingNote:"Illustrative range based on typical BLS Management Analyst data and entry-level business/systems analyst postings; actual pay depends heavily on industry (consulting vs. in-house) and location.",
-    quizIdeal:{coding:3,data:6,security:3,sysDesign:5,peopleDesign:8},
+    sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
+    qSource:"Grounded in the BABOK Guide (IIBA), Agile Alliance Scrum principles, and OMG's BPMN standard for process modeling.",
     questions:[
-      {type:"behavioral", q:"Tell me about a time you had to gather information from someone who wasn't giving you clear answers.",
-        keywords:["stakeholder","clarify","questions","requirements","ambiguous","documented","confirmed"],
-        modelAnswer:"On a group case, our 'client' contact gave vague, shifting requirements (Problem). I built a short list of specific yes/no clarifying questions and scheduled a 15-minute follow-up instead of guessing (Action). We documented confirmed requirements in writing and avoided a rebuild later in the project (Result)."},
-      {type:"behavioral", q:"Describe a situation where you had to explain something technical to a non-technical audience.",
-        keywords:["simplified","analogy","non-technical","presentation","stakeholder","understood"],
-        modelAnswer:"I needed to explain a database schema change to classmates outside the IS major (Problem). I dropped the technical vocabulary and used a filing-cabinet analogy with a simple diagram instead of the ER diagram (Action). They understood the tradeoff well enough to weigh in on the decision, which improved the final proposal (Result)."},
-      {type:"technical", q:"How would you document a requirement so a developer can't misinterpret it?",
-        keywords:["user story","acceptance criteria","specific","measurable","edge case","stakeholder sign-off"],
-        modelAnswer:"I'd write it as a user story with explicit acceptance criteria — who the user is, what they need, and why — plus concrete, testable conditions for 'done,' including edge cases. I'd also get stakeholder sign-off on the written version before development starts to avoid rework."},
-      {type:"technical", q:"What's the difference between a functional and a non-functional requirement? Give an example of each.",
-        keywords:["functional","non-functional","performance","security","behavior","system"],
-        modelAnswer:"A functional requirement describes what the system should do — e.g., 'users can reset their password via email.' A non-functional requirement describes how well it should do it — e.g., 'the password reset email must send within 5 seconds.' Both matter, but non-functional requirements are more often missed because they're less obvious to stakeholders."}
+      {type:"behavioral", q:"Tell me about a time you mediated a disagreement between two key stakeholders regarding project scope or priorities.",
+        keywords:["mediate","stakeholder","scope","priority","common ground","facilitated"],
+        modelAnswer:"Two stakeholders on a group project disagreed about which feature should ship first (Problem). I set up a short meeting where each explained their reasoning, then reframed the discussion around our shared success metric instead of personal preference (Action). We agreed on a sequence that hit both of their core needs, and I documented it so it wouldn't resurface later (Result)."},
+      {type:"behavioral", q:"Describe a situation where a project was at risk of scope creep. How did you address it?",
+        keywords:["scope creep","requirements","documented","said no","prioritized"],
+        modelAnswer:"Midway through a class project, teammates kept adding 'quick' extra features (Problem). I brought the original requirements doc back into the conversation and asked whether each addition mapped to our actual goal (Action). We cut two non-essential features and logged them for a future phase, which let us finish the core scope on time (Result)."},
+      {type:"behavioral", q:"How do you approach gathering requirements when end-users aren't completely sure what problem they want solved?",
+        keywords:["requirements gathering","clarify","interview","observe","root problem"],
+        modelAnswer:"I ask about their current process and where it breaks down rather than jumping straight to 'what feature do you want,' since users often describe a symptom, not the root cause. I follow up with specific, concrete questions and confirm my understanding in writing before any solution gets proposed."},
+      {type:"behavioral", q:"Tell me about a time a process improvement project you proposed faced strong user resistance. How did you manage change?",
+        keywords:["change management","resistance","buy-in","communicated","adoption"],
+        modelAnswer:"I proposed a new intake process for a student org and got pushback because it added a step people saw as bureaucracy (Problem). I explained the specific pain point it solved and piloted it with one small group first instead of rolling it out to everyone at once (Action). Once that group saw fewer errors, the rest adopted it with far less resistance (Result)."},
+      {type:"behavioral", q:"Walk me through a time you identified a business inefficiency or bottleneck and developed a plan to fix it.",
+        keywords:["bottleneck","inefficiency","process map","root cause","plan"],
+        modelAnswer:"I noticed our group project's approval process required three separate sign-offs for even minor changes (Problem). I mapped the current workflow, identified which step was actually necessary, and proposed a simplified path with a single reviewer for low-risk changes (Action). That cut our average turnaround time significantly and freed people up for higher-value work (Result)."},
+      {type:"behavioral", q:"Describe your experience working within an Agile/Scrum team versus a traditional Waterfall environment.",
+        keywords:["agile","scrum","waterfall","sprint","iterative","upfront planning"],
+        modelAnswer:"In Agile/Scrum, I've worked in sprints with a backlog, daily stand-ups, and frequent check-ins so requirements can adjust as we learn. Waterfall front-loads all the requirements and design before any building starts, which gives more certainty upfront but less room to adapt. I prefer Agile for ambiguous problems and lean toward Waterfall-style upfront planning when the requirements are genuinely stable and compliance-driven."},
+      {type:"behavioral", q:"Tell me about a situation where a technical team told you a requested business feature was impossible to build. What did you do next?",
+        keywords:["technical constraint","alternative","collaborated","tradeoff","feasibility"],
+        modelAnswer:"A developer told me a stakeholder's request wasn't feasible in our timeline as scoped (Problem). Instead of just relaying 'no,' I asked what specifically made it hard and worked with the developer to find a scaled-down version that hit most of the business need (Action). The stakeholder accepted the alternative once I explained the tradeoff clearly, and we still shipped on schedule (Result)."},
+      {type:"technical", q:"What is the difference between functional and non-functional requirements? Give examples of both.",
+        keywords:["functional","non-functional","performance","behavior","system"],
+        modelAnswer:"A functional requirement describes what the system should do — e.g., 'users can reset their password via email.' A non-functional requirement describes how well it should do it — e.g., 'the password reset email must send within 5 seconds.' Non-functional requirements are more often missed because they're less obvious to stakeholders, but they're just as critical to a working system."},
+      {type:"technical", q:"What is a Use Case, and what key components make up a well-written User Story with clear Acceptance Criteria?",
+        keywords:["use case","user story","acceptance criteria","actor","scenario"],
+        modelAnswer:"A Use Case describes a specific interaction between a user (actor) and the system to achieve a goal, including the main flow and any alternate paths. A well-written User Story follows 'As a [user], I want [goal], so that [benefit]' with explicit acceptance criteria — concrete, testable conditions that define when the story is actually done, including edge cases."},
+      {type:"technical", q:"Walk me through the tools and notations you use for business process modeling (e.g., BPMN diagrams, flowcharts, swimlanes).",
+        keywords:["bpmn","flowchart","swimlane","process modeling","diagram"],
+        modelAnswer:"For a straightforward process I'll use a basic flowchart to show the sequence of steps and decision points. For anything cross-departmental, I use a swimlane diagram so it's clear who owns each step, and for more formal documentation I use BPMN notation, which has standardized symbols for tasks, gateways, and events that other analysts and developers can read consistently."},
+      {type:"technical", q:"How do you conduct a Gap Analysis when evaluating an 'As-Is' state versus a 'To-Be' state?",
+        keywords:["gap analysis","as-is","to-be","current state","future state"],
+        modelAnswer:"I first document the As-Is state — how the process actually works today, including its pain points — then define the To-Be state based on the business goal. The gap analysis lays the two side by side to identify exactly what has to change: new tools, new steps, or removed steps, which becomes the basis for the project's requirements."},
+      {type:"technical", q:"What is a Requirements Traceability Matrix (RTM), and why is it essential throughout the project lifecycle?",
+        keywords:["rtm","traceability","requirement","test case","linked"],
+        modelAnswer:"An RTM is a table linking each requirement back to its source (why it exists) and forward to the design, code, and test case that fulfills it. It matters because it makes sure nothing gets built that wasn't requested, and nothing requested gets dropped silently — which is especially important when scope changes mid-project."},
+      {type:"technical", q:"How do you calculate and present Return on Investment (ROI) or Cost-Benefit Analysis for a proposed technology initiative?",
+        keywords:["roi","cost-benefit","investment","payback period","business case"],
+        modelAnswer:"I compare the total cost of the initiative — implementation, licensing, training — against its quantified benefits, like time saved or errors reduced, converted to a dollar value where possible. I present it as a simple payback-period figure ('this pays for itself in 8 months') because that's usually more persuasive to a decision-maker than a raw ROI percentage."},
+      {type:"technical", q:"How do you differentiate between a business requirement, a user requirement, and a system requirement?",
+        keywords:["business requirement","user requirement","system requirement","stakeholder"],
+        modelAnswer:"A business requirement is the high-level goal — 'reduce order processing time.' A user requirement describes what a specific user needs to do to support that goal — 'a customer service rep needs to see order status in one screen.' A system requirement is the technical specification that satisfies it — 'the order status API must return within 200ms.' Each layer translates the one above it into something more concrete."},
+      {type:"technical", q:"What techniques do you use to elicit requirements (e.g., workshops, interviews, document analysis, prototyping)?",
+        keywords:["elicitation","workshop","interview","prototyping","document analysis"],
+        modelAnswer:"I match the technique to the situation — one-on-one interviews for sensitive or detailed input, group workshops when I need stakeholders to align with each other in the room, document analysis when a process is already partially documented, and low-fidelity prototypes when people struggle to describe what they want but can react to something concrete."}
     ]
   },
   {
     id:"data",
     title:"Data Analyst / Data Scientist",
     category:"Data & Insight",
-    hook:"You find the signal in the noise and make it actionable.",
-    description:"Data analysts and scientists clean, query, and model data to answer business questions — from a straightforward sales dashboard to a predictive churn model.",
-    pros:["Extremely transferable across industries","Work is directly tied to measurable business impact"],
-    cons:["Data is often messy; cleaning eats real time","Findings can be politically sensitive to communicate"],
+    hook:"You turn raw numbers into decisions someone can act on.",
+    description:"Data Analysts and Scientists act as digital detectives — sifting through datasets to find hidden trends, building predictive models, and telling a clear story that helps leaders decide what to do next.",
+    intro:"Every time a user clicks a button, makes a purchase, or abandons a cart, they generate data. Companies are drowning in it, and they need Data Analysts and Scientists to make sense of it — sifting through massive datasets, building predictive models, and telling a compelling story that helps business leaders know exactly what to do next.",
+    pros:["Extremely transferable across every industry","Work is directly tied to measurable business decisions"],
+    cons:["Extracting and cleaning data often takes up the majority of the job","A single data error can lead to an expensive business mistake"],
     dayToDay:[
-      "Write SQL queries to pull and aggregate data",
-      "Clean and validate datasets before analysis",
-      "Build dashboards or reports for stakeholders",
-      "Run statistical tests or basic models to answer specific questions",
-      "Present findings and recommendations, not just numbers"
+      "Write complex SQL queries to pull customer or operational data from a database",
+      "Load data into Python to run statistical models",
+      "Build a dynamic dashboard in Tableau or Power BI to show stakeholders what's driving results",
+      "(Data Science-leaning) Train machine learning models to predict future behavior or automate decisions"
     ],
-    skills:["SQL", "Python or R", "Excel/BI tools (Tableau, Power BI)", "Statistics fundamentals", "Data visualization", "Basic ML concepts (for DS-leaning roles)"],
+    skills:["Data Manipulation & Querying: SQL, Excel, Pandas (Python)", "Programming & Statistics: Python or R, statistical modeling and probability", "Data Visualization: Tableau, Power BI, Looker, or Matplotlib/Seaborn", "Machine Learning (Data Science track): Scikit-Learn, TensorFlow, PyTorch"],
     entryLevel:[
-      "Can write intermediate SQL (joins, group by, subqueries)",
-      "Has built at least one dashboard or analysis end-to-end",
-      "Understands mean/median/distribution/correlation vs. causation",
-      "Can explain a chart's takeaway in one sentence"
+      "Airtight SQL — join complex tables, clean messy data, handle missing values without breaking the dataset",
+      "Can create clear, easy-to-read charts that don't overwhelm the viewer",
+      "Understand the business context — a perfectly coded model is useless if it doesn't answer the actual question",
+      "No one expects a revolutionary AI model from scratch at entry level"
     ],
-    salaryLow:"$62K", salaryHigh:"$85K", salaryGrowth:"Senior analysts and data scientists often reach $115K-$160K+ within 5-7 years, more at DS-heavy tech companies",
+    salaryLow:"$70K", salaryHigh:"$95K", salaryGrowth:"You'll often start as a Junior Data Analyst, moving up to Senior Analyst or transitioning into Data Scientist as your statistical/programming skills deepen (entry-level Data Scientist offers often run $85K-$115K+), then toward Lead Data Scientist, ML Engineer, or Director of Data — mid/senior roles often reach $110K-$160K+.",
     strongCandidate:[
-      "Leads with the business question, not the tool",
-      "Distinguishes correlation from causation unprompted",
-      "Can defend a methodology choice when challenged",
-      "Visualizes data cleanly instead of dumping raw numbers"
+      "Has an intense, natural curiosity — a spike on a graph makes you want to dig in and find out why",
+      "High attention to detail, since a single data error can cascade into a bad decision",
+      "An excellent storyteller who can explain complex analysis with clear visuals and simple takeaways",
+      "Leads with the business question, not the tool"
     ],
-    sourcingNote:"Illustrative range modeled on typical BLS Data Scientist/Operations Research Analyst data and entry-level analyst postings on major job boards; data science roles at tech-heavy firms often skew higher.",
-    quizIdeal:{coding:6,data:10,security:2,sysDesign:3,peopleDesign:3},
+    sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
+    qSource:"Grounded in ANSI/ISO SQL standards, fundamental statistical theory (hypothesis testing, Central Limit Theorem), and standard ETL/ELT data engineering pipelines.",
     questions:[
-      {type:"behavioral", q:"Tell me about a time your analysis led to a decision that surprised someone.",
-        keywords:["data","analysis","recommendation","stakeholder","evidence","surprised","result"],
-        modelAnswer:"For a class project, our initial assumption was that a marketing channel was underperforming (Problem). I pulled the actual conversion data and controlled for seasonality before presenting, rather than trusting the surface-level metric (Action). The data showed the opposite — the channel was our best performer once seasonality was removed — and the team reallocated budget based on it (Result)."},
-      {type:"behavioral", q:"Describe a time you found an error in your own data or analysis before presenting it.",
-        keywords:["error","validated","double-check","caught","fixed","integrity"],
-        modelAnswer:"While building a dashboard, my totals didn't reconcile with a source report (Problem). I traced it back to a duplicate join key inflating row counts and rebuilt the query with a deduplication step (Action). I caught it before the stakeholder meeting, which protected the team's credibility with leadership (Result)."},
-      {type:"technical", q:"Write (in words or pseudocode) how you'd find the second-highest salary in a table using SQL.",
-        keywords:["order by","limit","offset","distinct","subquery","max"],
-        modelAnswer:"One approach: SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 1 OFFSET 1. Alternatively, use a subquery that selects MAX(salary) where salary is less than the overall MAX(salary), which avoids issues with duplicate top salaries."},
-      {type:"technical", q:"How would you explain the difference between correlation and causation to a stakeholder who wants to act on a correlation?",
-        keywords:["correlation","causation","confounding","experiment","control","variable"],
-        modelAnswer:"I'd explain that two things moving together doesn't mean one causes the other — there could be a confounding variable driving both. I'd ask what decision they want to make and whether we can test it more rigorously, e.g., with an A/B test or by controlling for other variables, before committing resources based on the correlation alone."}
+      {type:"behavioral", q:"Tell me about a time you discovered unexpected or contradictory results in a dataset. How did you investigate?",
+        keywords:["unexpected","investigated","validated","root cause","data"],
+        modelAnswer:"While analyzing survey data for a class project, one segment's numbers contradicted everything else we'd seen (Problem). I checked the raw responses instead of trusting the aggregate, and found a filtering error was mixing two different survey versions together (Action). Once I separated them correctly, the result made sense and matched the rest of our findings (Result)."},
+      {type:"behavioral", q:"Describe a project where you had to translate complex statistical or numerical insights to non-technical stakeholders.",
+        keywords:["translate","non-technical","simplified","visualization","stakeholder"],
+        modelAnswer:"I needed to explain a regression result to classmates without a stats background (Problem). I dropped the coefficient talk and instead showed a simple chart of 'for every extra hour of X, Y changes by this much' (Action). They understood the practical takeaway well enough to actually use it in our recommendation (Result)."},
+      {type:"behavioral", q:"How do you determine when a dataset is 'clean enough' to analyze versus when deeper data hygiene is necessary?",
+        keywords:["data cleaning","missing values","outliers","threshold","validate"],
+        modelAnswer:"I check for the issues that would actually change the conclusion — missing values concentrated in one segment, duplicate rows, or outliers that swing an average — rather than chasing perfection. If the core metric holds up under a few sanity checks and spot-checks against a source, I move forward; if not, I keep cleaning before I trust any result."},
+      {type:"behavioral", q:"Tell me about a time a stakeholder requested an urgent dashboard or report with vague, ill-defined requirements. How did you clarify their needs?",
+        keywords:["vague requirements","clarify","questions","scope","dashboard"],
+        modelAnswer:"A group member asked for 'a dashboard on our marketing performance' with no further detail (Problem). I asked what decision the dashboard needed to support and who'd be looking at it, then sketched a mockup before building anything (Action). That five-minute conversation saved a full rebuild, since their actual need was one specific metric trend, not a dozen charts (Result)."},
+      {type:"behavioral", q:"Have you ever had your analytical methodology or conclusions challenged? How did you respond?",
+        keywords:["challenged","defended","methodology","evidence","open"],
+        modelAnswer:"A teammate questioned whether my sample size was large enough to support a conclusion in a class project (Problem). I walked through my methodology and reran the analysis with a larger pull to check if the result held (Action). It did, which strengthened the finding — but I made clear I'd have adjusted the conclusion if it hadn't (Result)."},
+      {type:"behavioral", q:"How do you prioritize multiple requests from different departments when facing tight deadlines?",
+        keywords:["prioritize","deadline","impact","stakeholder","tradeoff"],
+        modelAnswer:"I ask each requester what decision the analysis supports and by when, then prioritize by business impact and urgency rather than who asked first or loudest. When two requests are genuinely equal priority, I communicate the tradeoff openly instead of silently picking one."},
+      {type:"behavioral", q:"Share an example of how your data insights directly influenced an operational or business decision.",
+        keywords:["insight","decision","recommendation","impact","data-driven"],
+        modelAnswer:"For a class project, our data showed a marketing channel we assumed was underperforming was actually our best performer once seasonality was removed (Action: pulled and controlled the data). The team reallocated budget based on that finding, directly changing our final recommendation instead of going with the initial gut assumption (Result)."},
+      {type:"technical", q:"What is the operational difference between WHERE and HAVING in SQL?",
+        keywords:["where","having","group by","aggregate","filter"],
+        modelAnswer:"WHERE filters individual rows before any grouping happens, and can't reference aggregate functions. HAVING filters groups after a GROUP BY, and is used specifically to filter on aggregate results, like keeping only groups where COUNT(*) > 5."},
+      {type:"technical", q:"Explain the differences between an INNER JOIN, LEFT JOIN, RIGHT JOIN, and FULL OUTER JOIN, and potential pitfalls with NULL values.",
+        keywords:["inner join","left join","right join","full outer join","null"],
+        modelAnswer:"INNER JOIN returns only rows with matches in both tables. LEFT JOIN keeps every row from the left table, filling unmatched right-side columns with NULL; RIGHT JOIN does the reverse. FULL OUTER JOIN keeps all rows from both sides. A common pitfall is that NULLs in join or filter conditions don't behave like other values — comparisons against NULL return unknown, not true/false, so you need IS NULL rather than = NULL."},
+      {type:"technical", q:"In statistics, what is the difference between correlation and causation? How would you test if a relationship is statistically significant?",
+        keywords:["correlation","causation","significance","p-value","confounding"],
+        modelAnswer:"Correlation means two variables move together; causation means one actually drives the other, which correlation alone can't prove because a confounding variable could be driving both. To test significance, I'd run a hypothesis test — like a t-test or regression — and check whether the p-value is below my threshold (commonly 0.05), ideally alongside a controlled experiment like an A/B test rather than relying on observational data alone."},
+      {type:"technical", q:"How do you handle missing, corrupted, or outlier values in a dataset using Python (Pandas) or SQL?",
+        keywords:["missing values","outliers","pandas","imputation","dropna"],
+        modelAnswer:"For missing values I first check if they're random or systematic, since that changes the fix — I might drop rows, impute with a median/mean, or flag them explicitly rather than silently filling. For outliers, I investigate whether they're data errors or real extreme values before deciding to cap, remove, or keep them, since removing real outliers can hide the actual story."},
+      {type:"technical", q:"What are SQL window functions (e.g., ROW_NUMBER(), RANK(), DENSE_RANK()), and when would you use them over a GROUP BY?",
+        keywords:["window function","row_number","rank","partition by","group by"],
+        modelAnswer:"Window functions calculate a value across a set of rows related to the current row — like a running total or rank — without collapsing them into a single row like GROUP BY does. I'd use ROW_NUMBER() or RANK() over PARTITION BY when I need to keep every row but also know, say, each customer's most recent order, which a plain GROUP BY can't do."},
+      {type:"technical", q:"When designing a dashboard in Tableau or Power BI, what principles do you follow to ensure it remains intuitive and performant?",
+        keywords:["dashboard","tableau","power bi","intuitive","performance"],
+        modelAnswer:"I lead with the one or two metrics that matter most, avoid cramming in every possible chart, and use consistent colors/labels so the viewer isn't re-learning the dashboard each visit. For performance, I aggregate data upstream where possible instead of pulling raw row-level data into every visual, since that's usually what makes dashboards slow."},
+      {type:"technical", q:"What is the difference between structured and unstructured data, and how do you approach cleaning each?",
+        keywords:["structured data","unstructured data","schema","text data","cleaning"],
+        modelAnswer:"Structured data fits neatly into rows and columns with a defined schema, like a sales table — cleaning it means handling duplicates, nulls, and type mismatches. Unstructured data, like free-text survey responses or logs, has no fixed shape, so cleaning involves parsing, standardizing formats, and often some text processing before it can be analyzed at all."},
+      {type:"technical", q:"Can you explain the Central Limit Theorem and why it is foundational to hypothesis testing?",
+        keywords:["central limit theorem","sample","normal distribution","hypothesis testing"],
+        modelAnswer:"The Central Limit Theorem says that if you take sufficiently large random samples from a population, the distribution of the sample means will approximate a normal distribution, regardless of the population's original distribution. That matters because most hypothesis tests assume normality, so it's what lets us apply those standard statistical tests to real-world data that isn't normally distributed to begin with."}
     ]
   },
   {
@@ -568,91 +700,157 @@ const ROLES = [
     title:"Cybersecurity Analyst",
     category:"Risk & Defense",
     hook:"You find the gaps before someone else exploits them.",
-    description:"Cybersecurity analysts monitor systems for threats, respond to incidents, and help harden an organization's defenses against attackers.",
-    pros:["Extremely high demand, low unemployment in the field","Work has clear, tangible stakes"],
-    cons:["On-call/incident response can disrupt normal hours","Constantly evolving threat landscape requires ongoing learning"],
+    description:"Cybersecurity Analysts are the digital defenders of an organization — monitoring networks for vulnerabilities, analyzing system architecture, and responding to active threats to keep sensitive data safe.",
+    intro:"As a Cybersecurity Analyst, you are the digital bodyguard for your organization. While developers build the applications and cloud engineers set up the servers, your job is to ensure the data flowing through those systems stays out of the hands of malicious actors — a high-stakes, fast-paced environment where the rules of the game change daily.",
+    pros:["Extremely high demand with low unemployment in the field","Work has clear, tangible stakes — you can point to what you protected"],
+    cons:["Dashboards can flood you with alerts and false positives to triage","The threat landscape evolves constantly, demanding ongoing self-directed learning"],
     dayToDay:[
-      "Monitor security alerts and logs (SIEM tools) for suspicious activity",
-      "Investigate and respond to potential incidents",
-      "Run vulnerability scans and help prioritize remediation",
-      "Support security awareness training and policy enforcement",
-      "Document incidents and contribute to post-mortems"
+      "Watch a SIEM dashboard (Splunk, Sentinel, QRadar) to detect unusual traffic or unauthorized logins",
+      "Investigate triggered alerts to determine false alarm vs. real breach",
+      "Run routine vulnerability scans and help patch outdated systems before they're exploited",
+      "Educate employees on spotting phishing emails"
     ],
-    skills:["Networking fundamentals (TCP/IP, firewalls)", "Security frameworks (NIST, OWASP Top 10)", "SIEM/log analysis tools", "Basic scripting (Python/Bash)", "Linux fundamentals", "Risk assessment basics"],
+    skills:["Monitoring & Logging (SIEM): Splunk, Microsoft Sentinel, or QRadar", "Network Security: Firewalls (Palo Alto, Cisco), VPNs, Wireshark for packet analysis", "Vulnerability Management: Nessus, Qualys, CrowdStrike", "Core Fundamentals: TCP/IP, DNS, Linux/Unix command line, basic scripting (Python or Bash)"],
     entryLevel:[
-      "Understands common attack types (phishing, SQL injection, DDoS) and basic defenses",
-      "Familiarity with the OWASP Top 10",
-      "Some hands-on lab exposure (CTFs, TryHackMe, home lab, or coursework)",
-      "Security+ or working toward it is a strong signal, not always required"
+      "Understand core networking concepts and the CIA Triad (Confidentiality, Integrity, Availability)",
+      "Familiar with the OWASP Top 10 common web application vulnerabilities",
+      "Can look at a log file and identify suspicious activity",
+      "CompTIA Security+ (or working toward it) is a strong, common entry signal"
     ],
-    salaryLow:"$65K", salaryHigh:"$88K", salaryGrowth:"Senior analysts, security engineers, and architects often reach $130K-$170K+ within 6-8 years",
+    salaryLow:"$75K", salaryHigh:"$95K", salaryGrowth:"Analysts typically specialize as they grow — into Security Engineer, Penetration Tester, Incident Response Lead, or eventually CISO; mid/senior roles often reach $110K-$150K+.",
     strongCandidate:[
-      "Thinks like an attacker, not just a defender, when evaluating a system",
-      "Stays calm and methodical describing incident response steps",
-      "Keeps up with current threats/CVEs, not just textbook knowledge",
-      "Can explain risk in business terms, not just technical severity"
+      "Has an investigative, slightly paranoid mindset and enjoys solving digital puzzles",
+      "An insatiable learner who reads up on the latest zero-day exploits in their free time",
+      "Stays calm, methodical, and communicative under intense pressure during an active breach",
+      "Thinks like an attacker, not just a defender, when evaluating a system"
     ],
-    sourcingNote:"Illustrative range modeled on typical BLS Information Security Analyst data and entry-level SOC analyst postings; figures vary substantially by industry (finance/defense tend to pay above average).",
-    quizIdeal:{coding:5,data:5,security:10,sysDesign:5,peopleDesign:2},
+    sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
+    qSource:"Grounded in NIST SP 800-61 (Computer Security Incident Handling Guide), the MITRE ATT&CK framework, the Lockheed Martin Cyber Kill Chain, and CompTIA Security+/SSCP entry-level certification concepts.",
     questions:[
-      {type:"behavioral", q:"Tell me about a time you noticed something 'off' before it became a bigger problem.",
-        keywords:["noticed","investigated","escalated","risk","flagged","monitoring"],
-        modelAnswer:"While reviewing logs in a lab exercise, I noticed a login pattern from an unusual location outside normal hours (Problem). I flagged it, cross-referenced it against expected user activity, and escalated with the specific evidence rather than a vague hunch (Action). It turned out to be a credential-testing pattern, and the early flag meant it was contained before further access (Result)."},
-      {type:"behavioral", q:"Describe how you'd handle disagreeing with a colleague about how serious a vulnerability is.",
-        keywords:["risk","severity","evidence","escalate","framework","cvss","disagree"],
-        modelAnswer:"I'd bring objective criteria to the conversation instead of just opinion — likelihood of exploitation, potential impact, and a scoring framework like CVSS — and walk through the reasoning together (Action-focused). If we still disagreed, I'd document both positions and escalate to whoever owns the risk decision, since the goal is the right call, not winning the argument."},
-      {type:"technical", q:"Explain what a SQL injection attack is and one way to prevent it.",
-        keywords:["sql injection","input validation","parameterized","sanitize","query"],
-        modelAnswer:"SQL injection happens when untrusted user input is inserted directly into a SQL query, letting an attacker manipulate the query to access or modify data they shouldn't. The main prevention is using parameterized queries/prepared statements instead of string-concatenating input directly into SQL, combined with input validation."},
-      {type:"technical", q:"What's the difference between a vulnerability and an exploit?",
-        keywords:["vulnerability","exploit","weakness","code","risk","patch"],
-        modelAnswer:"A vulnerability is a weakness in a system — a flaw in code, configuration, or process — that could potentially be abused. An exploit is the actual code or technique used to take advantage of that vulnerability. A system can have a vulnerability with no known exploit yet, which is why patching promptly still matters."}
+      {type:"behavioral", q:"Tell me about a time you identified a security risk or vulnerability that others overlooked. How did you report it?",
+        keywords:["vulnerability","identified","reported","documented","risk"],
+        modelAnswer:"During a lab exercise, I noticed a login form that didn't sanitize input, which others had passed over as functional (Problem). I confirmed it was exploitable with a basic test payload and documented exactly how to reproduce it, along with the fix (Action). I reported it with clear reproduction steps instead of a vague warning, which got it prioritized and patched quickly (Result)."},
+      {type:"behavioral", q:"Describe a situation where you had to explain a complex security policy to a non-technical colleague who felt the policy was hindering their workflow.",
+        keywords:["explained","non-technical","policy","risk","empathetic"],
+        modelAnswer:"A classmate felt a two-factor authentication requirement was slowing them down for no reason (Problem). I explained the specific risk it addressed — credential theft — in plain terms and showed them a faster authenticator-app method instead of SMS codes (Action). They understood the tradeoff and stopped seeing it as pointless friction (Result)."},
+      {type:"behavioral", q:"How do you stay updated on the latest security threats, zero-day vulnerabilities, and threat-actor tactics?",
+        keywords:["threat intelligence","cve","stay updated","research","zero-day"],
+        modelAnswer:"I follow CVE announcements and a couple of trusted security research blogs, and I try to work through CTF challenges or TryHackMe rooms regularly so the learning is hands-on, not just reading. Staying current here is part of the job, not a side activity."},
+      {type:"behavioral", q:"Describe a time you made a mistake (e.g., misconfigured a setting or misread a log). How did you rectify it?",
+        keywords:["mistake","misconfigured","corrected","owned it","documented"],
+        modelAnswer:"While practicing firewall rules in a lab, I misconfigured a rule that blocked legitimate traffic instead of the intended malicious pattern (Problem). I caught it by checking the actual traffic logs against what I expected to see, corrected the rule, and documented what I'd misunderstood about the rule ordering (Action). It didn't recur, and I built a checklist for myself to avoid the same mistake (Result)."},
+      {type:"behavioral", q:"How do you prioritize alerts when your dashboard is flooded with notifications and potential false positives?",
+        keywords:["alert fatigue","prioritize","triage","severity","false positive"],
+        modelAnswer:"I triage by potential impact and likelihood first, using severity scoring rather than reacting to volume or recency. Alerts tied to sensitive systems or unusual patterns (like access outside normal hours) jump the queue over routine noise, and I look for ways to tune the rules generating repeated false positives so the signal doesn't get buried."},
+      {type:"behavioral", q:"Tell me about a project where you had to balance strict security controls with system usability.",
+        keywords:["usability","security controls","balance","tradeoff","friction"],
+        modelAnswer:"On a class project we debated requiring a complex password-change policy that would frustrate users (Problem). Instead of the strictest possible setting, I proposed multi-factor authentication paired with a reasonable password policy, based on current guidance that overly complex rotation rules often push users toward weaker, reused passwords (Action). It gave us stronger real-world security without the usability backlash (Result)."},
+      {type:"behavioral", q:"How would you handle a situation where a senior team member asks you to bypass security protocols for a temporary shortcut?",
+        keywords:["policy","bypass","escalate","risk","documented","pushback"],
+        modelAnswer:"I'd explain the specific risk the protocol addresses and ask if there's a faster, still-compliant path to what they actually need. If they insisted, I'd document the request and the risk in writing and escalate to whoever owns that risk decision, rather than quietly bypassing a control myself — the goal is protecting the org, not just following orders or refusing them."},
+      {type:"technical", q:"What is the difference between asymmetric and symmetric encryption, and where is each typically used?",
+        keywords:["symmetric encryption","asymmetric encryption","public key","private key"],
+        modelAnswer:"Symmetric encryption uses one shared key for both encrypting and decrypting, which is fast and used for bulk data encryption (like disk or file encryption). Asymmetric encryption uses a public/private key pair — anyone can encrypt with the public key, but only the private key holder can decrypt — which is slower but solves the key-distribution problem, so it's used for things like TLS handshakes and digital signatures."},
+      {type:"technical", q:"Walk me through the stages of the Cyber Kill Chain and the MITRE ATT&CK framework.",
+        keywords:["cyber kill chain","mitre att&ck","reconnaissance","exploitation","exfiltration"],
+        modelAnswer:"The Cyber Kill Chain describes an attack as a sequence — reconnaissance, weaponization, delivery, exploitation, installation, command and control, and actions on objectives — and defenders can break the chain at any stage. MITRE ATT&CK is a more granular, real-world-observed matrix of specific tactics and techniques attackers actually use at each stage, which is more useful for mapping detections and gaps than the higher-level kill chain alone."},
+      {type:"technical", q:"How does the TCP three-way handshake work, and what type of attack exploits it?",
+        keywords:["tcp handshake","syn","syn-ack","ack","syn flood"],
+        modelAnswer:"The handshake is SYN (client requests connection), SYN-ACK (server acknowledges and responds), ACK (client confirms) — establishing a reliable connection before data flows. A SYN flood attack exploits this by sending many SYN requests without completing the handshake, leaving the server holding half-open connections until it can't accept new legitimate ones."},
+      {type:"technical", q:"What is the difference between a Vulnerability Assessment and a Penetration Test?",
+        keywords:["vulnerability assessment","penetration test","scan","exploit"],
+        modelAnswer:"A Vulnerability Assessment scans and catalogs known weaknesses in a system without actively exploiting them, giving a broad inventory of risk. A Penetration Test goes further — actively attempting to exploit those weaknesses (with permission) to prove real-world impact and see how far an attacker could actually get."},
+      {type:"technical", q:"If a host on the network is suspected of being infected with ransomware, what are the immediate first three containment steps you take?",
+        keywords:["containment","isolate","incident response","ransomware","preserve evidence"],
+        modelAnswer:"First, isolate the host from the network immediately to stop lateral spread — pull the network cable or disable the network interface rather than shutting it down, which can destroy evidence in memory. Second, identify what else that host had access to, so you can check for spread. Third, preserve logs and evidence for investigation while notifying the incident response team, rather than trying to 'fix it' solo."},
+      {type:"technical", q:"Can you explain what SQL Injection (SQLi) and Cross-Site Scripting (XSS) are, along with how to remediate them?",
+        keywords:["sql injection","xss","input validation","parameterized queries","sanitize"],
+        modelAnswer:"SQL Injection happens when untrusted input is inserted directly into a SQL query, letting an attacker manipulate it — remediated with parameterized queries/prepared statements. Cross-Site Scripting happens when untrusted input is rendered as executable code in a browser, letting an attacker run malicious scripts in another user's session — remediated by properly encoding/escaping output and using a strong Content Security Policy."},
+      {type:"technical", q:"What are standard SIEM tools used for, and how do correlation rules help identify security incidents?",
+        keywords:["siem","correlation rules","log aggregation","incident detection"],
+        modelAnswer:"A SIEM aggregates logs from across the network — firewalls, servers, endpoints — into one place so you can search and monitor centrally instead of checking each system separately. Correlation rules tie together events that look harmless individually but form a pattern together, like a failed login followed by a successful one from a new location, which is what actually flags a likely incident instead of drowning analysts in raw logs."},
+      {type:"technical", q:"How does Multi-Factor Authentication (MFA) defend against credential stuffing and brute-force attacks?",
+        keywords:["mfa","credential stuffing","brute force","second factor"],
+        modelAnswer:"Credential stuffing and brute-force attacks rely on the password alone being enough to get in. MFA requires a second factor — something you have (a phone/authenticator app) or something you are (biometric) — so even a correct, stolen, or guessed password isn't sufficient on its own, which makes those large-scale automated attacks far less effective."}
     ]
   },
   {
     id:"ux-pm",
     title:"UX Designer / Product Manager",
     category:"Product & Experience",
-    hook:"You decide what gets built and how it should feel to use.",
-    description:"UX designers and product managers define what a product should do and how it should feel — researching users, prioritizing features, and shaping the experience end to end.",
-    pros:["High influence over what actually gets built","Deeply cross-functional, rarely repetitive"],
-    cons:["Success often depends on others' execution, not just your own work","Prioritization decisions are frequently contested"],
+    hook:"You research what users need and shape how the product delivers it.",
+    description:"UX Designers and Product Managers bridge the end-user and the engineering team — researching user needs, wireframing interfaces, and guiding a product from idea to launched solution.",
+    intro:"Though often split into two distinct roles at larger companies, UX Design and Product Management share a core mission: making sure the software being built actually solves the user's problem while meeting business goals. IS students thrive here because they understand both the technical constraints of developers and the strategic goals of the business.",
+    pros:["High influence over what actually gets built, from research through launch","Sits at the intersection of business strategy and user experience"],
+    cons:["Rarely writing production code, so impact often runs through other people's work","Design and feature decisions get contested and have to be defended with data"],
     dayToDay:[
-      "Conduct or review user research and usability testing",
-      "Prioritize a backlog based on user needs and business goals",
-      "Create wireframes, prototypes, or PRDs (product requirement docs)",
-      "Align engineering, design, and business stakeholders on scope",
-      "Analyze usage data to see what's working post-launch"
+      "Talk to users to understand their pain points and map out their journeys",
+      "Create wireframes or prototypes for new features",
+      "Lead daily stand-ups with developers and prioritize the feature backlog",
+      "Analyze product metrics to decide what the team should build next"
     ],
-    skills:["User research methods", "Wireframing/prototyping (Figma)", "Prioritization frameworks (RICE, MoSCoW)", "Basic data literacy", "Roadmapping", "Cross-functional communication"],
+    skills:["Design & Prototyping: Figma, Sketch, or Adobe XD", "Productivity & Agile: Jira, Trello, Confluence", "Data & Analytics: Google Analytics, Mixpanel, SQL", "Methodologies: Agile/Scrum, Design Thinking, A/B Testing"],
     entryLevel:[
-      "Has done at least one structured user research or usability exercise",
-      "Can articulate a prioritization decision with real tradeoffs",
-      "Comfortable presenting and defending a design/product decision",
-      "Basic familiarity with Figma or similar prototyping tools"
+      "Know how to conduct a basic user interview",
+      "Can create low-to-medium fidelity wireframes",
+      "Can write clear user stories developers can build from",
+      "Understand the product lifecycle and can defend decisions with data, not just preference"
     ],
-    salaryLow:"$60K", salaryHigh:"$82K", salaryGrowth:"Senior PMs/designers often reach $120K-$160K+ within 5-7 years, higher at large tech companies",
+    salaryLow:"$75K", salaryHigh:"$95K", salaryGrowth:"UX Designers often grow into Lead Designer or UX Director; Product Managers typically advance to Senior PM, Group PM, and eventually Director of Product or CPO — mid/senior roles often reach $110K-$160K+.",
     strongCandidate:[
-      "Grounds opinions in user evidence, not just personal preference",
-      "Can say no to a stakeholder request and explain why clearly",
-      "Thinks in tradeoffs (scope vs. time vs. quality) rather than absolutes",
-      "Shows genuine curiosity about how real users actually behave"
+      "Has immense empathy for the user combined with ruthless prioritization skills",
+      "Has a 'T-shaped' skill set — broad across business/dev, deep in communication and research",
+      "Builds a portfolio that documents process, not just polished screens",
+      "Grounds design opinions in evidence rather than personal preference"
     ],
-    sourcingNote:"Illustrative range modeled on typical BLS Market Research Analyst and entry-level Associate PM/UX postings; product roles at large tech firms typically pay well above this baseline.",
-    quizIdeal:{coding:2,data:4,security:2,sysDesign:4,peopleDesign:10},
+    sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
+    qSource:"Sourced from usability frameworks established by the Nielsen Norman Group (NN/g), interaction design literature, and the W3C Web Content Accessibility Guidelines (WCAG 2.1/2.2).",
     questions:[
-      {type:"behavioral", q:"Tell me about a time you had to say no to a feature request or idea someone was excited about.",
-        keywords:["prioritize","tradeoff","said no","evidence","scope","stakeholder"],
-        modelAnswer:"A teammate wanted to add a feature late in our project timeline that wasn't in our original scope (Problem). I walked through the tradeoff explicitly — what we'd cut or delay to fit it in — using our prioritization criteria instead of just saying 'no' (Action). We agreed to defer it to a 'v2' list, which kept us on schedule for the core deliverable (Result)."},
-      {type:"behavioral", q:"Describe a time you got user feedback that contradicted what you expected.",
-        keywords:["user feedback","assumption","tested","surprised","iterated","learned"],
-        modelAnswer:"I assumed users would prefer a streamlined single-page flow (Problem/assumption). When I tested a low-fidelity prototype with a few classmates, most got confused about where they were in the process (Action: tested it). I redesigned it with clearer step indicators, and the follow-up test showed much less confusion (Result)."},
-      {type:"technical", q:"How would you prioritize a backlog of ten feature requests with limited engineering time?",
-        keywords:["rice","impact","effort","priority","framework","tradeoff","user value"],
-        modelAnswer:"I'd score each item on a framework like RICE — reach, impact, confidence, and effort — to get a comparable ranking rather than prioritizing by whoever asked loudest. I'd also sanity-check the top items against strategic goals, not just the raw score, before finalizing the list with stakeholders."},
-      {type:"technical", q:"Walk me through how you'd approach a usability test for a new feature with a limited budget.",
-        keywords:["usability test","participants","task","observe","think aloud","iterate"],
-        modelAnswer:"I'd recruit 5-6 representative users (enough to catch most major issues per standard usability research), give them realistic tasks rather than leading questions, and use a think-aloud protocol while observing. I'd look for where they hesitate or fail, prioritize fixing the most common friction points, and re-test cheaply with a clickable prototype before full development."}
+      {type:"behavioral", q:"Tell me about a time user research findings contradicted what stakeholders or executives strongly believed. How did you present the data?",
+        keywords:["user research","contradicted","data","presented","stakeholder"],
+        modelAnswer:"Our team assumed users wanted more features on a dashboard, but usability testing showed they were overwhelmed and wanted less (Problem). I presented the session recordings and specific quotes rather than just a summary opinion, letting the evidence make the case (Action). The team agreed to simplify the design based on what we'd actually observed, not our initial assumption (Result)."},
+      {type:"behavioral", q:"How do you manage situations where design constraints or engineering limitations prevent your recommended UX solution from being built?",
+        keywords:["constraint","engineering limitation","tradeoff","alternative","collaborated"],
+        modelAnswer:"When engineering told me my ideal design wasn't feasible in our timeline, I asked what specifically made it hard rather than pushing back immediately (Action). We worked together to find a scaled-down version that preserved the core user benefit within the real constraints, which taught me to loop engineering in earlier next time instead of designing in isolation (Result)."},
+      {type:"behavioral", q:"Walk me through a time when a usability test didn't go as planned. What happened, and what did you learn?",
+        keywords:["usability test","unexpected","learned","adjusted","participants"],
+        modelAnswer:"During a usability test, my test tasks were too leading and participants just followed my wording instead of exploring naturally (Problem). I noticed halfway through and rewrote the remaining tasks to be more open-ended (Action). The later sessions produced much more honest friction points, and I learned to pilot-test my test script itself before running real sessions (Result)."},
+      {type:"behavioral", q:"How do you balance advocating for user needs with meeting business objectives and timelines?",
+        keywords:["user needs","business objectives","tradeoff","prioritize","balance"],
+        modelAnswer:"I frame user needs and business goals as usually aligned, not opposed — a confusing checkout hurts both the user and revenue — so I look for the solution that serves both. When there's a genuine tradeoff and time is tight, I'm explicit about what we're deprioritizing and why, rather than quietly picking one side."},
+      {type:"behavioral", q:"Describe how you collaborate with UI designers, product managers, and developers during a product sprint.",
+        keywords:["collaborate","sprint","cross-functional","communication","alignment"],
+        modelAnswer:"I bring research findings and user needs into planning early so decisions are grounded before design starts, then stay in the loop during build to answer questions and catch scope drift. I try to keep the conversation focused on the user problem we're solving, which keeps designers, PMs, and developers aligned even when we disagree on the specific solution."},
+      {type:"behavioral", q:"How do you ensure your research samples are diverse, inclusive, and free from confirmation bias?",
+        keywords:["diverse","inclusive","confirmation bias","recruitment","sample"],
+        modelAnswer:"I actively recruit outside my easiest-to-reach circle — classmates or convenient contacts — since that skews the sample toward people like me. I write research questions that could disprove my hypothesis, not just confirm it, and I look for disconfirming evidence in the data rather than only noting what supports what I expected."},
+      {type:"behavioral", q:"Tell me about a time you turned qualitative user feedback into measurable, actionable product recommendations.",
+        keywords:["qualitative","actionable","recommendation","synthesized","measurable"],
+        modelAnswer:"After interviews surfaced a recurring complaint about a confusing signup flow, I coded the feedback into specific friction points rather than leaving it as a vague theme (Action). I turned the top pattern into a concrete recommendation — reduce the flow from 5 steps to 2 — with a proposed metric (completion rate) to measure whether it worked (Result)."},
+      {type:"technical", q:"What is the difference between qualitative and quantitative UX research, and when should you use each?",
+        keywords:["qualitative","quantitative","research method","why","how many"],
+        modelAnswer:"Qualitative research — interviews, usability tests — tells you why users behave a certain way and surfaces issues you didn't anticipate, but with small sample sizes. Quantitative research — analytics, surveys, A/B tests — tells you how many users do something and at what scale, but not why. I'd use qualitative early to explore a problem and quantitative to validate a solution or measure impact at scale."},
+      {type:"technical", q:"How do you determine whether to run an unmoderated usability test versus a moderated one?",
+        keywords:["unmoderated","moderated","usability test","scale","depth"],
+        modelAnswer:"I'd run a moderated test when I need to probe deeper — asking follow-up questions in real time about why someone hesitated — especially for a complex or early-stage design. I'd run an unmoderated test when I need more participants, faster turnaround, or want to observe truly natural behavior without a facilitator's presence changing it."},
+      {type:"technical", q:"What UX metrics do you track to evaluate task completion, efficiency, and user satisfaction (e.g., SUS, CSAT, CES, TTR)?",
+        keywords:["sus","csat","ces","task completion","time to complete"],
+        modelAnswer:"For task completion, I track success rate and time-to-completion (TTR) against a benchmark. For satisfaction, I use CSAT for a quick 'how satisfied were you' or the System Usability Scale (SUS) for a broader, standardized usability score. Customer Effort Score (CES) is useful specifically for flows like support or checkout, where the question is how much friction the user felt, not just whether they succeeded."},
+      {type:"technical", q:"Walk me through the process of setting up and evaluating an A/B test for a key conversion workflow.",
+        keywords:["a/b test","hypothesis","sample size","statistical significance","conversion"],
+        modelAnswer:"I'd start with a clear hypothesis — e.g., 'a shorter form increases signup completion' — and change only that one variable between the control and variant. I'd calculate the sample size needed for statistical significance before launching, run it long enough to avoid weekday/weekend skew, then evaluate the conversion metric with a significance test rather than just eyeballing which number is bigger."},
+      {type:"technical", q:"How do you create and validate user personas so they remain data-driven rather than stereotypical?",
+        keywords:["persona","data-driven","research-based","validated","stereotype"],
+        modelAnswer:"I build personas from patterns in actual research data — interviews, survey clusters, behavioral analytics — rather than from assumptions about who I imagine the user to be. I validate them by checking whether real user behavior in the data actually matches the persona's described goals and pain points, and I update personas when new research contradicts them."},
+      {type:"technical", q:"Explain the difference between card sorting and tree testing, and what stage of Information Architecture design uses them.",
+        keywords:["card sorting","tree testing","information architecture","navigation"],
+        modelAnswer:"Card sorting is a generative method — users group and label content themselves — used early to help design a navigation structure from scratch. Tree testing is an evaluative method — users try to find specific content within an existing structure, without any visual design — used later to validate whether a proposed navigation actually works before it's built."},
+      {type:"technical", q:"How do you design user journey maps and service blueprints to identify friction points?",
+        keywords:["journey map","service blueprint","friction","touchpoint"],
+        modelAnswer:"A journey map lays out every step a user takes to accomplish a goal, along with their emotions and pain points at each touchpoint, which surfaces where friction happens from the user's side. A service blueprint adds the 'backstage' layer — what systems and teams are operating behind each touchpoint — which helps identify whether the friction is a design problem or an operational one."},
+      {type:"technical", q:"What methods do you use to evaluate accessibility (WCAG compliance) in an existing interface?",
+        keywords:["accessibility","wcag","screen reader","contrast","keyboard navigation"],
+        modelAnswer:"I check color contrast ratios against WCAG's minimum thresholds, test keyboard-only navigation to make sure nothing requires a mouse, and run the interface through a screen reader to check that content and labels make sense out of visual context. For anything beyond a basic check, I'd bring in an automated scanner as a first pass and follow up with manual testing, since automated tools only catch a fraction of real accessibility issues."}
     ]
   },
   {
@@ -660,55 +858,113 @@ const ROLES = [
     title:"Cloud / Infrastructure Engineer",
     category:"Systems & Infrastructure",
     hook:"You build and run the systems everything else depends on.",
-    description:"Cloud and infrastructure engineers design, deploy, and maintain the servers, networks, and cloud environments that applications run on — keeping systems available, scalable, and secure.",
-    pros:["Strong pay and demand as companies move to cloud-first","Deep, transferable technical foundation"],
-    cons:["On-call rotations for outages are common","Mistakes can have wide, visible blast radius"],
+    description:"Cloud and Infrastructure Engineers design and maintain the invisible backbone of modern tech — managing servers, automating deployments, and keeping networks running so applications stay online at scale.",
+    intro:"If software developers build the house, Cloud and Infrastructure Engineers build the foundation, the plumbing, and the electrical grid it sits on. As companies move away from owning physical servers, they need engineers who can design, deploy, and maintain massive, scalable networks in the cloud — keeping an application online, fast, and able to handle a sudden spike of a million users without crashing.",
+    pros:["One of the highest-paying entry technical fields, with strong demand as companies go cloud-first","Deep, transferable technical foundation across any employer"],
+    cons:["On-call rotations for outages are common","A single misconfigured security group can expose a database to the public internet"],
     dayToDay:[
-      "Provision and manage cloud resources (AWS/Azure/GCP)",
-      "Write infrastructure-as-code (Terraform, CloudFormation)",
-      "Monitor system health and respond to outages/incidents",
-      "Automate deployment pipelines (CI/CD)",
-      "Optimize systems for cost, performance, and reliability"
+      "Write scripts to automatically spin up new web servers ahead of a big product launch",
+      "Configure load balancers to distribute traffic evenly",
+      "Troubleshoot network latency issues between databases",
+      "Build automated CI/CD pipelines with developers to safely deploy their code to production"
     ],
-    skills:["AWS/Azure/GCP fundamentals", "Linux administration", "Networking basics", "Infrastructure-as-code (Terraform)", "CI/CD pipelines", "Scripting (Python/Bash)"],
+    skills:["Cloud Platforms: AWS, Microsoft Azure, or Google Cloud Platform (GCP)", "Infrastructure as Code (IaC): Terraform, AWS CloudFormation, or Ansible", "Containers & Orchestration: Docker and Kubernetes", "Operating Systems & Scripting: Linux administration, Bash, Python, core networking protocols"],
     entryLevel:[
-      "Basic familiarity with at least one cloud provider (free-tier project counts)",
-      "Understands the difference between IaaS, PaaS, and SaaS",
-      "Comfortable in a Linux command line",
-      "Some exposure to containers (Docker) is a strong plus"
+      "Know how to spin up a virtual machine (e.g. an AWS EC2 instance)",
+      "Can configure basic networking — VPCs, subnets, and security groups",
+      "Understand how cloud storage works (e.g. AWS S3)",
+      "Comfortable in the Linux command line; a foundational cert (AWS Cloud Practitioner, Azure Fundamentals) is a strong signal"
     ],
-    salaryLow:"$68K", salaryHigh:"$90K", salaryGrowth:"Senior cloud/infra/DevOps engineers often reach $135K-$175K+ within 5-8 years",
+    salaryLow:"$80K", salaryHigh:"$110K", salaryGrowth:"You might start as a Junior Cloud Engineer or Systems Administrator, grow into a DevOps Engineer or Site Reliability Engineer (SRE), and eventually become a Cloud Architect designing enterprise cloud strategy — mid/senior roles often reach $120K-$170K+.",
     strongCandidate:[
-      "Can explain a system's failure mode, not just how it works when healthy",
-      "Comfortable with ambiguity during an outage — methodical under pressure",
-      "Understands cost tradeoffs of infrastructure decisions, not just technical ones",
-      "Automates repetitive work rather than doing it manually every time"
+      "A systems thinker who automates any repetitive manual task instead of repeating it by hand",
+      "Highly detail-oriented — one misconfiguration can have a wide blast radius",
+      "Stays calm and methodical diagnosing complex issues during a high-stress outage",
+      "Can explain a system's failure mode, not just how it works when healthy"
     ],
-    sourcingNote:"Illustrative range modeled on typical BLS Network/Systems Administrator and entry-level Cloud/DevOps Engineer postings; certifications (AWS/Azure) and hands-on project experience meaningfully shift offers.",
-    quizIdeal:{coding:7,data:3,security:6,sysDesign:10,peopleDesign:2},
+    sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
+    qSource:"Drawn from the AWS Well-Architected Framework, the Microsoft Cloud Adoption Framework for Azure, and cloud-native definitions maintained by the Cloud Native Computing Foundation (CNCF).",
     questions:[
-      {type:"behavioral", q:"Tell me about a time something you set up broke or went down. What did you do?",
-        keywords:["outage","incident","monitoring","root cause","fixed","documented","postmortem"],
-        modelAnswer:"During a class project demo prep, our deployed app went down the night before (Problem). I checked logs, found we'd hit a free-tier resource limit, and reconfigured the deployment with better resource limits and basic monitoring (Action). It was back up within an hour, and I added an alert so we'd catch it earlier next time (Result)."},
-      {type:"behavioral", q:"Describe a time you had to automate a repetitive manual task.",
-        keywords:["automated","script","manual","repetitive","efficiency","time saved"],
+      {type:"behavioral", q:"Tell me about a time a cloud service or application experienced downtime or a performance degradation. How did you troubleshoot it?",
+        keywords:["downtime","troubleshoot","root cause","monitoring","resolved"],
+        modelAnswer:"During a class project demo prep, our deployed app went down the night before (Problem). I checked logs, found we'd hit a free-tier resource limit, and reconfigured the deployment with better limits and basic monitoring (Action). It was back up within an hour, and I added an alert so we'd catch it earlier next time (Result)."},
+      {type:"behavioral", q:"Describe how you approach managing cloud costs and avoiding unexpected billing spikes.",
+        keywords:["cost optimization","billing","budget alert","resource limits"],
+        modelAnswer:"I set budget alerts early so I'd know before a bill surprised me, and I shut down or right-size resources that weren't actively needed instead of leaving test environments running. On a class project I caught an idle instance that would've burned through our free-tier credits and shut it down before it became a problem."},
+      {type:"behavioral", q:"How do you handle balancing rapid cloud deployment needs with organizational security and compliance constraints?",
+        keywords:["security","compliance","deployment","balance","guardrails"],
+        modelAnswer:"I try to bake security into the deployment process itself — like using IaC templates with sane defaults already applied — rather than treating security as a separate slow step after the fact. That way teams can move fast without having to choose between speed and compliance."},
+      {type:"behavioral", q:"Walk me through a time you automated a repetitive manual task in an infrastructure environment.",
+        keywords:["automated","script","manual","efficiency","ci/cd"],
         modelAnswer:"I was manually redeploying a project after every small code change (Problem). I wrote a basic CI/CD script that ran tests and redeployed automatically on push (Action). It cut a five-minute manual process down to a few seconds and removed room for manual error (Result)."},
-      {type:"technical", q:"What's the difference between horizontal and vertical scaling?",
-        keywords:["horizontal","vertical","scaling","load balancer","server","capacity"],
-        modelAnswer:"Vertical scaling means adding more resources (CPU/RAM) to a single server. Horizontal scaling means adding more servers/instances and distributing load across them, typically behind a load balancer. Horizontal scaling generally offers better fault tolerance and near-limitless growth, but adds complexity around state and coordination."},
-      {type:"technical", q:"What is infrastructure as code, and why does it matter?",
-        keywords:["infrastructure as code","terraform","version control","reproducible","automation"],
-        modelAnswer:"Infrastructure as code means defining servers, networks, and cloud resources in version-controlled config files (like Terraform) instead of manually clicking through a console. It matters because it makes environments reproducible, reviewable, and auditable, and lets you recreate or roll back infrastructure the same way you would application code."}
+      {type:"behavioral", q:"How do you keep up with the fast-evolving ecosystem of AWS, Azure, or GCP services?",
+        keywords:["stay updated","documentation","certification","hands-on"],
+        modelAnswer:"I follow release notes for the services I actually use rather than trying to track everything, and I learn best by building small hands-on projects with a new service rather than just reading about it. Working toward a cloud certification also forces structured, current knowledge rather than scattered familiarity."},
+      {type:"behavioral", q:"Tell me about a time you collaborated with software developers to help deploy their application into a staging or production cloud environment.",
+        keywords:["collaborated","deployment","staging","production","developers"],
+        modelAnswer:"A developer on a group project needed help getting their app past a local demo into something classmates could actually access (Problem). I set up a simple staging environment and walked them through the deployment pipeline so they could redeploy themselves going forward, instead of me being a bottleneck (Action). They were able to ship updates independently after that (Result)."},
+      {type:"behavioral", q:"What is your strategy when troubleshooting an issue where a server or container cannot connect to the internet or an internal database?",
+        keywords:["troubleshoot","connectivity","security group","dns","network"],
+        modelAnswer:"I work outward from the most likely cause: check the security group/firewall rules first, then DNS resolution, then whether the route table or subnet configuration allows the traffic, then the application-level connection string or credentials. Isolating each layer instead of guessing usually finds it faster than changing several things at once."},
+      {type:"technical", q:"What is the core difference between IaaS, PaaS, and SaaS?",
+        keywords:["iaas","paas","saas","infrastructure","platform"],
+        modelAnswer:"IaaS gives you raw infrastructure — virtual machines, storage, networking — and you manage everything above that, like the OS and app. PaaS gives you a managed platform to deploy code onto without managing the underlying servers. SaaS gives you a finished, ready-to-use application, like Gmail, where the provider manages everything."},
+      {type:"technical", q:"Explain the purpose of Infrastructure as Code (IaC) and the benefits tools like Terraform or CloudFormation offer over manual configuration.",
+        keywords:["infrastructure as code","terraform","version control","reproducible"],
+        modelAnswer:"IaC means defining servers, networks, and cloud resources in version-controlled config files instead of manually clicking through a console. It matters because it makes environments reproducible, reviewable like code, and auditable — you can recreate or roll back infrastructure the same way you'd roll back application code, instead of relying on someone remembering the manual steps."},
+      {type:"technical", q:"What is the difference between horizontal scaling and vertical scaling, and how do load balancers assist in high-availability architectures?",
+        keywords:["horizontal scaling","vertical scaling","load balancer","high availability"],
+        modelAnswer:"Vertical scaling adds more resources (CPU/RAM) to a single server. Horizontal scaling adds more servers and distributes load across them, typically behind a load balancer. Horizontal scaling generally offers better fault tolerance and near-limitless growth, since a load balancer can route around a failed instance, but it adds complexity around state and coordination that vertical scaling doesn't."},
+      {type:"technical", q:"Explain the structure of a Virtual Private Cloud (VPC), including public vs. private subnets, NAT gateways, and internet gateways.",
+        keywords:["vpc","public subnet","private subnet","nat gateway","internet gateway"],
+        modelAnswer:"A VPC is an isolated network you define in the cloud. Public subnets route through an internet gateway so resources there can be reached from the internet, like a web server. Private subnets have no direct internet route, keeping resources like databases isolated — but they can still reach out to the internet for updates through a NAT gateway, which allows outbound traffic without allowing inbound connections."},
+      {type:"technical", q:"What is the difference between a container (e.g., Docker) and a virtual machine (VM)?",
+        keywords:["container","docker","virtual machine","hypervisor","kernel"],
+        modelAnswer:"A VM virtualizes an entire machine, including its own OS kernel, managed by a hypervisor — heavier, but fully isolated. A container shares the host machine's OS kernel and only packages the application and its dependencies, making it much lighter and faster to start, though with a thinner isolation boundary than a full VM."},
+      {type:"technical", q:"How do object storage services (like AWS S3) differ from block storage (like EBS) and file storage (like EFS)?",
+        keywords:["object storage","s3","block storage","file storage"],
+        modelAnswer:"Object storage (S3) stores data as whole objects with metadata, accessed over HTTP — great for static files, backups, and massive scale, but not for a running database. Block storage (EBS) presents raw storage volumes a server attaches to like a hard drive, needed for things like a database that requires low-latency random read/write. File storage (EFS) provides a shared file system multiple servers can mount at once, useful when several instances need to read/write the same files concurrently."},
+      {type:"technical", q:"What is the Shared Responsibility Model in cloud security?",
+        keywords:["shared responsibility model","cloud provider","customer","security"],
+        modelAnswer:"The cloud provider is responsible for the security of the cloud — physical data centers, hardware, and the underlying infrastructure. The customer is responsible for security in the cloud — how they configure access controls, encrypt their data, and secure their own applications. A lot of real-world breaches come from customers misunderstanding where that line actually falls, like leaving an S3 bucket public."},
+      {type:"technical", q:"How do DNS, CDN (Content Delivery Networks), and edge computing optimize global application delivery and latency?",
+        keywords:["dns","cdn","edge computing","latency","caching"],
+        modelAnswer:"DNS resolves a domain name to the nearest or best-performing server rather than always the same one. A CDN caches static content at edge locations close to users around the world, so a user in Asia doesn't have to fetch an image from a server in the US every time. Edge computing pushes some actual processing to those nearby locations too, not just cached content, which further cuts the round-trip latency for time-sensitive operations."}
     ]
   }
 ];
 
-const QUIZ_QUESTIONS = [
-  {key:"coding", label:"Writing and debugging code all day", low:"Not for me", high:"Love it"},
-  {key:"data", label:"Digging into data to find patterns and answer questions", low:"Not for me", high:"Love it"},
-  {key:"security", label:"Thinking like an attacker to find and close security gaps", low:"Not for me", high:"Love it"},
-  {key:"sysDesign", label:"Designing and running the systems/infrastructure everything depends on", low:"Not for me", high:"Love it"},
-  {key:"peopleDesign", label:"Talking to users/stakeholders and shaping the product experience", low:"Not for me", high:"Love it"}
+const QUIZ_SECTIONS = [
+  {section:"Working with People and Design", roleId:"ux-pm", questions:[
+    {text:"I enjoy designing the layout of websites or apps to make them intuitive and visually appealing for the end user.", primary:true},
+    {text:"I like interviewing people to understand their frustrations and figuring out how a product can solve their specific problems."},
+    {text:"I prefer guiding the big-picture vision and feature list of a project rather than getting bogged down in the underlying code."}
+  ]},
+  {section:"Security and Risk", roleId:"cyber", questions:[
+    {text:"I am fascinated by digital puzzles, finding loopholes, and figuring out how hackers exploit system vulnerabilities.", primary:true},
+    {text:"I am highly detail-oriented and would enjoy enforcing rules, monitoring network traffic, and ensuring company data is protected."},
+    {text:"I thrive in high-pressure situations where I have to investigate a crisis or respond to an active threat."}
+  ]},
+  {section:"Strategy and Processes", roleId:"biz-analyst", questions:[
+    {text:"I enjoy acting as a translator between highly technical developers and non-technical business leaders.", primary:true},
+    {text:"I like analyzing business processes and drawing diagrams to show exactly how data and money flow through an organization."},
+    {text:"I enjoy querying databases (using tools like SQL) and organizing data in spreadsheets to build reports for decision-makers."}
+  ]},
+  {section:"Logic and Building", roleId:"app-dev", questions:[
+    {text:"I love writing code, building applications from scratch, and seeing my pure logic come to life on the screen.", primary:true},
+    {text:"I have a high tolerance for frustration and actually enjoy spending time debugging code until it works perfectly."},
+    {text:"I prefer to put my headphones on, minimize distractions, and focus deeply on solving complex algorithmic problems."}
+  ]},
+  {section:"Systems and Scale", roleId:"cloud", questions:[
+    {text:"I am highly interested in how the internet actually works behind the scenes, including servers, networks, and routers.", primary:true},
+    {text:"I prefer setting up, automating, and maintaining the environments that keep applications running rather than building the apps themselves."},
+    {text:"I like the idea of managing massive amounts of computing power, memory, and storage using platforms like AWS, Google Cloud, or Azure."}
+  ]},
+  {section:"Insights and Prediction", roleId:"data", questions:[
+    {text:"I enjoy using statistics, math, and algorithms to find hidden patterns in massive, complex datasets.", primary:true},
+    {text:"I like the idea of building predictive models (like machine learning or AI) to forecast future trends based on historical data."},
+    {text:"I am interested in using programming languages like Python or R specifically for advanced data manipulation and creating complex data visualizations."}
+  ]}
 ];
 
 /* =====================================================================
@@ -792,6 +1048,10 @@ function openModal(roleId){
         </div>
         <div class="modal-body">
           <div class="detail-block">
+            <h4>In-Depth Description</h4>
+            <p>${r.intro}</p>
+          </div>
+          <div class="detail-block">
             <h4>Day-to-Day Duties</h4>
             <ul>${r.dayToDay.map(d=>`<li>${d}</li>`).join("")}</ul>
           </div>
@@ -815,7 +1075,8 @@ function openModal(roleId){
             <ul>${r.strongCandidate.map(s=>`<li>${s}</li>`).join("")}</ul>
           </div>
           <div class="source-note">
-            <strong>Data sourcing note:</strong> ${r.sourcingNote}
+            <strong>Data sourcing note:</strong> ${r.sourcingNote}<br>
+            <strong>Interview question sourcing:</strong> ${r.qSource}
           </div>
         </div>
         <div class="modal-cta">
@@ -839,65 +1100,85 @@ function closeModal(){ document.getElementById("modal-root").innerHTML = ""; }
    ===================================================================== */
 function renderQuiz(){
   const container = document.getElementById("quiz-questions");
-  container.innerHTML = QUIZ_QUESTIONS.map((q,i) => `
-    <div class="quiz-q">
-      <label>
-        <span>${q.label}</span>
-        <span class="qval" id="qval-${q.key}">5</span>
-      </label>
-      <input type="range" min="1" max="10" value="5" id="slider-${q.key}" data-key="${q.key}">
-      <div class="scale-labels"><span>${q.low}</span><span>${q.high}</span></div>
+  container.innerHTML = QUIZ_SECTIONS.map((sec,si) => `
+    <div class="likert-section">
+      <div class="likert-section-title">${si+1}. ${sec.section}</div>
+      ${sec.questions.map((q,qi) => `
+        <div class="likert-q">
+          <div class="likert-q-text">${q.text}</div>
+          <div class="likert-scale">
+            ${[1,2,3,4,5].map(v => `
+              <label class="likert-opt">
+                <input type="radio" name="q-${si}-${qi}" value="${v}" data-section="${si}" data-q="${qi}" ${v===3?"checked":""}>
+                <span>${v}</span>
+              </label>
+            `).join("")}
+          </div>
+          ${qi===0 ? `<div class="likert-scale-labels"><span>Strongly Disagree</span><span>Strongly Agree</span></div>` : ""}
+        </div>
+      `).join("")}
     </div>
   `).join("");
-
-  QUIZ_QUESTIONS.forEach(q => {
-    const slider = document.getElementById("slider-" + q.key);
-    const val = document.getElementById("qval-" + q.key);
-    slider.addEventListener("input", () => { val.textContent = slider.value; });
-  });
 }
 
 document.getElementById("calc-fit-btn").addEventListener("click", () => {
-  const answers = {};
-  QUIZ_QUESTIONS.forEach(q => {
-    answers[q.key] = parseInt(document.getElementById("slider-" + q.key).value, 10);
+  const answers = QUIZ_SECTIONS.map((sec,si) => sec.questions.map((q,qi) => {
+    const checked = document.querySelector(`input[name="q-${si}-${qi}"]:checked`);
+    return checked ? parseInt(checked.value, 10) : 3;
+  }));
+
+  const scores = QUIZ_SECTIONS.map((sec,si) => {
+    const vals = answers[si];
+    const sum = vals.reduce((a,b) => a+b, 0);
+    const primaryIndex = sec.questions.findIndex(q => q.primary);
+    return {role:getRole(sec.roleId), sum, primaryVal: vals[primaryIndex], pct: Math.round((sum-3)/12*100)};
   });
 
-  const ranked = ROLES.map(r => {
-    let diffSum = 0;
-    QUIZ_QUESTIONS.forEach(q => { diffSum += Math.abs(answers[q.key] - r.quizIdeal[q.key]); });
-    const maxDiff = 9 * QUIZ_QUESTIONS.length;
-    const match = Math.round(100 - (diffSum / maxDiff) * 100);
-    return {role:r, match: Math.max(match, 0)};
-  }).sort((a,b) => b.match - a.match);
+  const maxSum = Math.max(...scores.map(s => s.sum));
+  let winners = scores.filter(s => s.sum === maxSum);
+  if(winners.length > 1){
+    const maxPrimary = Math.max(...winners.map(s => s.primaryVal));
+    winners = winners.filter(s => s.primaryVal === maxPrimary);
+  }
 
-  appState.quizResults = {answers, ranked};
-  renderQuizResult(ranked);
+  const ranked = scores.slice().sort((a,b) => b.sum - a.sum);
+  appState.quizResults = {answers, ranked, winners};
+  renderQuizResult(ranked, winners);
 });
 
-function renderQuizResult(ranked){
-  const top = ranked[0];
+function renderQuizResult(ranked, winners){
   const box = document.getElementById("quiz-result");
   box.classList.remove("hidden");
+  const isTie = winners.length > 1;
   box.innerHTML = `
-    <div class="eyebrow" style="color:var(--text-dim);">Top Match</div>
-    <div class="match-pct">${top.match}%</div>
-    <div class="match-role">${top.role.title}</div>
-    <p style="margin-bottom:18px;">Your answers lean closest to this role's day-to-day mix. ${top.role.hook}</p>
-    <button class="btn primary" id="quiz-goto-interview">Start Mock Interview for ${top.role.title}</button>
+    <div class="eyebrow" style="color:var(--text-dim);">${isTie ? "Top Matches (Tied)" : "Top Match"}</div>
+    ${isTie ? `
+      <div class="match-role" style="font-size:22px;">${winners.map(w=>w.role.title).join(" & ")}</div>
+      <p style="margin-bottom:18px;">Your answers show an equally strong pull toward ${winners.length} paths — that's a real, common result, not a bug. Explore both career cards below before picking which to interview for.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:4px;">
+        ${winners.map(w => `<button class="btn primary quiz-goto-interview" data-role="${w.role.id}">Practice for ${w.role.title}</button>`).join("")}
+      </div>
+    ` : `
+      <div class="match-pct">${winners[0].pct}%</div>
+      <div class="match-role">${winners[0].role.title}</div>
+      <p style="margin-bottom:18px;">Your answers lean closest to this role's day-to-day mix. ${winners[0].role.hook}</p>
+      <button class="btn primary quiz-goto-interview" data-role="${winners[0].role.id}">Start Mock Interview for ${winners[0].role.title}</button>
+    `}
     <div class="rank-list">
       ${ranked.map(r => `
         <div class="rank-row">
           <div class="rname">${r.role.title}</div>
-          <div class="rank-bar-track"><div class="rank-bar-fill" style="width:${r.match}%;"></div></div>
-          <div class="rpct">${r.match}%</div>
+          <div class="rank-bar-track"><div class="rank-bar-fill" style="width:${r.pct}%;"></div></div>
+          <div class="rpct">${r.sum}/15</div>
         </div>
       `).join("")}
     </div>
   `;
-  document.getElementById("quiz-goto-interview").addEventListener("click", () => {
-    appState.currentRole = top.role.id;
-    goToView("interview");
+  box.querySelectorAll(".quiz-goto-interview").forEach(btn => {
+    btn.addEventListener("click", () => {
+      appState.currentRole = btn.dataset.role;
+      goToView("interview");
+    });
   });
   box.scrollIntoView({behavior:"smooth", block:"nearest"});
 }
