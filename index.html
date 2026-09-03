@@ -236,6 +236,11 @@
   .par-item .pk{font-family:var(--mono);color:var(--cyan);font-size:12px;letter-spacing:1px;}
   .par-item p{font-size:12.5px;margin:4px 0 0;}
 
+  .kw-cloud-box{border:1px solid var(--border);background:var(--card);padding:16px 20px;margin-bottom:20px;border-radius:var(--r-md);box-shadow:var(--shadow-soft);}
+  .kw-cloud-label{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;}
+  .kw-cloud-tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .kw-tag{display:inline-block;font-size:12px;padding:5px 12px;border:1px solid var(--border-hi);color:var(--text-dim);border-radius:var(--r-pill);background:rgba(169,39,23,0.08);}
+
   .role-select-row{display:flex;align-items:center;gap:14px;margin-bottom:32px;flex-wrap:wrap;}
   .role-select-row label{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;}
   select{
@@ -418,6 +423,7 @@
         <div class="progress-dots" id="progress-dots"></div>
       </div>
 
+      <div id="keyword-cloud-area"></div>
       <div id="interview-question-area"></div>
       <div id="scorecard-area"></div>
     </section>
@@ -476,6 +482,7 @@ const ROLES = [
     ],
     sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates modeled on entry-level developer offer data — confirm current figures before presenting.",
     qSource:"Questions and paradigms grounded in ACM/IEEE Computer Society curricula, classic algorithmic complexity analysis (Big-O), and Roy Fielding's dissertation defining REST.",
+    keywordCloud:["Git/GitHub","Data Structures","Algorithms","REST APIs","OOP","CI/CD","Unit Testing","Debugging","Microservices","Relational Databases","Refactoring","Asynchronous","Design Patterns","Big-O","Pull Requests"],
     questions:[
       {type:"behavioral", q:"Tell me about a difficult bug you encountered that took hours or days to track down. How did you isolate and resolve it?",
         keywords:["debug","isolate","logging","root cause","tested","fixed","reproduce"],
@@ -534,6 +541,7 @@ const ROLES = [
     ],
     sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
     qSource:"Grounded in the BABOK Guide (IIBA), Agile Alliance Scrum principles, and OMG's BPMN standard for process modeling.",
+    keywordCloud:["Requirements Gathering","User Stories","Acceptance Criteria","BPMN","Gap Analysis","Agile/Scrum","Stakeholder Management","Scope Creep","Use Cases","SWOT Analysis","Feasibility Study","Process Mapping","Jira","Cost-Benefit Analysis","UAT (User Acceptance Testing)"],
     questions:[
       {type:"behavioral", q:"Tell me about a time you mediated a disagreement between two key stakeholders regarding project scope or priorities.",
         keywords:["mediate","stakeholder","scope","priority","common ground","facilitated"],
@@ -592,6 +600,7 @@ const ROLES = [
     ],
     sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
     qSource:"Grounded in ANSI/ISO SQL standards, fundamental statistical theory (hypothesis testing, Central Limit Theorem), and standard ETL/ELT data engineering pipelines.",
+    keywordCloud:["SQL","Python (Pandas)","Tableau","Power BI","ETL","Data Cleansing","Data Modeling","Regression","Aggregation","KPIs","A/B Testing","Data Wrangling","PivotTables","Dashboards","Hypothesis Testing"],
     questions:[
       {type:"behavioral", q:"Tell me about a time you discovered unexpected or contradictory results in a dataset. How did you investigate?",
         keywords:["unexpected","investigated","validated","root cause","data"],
@@ -650,6 +659,7 @@ const ROLES = [
     ],
     sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
     qSource:"Grounded in NIST SP 800-61 (Computer Security Incident Handling Guide), the MITRE ATT&CK framework, the Lockheed Martin Cyber Kill Chain, and CompTIA Security+/SSCP entry-level certification concepts.",
+    keywordCloud:["SIEM","Zero Trust","Firewall","Incident Response","Phishing","SOC","MITRE ATT&CK","Encryption","Penetration Testing","Vulnerability","Endpoint Detection (EDR)","Threat Hunting","Least Privilege","IDS/IPS","CIA Triad"],
     questions:[
       {type:"behavioral", q:"Tell me about a time you identified a security risk or vulnerability that others overlooked. How did you report it?",
         keywords:["vulnerability","identified","reported","documented","risk"],
@@ -708,6 +718,7 @@ const ROLES = [
     ],
     sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
     qSource:"Sourced from usability frameworks established by the Nielsen Norman Group (NN/g), interaction design literature, and the W3C Web Content Accessibility Guidelines (WCAG 2.1/2.2).",
+    keywordCloud:["Usability Testing","Information Architecture","A/B Testing","Wireframing","User Journey","Heuristic Evaluation","Personas","Accessibility (WCAG)","Figma","Card Sorting","Qualitative","Quantitative","Prototyping","User Empathy","Conversion Rate"],
     questions:[
       {type:"behavioral", q:"Tell me about a time user research findings contradicted what stakeholders or executives strongly believed. How did you present the data?",
         keywords:["user research","contradicted","data","presented","stakeholder"],
@@ -766,6 +777,7 @@ const ROLES = [
     ],
     sourcingNote:"In-depth description adapted from the BYU IS Career Explorer (iscareers.byu.edu/career-explorer); salary bands are representative estimates — confirm current figures before presenting.",
     qSource:"Drawn from the AWS Well-Architected Framework, the Microsoft Cloud Adoption Framework for Azure, and cloud-native definitions maintained by the Cloud Native Computing Foundation (CNCF).",
+    keywordCloud:["Terraform (IaC)","Docker","Kubernetes","VPC","AWS/Azure/GCP","CI/CD Pipelines","Load Balancing","Serverless","S3 Storage","IAM Roles","High Availability","Auto-Scaling","Monitoring (CloudWatch)","Subnets","Cost Optimization"],
     questions:[
       {type:"behavioral", q:"Tell me about a time a cloud service or application experienced downtime or a performance degradation. How did you troubleshoot it?",
         keywords:["downtime","troubleshoot","root cause","monitoring","resolved"],
@@ -1066,11 +1078,23 @@ function getCurrentQIndex(roleId){
   return role.questions.length; // all answered -> scorecard
 }
 
+function renderKeywordCloud(role){
+  const area = document.getElementById("keyword-cloud-area");
+  if(!role.keywordCloud || role.keywordCloud.length === 0){ area.innerHTML = ""; return; }
+  area.innerHTML = `
+    <div class="kw-cloud-box">
+      <div class="kw-cloud-label">Keyword Cloud — ${role.title}</div>
+      <div class="kw-cloud-tags">${role.keywordCloud.map(k => `<span class="kw-tag">${k}</span>`).join("")}</div>
+    </div>
+  `;
+}
+
 function renderInterview(){
   document.getElementById("role-select").value = appState.currentRole;
   const role = getRole(appState.currentRole);
   if(!appState.interviewAnswers[role.id]) appState.interviewAnswers[role.id] = {};
 
+  renderKeywordCloud(role);
   renderProgressDots(role);
   const qIndex = getCurrentQIndex(role.id);
 
