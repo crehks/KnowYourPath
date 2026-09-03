@@ -19,9 +19,9 @@
     --text:#deded2;
     --text-dim:#a2a0b3;
     --text-faint:#797c95;
-    --cyan:#a92717;      /* primary accent — rust red */
+    --cyan:#FF5714;      /* primary accent — rust red */
     --amber:#b9a727;     /* secondary accent — olive gold */
-    --danger:#a92717;
+    --danger:#FF5714;
     --success:#b9a727;
     --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace;
     --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -393,9 +393,9 @@
         <p style="margin:0;">Structure behavioral answers around three parts. This tool checks your
         answers for all three, plus role-specific technical terms.</p>
         <div class="par-row">
-          <div class="par-item"><div class="pk">P — PROBLEM</div><p>The situation or challenge you faced.</p></div>
-          <div class="par-item"><div class="pk">A — ACTION</div><p>What you specifically did about it.</p></div>
-          <div class="par-item"><div class="pk">R — RESULT</div><p>The outcome, ideally with a number.</p></div>
+          <div class="par-item"><div class="pk">P — PROBLEM</div><p>The situation or challenge you faced. Set the scene in about 15–20 seconds — just enough for the interviewer to get the stakes.</p></div>
+          <div class="par-item"><div class="pk">A — ACTION</div><p>What you specifically did about it. Be concrete — name the tools, decisions, and steps. Say "I," not "we."</p></div>
+          <div class="par-item"><div class="pk">R — RESULT</div><p>The outcome, ideally with a number — time saved, errors reduced, users served. No number? Describe the outcome concretely instead.</p></div>
         </div>
       </div>
 
@@ -489,15 +489,6 @@ const ROLES = [
       {type:"behavioral", q:"Tell me about a time you had to make a trade-off between writing clean, scalable code and shipping quickly to hit a business deadline.",
         keywords:["technical debt","deadline","tradeoff","refactor","shipped","documented"],
         modelAnswer:"With a demo deadline two days out, I chose a simpler, slightly duplicated implementation over a more elegant abstraction that would've taken longer to get right (Action). I flagged it clearly as technical debt in the code and a follow-up ticket rather than pretending it was final, and we shipped on time with a documented plan to clean it up (Result)."},
-      {type:"behavioral", q:"How do you approach reading and understanding a massive, unfamiliar codebase with minimal documentation?",
-        keywords:["codebase","trace","entry point","debugger","tests","incrementally"],
-        modelAnswer:"I start from a known entry point — like the main route or the test suite — and trace execution outward rather than trying to read everything linearly. I run the code with a debugger or print statements to confirm my mental model, and I make small, safe changes early to validate my understanding before touching anything critical."},
-      {type:"behavioral", q:"Walk me through a project where you collaborated with teammates using Git. How did you resolve merge conflicts?",
-        keywords:["git","branch","merge conflict","pull request","communicated","resolved"],
-        modelAnswer:"On a team project we each worked on feature branches and opened pull requests before merging into main (Action). When two of us edited the same file, I pulled the latest main, resolved the conflict locally by talking through which version was correct with my teammate, and re-tested before pushing (Result) — communicating early kept conflicts small instead of one big mess at the end."},
-      {type:"behavioral", q:"How do you prioritize writing automated tests versus building out feature functionality?",
-        keywords:["unit testing","priority","coverage","regression","tradeoff","time"],
-        modelAnswer:"I prioritize tests for the logic most likely to break silently — data transformations, edge cases, anything with a bug history — over exhaustively testing simple UI. Under real time pressure I'll ship a feature with lighter coverage on the low-risk paths, but I don't skip tests on anything a regression there would be expensive to catch late."},
       {type:"technical", q:"Explain the differences between Object-Oriented Programming (OOP) and Functional Programming paradigms.",
         keywords:["oop","functional programming","state","immutable","objects","side effects"],
         modelAnswer:"OOP organizes code around objects that bundle state and behavior together, using patterns like inheritance and encapsulation. Functional programming treats computation as the evaluation of pure functions, avoiding shared state and mutable data. OOP tends to model real-world entities naturally; functional style tends to produce code that's easier to reason about and test because functions don't have hidden side effects."},
@@ -509,19 +500,7 @@ const ROLES = [
         modelAnswer:"Abstraction hides implementation details behind a simple interface — like a car's steering wheel hiding the mechanics. Encapsulation bundles data with the methods that operate on it and restricts direct access, like a bank account object only allowing balance changes through deposit/withdraw methods. Inheritance lets a class reuse and extend another's behavior, like a SavingsAccount inheriting from a base Account class. Polymorphism lets different classes respond to the same method call in their own way, like different shapes each implementing their own area() calculation."},
       {type:"technical", q:"What is the difference between synchronous and asynchronous code execution, and how do event loops or threading models handle concurrency?",
         keywords:["synchronous","asynchronous","event loop","callback","promise","concurrency"],
-        modelAnswer:"Synchronous code runs one operation at a time, blocking until each finishes. Asynchronous code lets a long-running operation, like a network request, continue in the background while the program keeps running, resuming via a callback, promise, or async/await when it completes. JavaScript handles this with a single-threaded event loop that queues callbacks; other languages use actual multi-threading, which adds power but also the risk of race conditions."},
-      {type:"technical", q:"Explain how RESTful APIs work, including the primary HTTP methods (GET, POST, PUT, DELETE, PATCH) and status code categories (2xx, 4xx, 5xx).",
-        keywords:["rest api","http methods","get","post","status code","endpoint"],
-        modelAnswer:"A RESTful API exposes resources through URLs, and HTTP methods define the action: GET reads a resource, POST creates one, PUT/PATCH update one (fully or partially), and DELETE removes one. Status codes tell you the outcome: 2xx means success, 4xx means the client made a bad request (like a 404 for a resource that doesn't exist), and 5xx means the server failed to handle a valid request."},
-      {type:"technical", q:"What is the difference between a stack and a queue data structure, and what are their typical use cases?",
-        keywords:["stack","queue","lifo","fifo","push","pop"],
-        modelAnswer:"A stack is Last-In-First-Out — you push and pop from the same end, like undo history in an editor. A queue is First-In-First-Out — items are added at the back and removed from the front, like a print job queue or task scheduler. I'd reach for a stack for anything needing 'most recent first' behavior and a queue for anything needing fair, ordered processing."},
-      {type:"technical", q:"How does dependency injection improve code maintainability and testability?",
-        keywords:["dependency injection","testability","mock","decoupled","interface"],
-        modelAnswer:"Dependency injection means a class receives the objects it depends on from the outside instead of creating them itself, which decouples it from specific implementations. That makes testing much easier — I can inject a mock database or API client in a test instead of hitting the real one — and it makes swapping implementations later a config change instead of a rewrite."},
-      {type:"technical", q:"What are the key differences between SQL (relational) and NoSQL databases, and when would you choose one over the other?",
-        keywords:["sql","nosql","relational","schema","scalability","joins"],
-        modelAnswer:"SQL databases use a fixed schema and tables with relationships enforced through joins and constraints, which is great for structured data with clear relationships, like financial records. NoSQL databases (document, key-value, graph) trade strict schema and joins for flexibility and horizontal scalability, which suits rapidly changing or unstructured data, like user activity logs. I'd default to SQL unless I have a specific reason — scale, schema flexibility — to reach for NoSQL."}
+        modelAnswer:"Synchronous code runs one operation at a time, blocking until each finishes. Asynchronous code lets a long-running operation, like a network request, continue in the background while the program keeps running, resuming via a callback, promise, or async/await when it completes. JavaScript handles this with a single-threaded event loop that queues callbacks; other languages use actual multi-threading, which adds power but also the risk of race conditions."}
     ]
   },
   {
@@ -563,20 +542,11 @@ const ROLES = [
         keywords:["scope creep","requirements","documented","said no","prioritized"],
         modelAnswer:"Midway through a class project, teammates kept adding 'quick' extra features (Problem). I brought the original requirements doc back into the conversation and asked whether each addition mapped to our actual goal (Action). We cut two non-essential features and logged them for a future phase, which let us finish the core scope on time (Result)."},
       {type:"behavioral", q:"How do you approach gathering requirements when end-users aren't completely sure what problem they want solved?",
-        keywords:["requirements gathering","clarify","interview","observe","root problem"],
+        keywords:["current process","root cause","concrete questions","confirm understanding","symptom"],
         modelAnswer:"I ask about their current process and where it breaks down rather than jumping straight to 'what feature do you want,' since users often describe a symptom, not the root cause. I follow up with specific, concrete questions and confirm my understanding in writing before any solution gets proposed."},
       {type:"behavioral", q:"Tell me about a time a process improvement project you proposed faced strong user resistance. How did you manage change?",
         keywords:["change management","resistance","buy-in","communicated","adoption"],
         modelAnswer:"I proposed a new intake process for a student org and got pushback because it added a step people saw as bureaucracy (Problem). I explained the specific pain point it solved and piloted it with one small group first instead of rolling it out to everyone at once (Action). Once that group saw fewer errors, the rest adopted it with far less resistance (Result)."},
-      {type:"behavioral", q:"Walk me through a time you identified a business inefficiency or bottleneck and developed a plan to fix it.",
-        keywords:["bottleneck","inefficiency","process map","root cause","plan"],
-        modelAnswer:"I noticed our group project's approval process required three separate sign-offs for even minor changes (Problem). I mapped the current workflow, identified which step was actually necessary, and proposed a simplified path with a single reviewer for low-risk changes (Action). That cut our average turnaround time significantly and freed people up for higher-value work (Result)."},
-      {type:"behavioral", q:"Describe your experience working within an Agile/Scrum team versus a traditional Waterfall environment.",
-        keywords:["agile","scrum","waterfall","sprint","iterative","upfront planning"],
-        modelAnswer:"In Agile/Scrum, I've worked in sprints with a backlog, daily stand-ups, and frequent check-ins so requirements can adjust as we learn. Waterfall front-loads all the requirements and design before any building starts, which gives more certainty upfront but less room to adapt. I prefer Agile for ambiguous problems and lean toward Waterfall-style upfront planning when the requirements are genuinely stable and compliance-driven."},
-      {type:"behavioral", q:"Tell me about a situation where a technical team told you a requested business feature was impossible to build. What did you do next?",
-        keywords:["technical constraint","alternative","collaborated","tradeoff","feasibility"],
-        modelAnswer:"A developer told me a stakeholder's request wasn't feasible in our timeline as scoped (Problem). Instead of just relaying 'no,' I asked what specifically made it hard and worked with the developer to find a scaled-down version that hit most of the business need (Action). The stakeholder accepted the alternative once I explained the tradeoff clearly, and we still shipped on schedule (Result)."},
       {type:"technical", q:"What is the difference between functional and non-functional requirements? Give examples of both.",
         keywords:["functional","non-functional","performance","behavior","system"],
         modelAnswer:"A functional requirement describes what the system should do — e.g., 'users can reset their password via email.' A non-functional requirement describes how well it should do it — e.g., 'the password reset email must send within 5 seconds.' Non-functional requirements are more often missed because they're less obvious to stakeholders, but they're just as critical to a working system."},
@@ -588,19 +558,7 @@ const ROLES = [
         modelAnswer:"For a straightforward process I'll use a basic flowchart to show the sequence of steps and decision points. For anything cross-departmental, I use a swimlane diagram so it's clear who owns each step, and for more formal documentation I use BPMN notation, which has standardized symbols for tasks, gateways, and events that other analysts and developers can read consistently."},
       {type:"technical", q:"How do you conduct a Gap Analysis when evaluating an 'As-Is' state versus a 'To-Be' state?",
         keywords:["gap analysis","as-is","to-be","current state","future state"],
-        modelAnswer:"I first document the As-Is state — how the process actually works today, including its pain points — then define the To-Be state based on the business goal. The gap analysis lays the two side by side to identify exactly what has to change: new tools, new steps, or removed steps, which becomes the basis for the project's requirements."},
-      {type:"technical", q:"What is a Requirements Traceability Matrix (RTM), and why is it essential throughout the project lifecycle?",
-        keywords:["rtm","traceability","requirement","test case","linked"],
-        modelAnswer:"An RTM is a table linking each requirement back to its source (why it exists) and forward to the design, code, and test case that fulfills it. It matters because it makes sure nothing gets built that wasn't requested, and nothing requested gets dropped silently — which is especially important when scope changes mid-project."},
-      {type:"technical", q:"How do you calculate and present Return on Investment (ROI) or Cost-Benefit Analysis for a proposed technology initiative?",
-        keywords:["roi","cost-benefit","investment","payback period","business case"],
-        modelAnswer:"I compare the total cost of the initiative — implementation, licensing, training — against its quantified benefits, like time saved or errors reduced, converted to a dollar value where possible. I present it as a simple payback-period figure ('this pays for itself in 8 months') because that's usually more persuasive to a decision-maker than a raw ROI percentage."},
-      {type:"technical", q:"How do you differentiate between a business requirement, a user requirement, and a system requirement?",
-        keywords:["business requirement","user requirement","system requirement","stakeholder"],
-        modelAnswer:"A business requirement is the high-level goal — 'reduce order processing time.' A user requirement describes what a specific user needs to do to support that goal — 'a customer service rep needs to see order status in one screen.' A system requirement is the technical specification that satisfies it — 'the order status API must return within 200ms.' Each layer translates the one above it into something more concrete."},
-      {type:"technical", q:"What techniques do you use to elicit requirements (e.g., workshops, interviews, document analysis, prototyping)?",
-        keywords:["elicitation","workshop","interview","prototyping","document analysis"],
-        modelAnswer:"I match the technique to the situation — one-on-one interviews for sensitive or detailed input, group workshops when I need stakeholders to align with each other in the room, document analysis when a process is already partially documented, and low-fidelity prototypes when people struggle to describe what they want but can react to something concrete."}
+        modelAnswer:"I first document the As-Is state — how the process actually works today, including its pain points — then define the To-Be state based on the business goal. The gap analysis lays the two side by side to identify exactly what has to change: new tools, new steps, or removed steps, which becomes the basis for the project's requirements."}
     ]
   },
   {
@@ -639,7 +597,7 @@ const ROLES = [
         keywords:["unexpected","investigated","validated","root cause","data"],
         modelAnswer:"While analyzing survey data for a class project, one segment's numbers contradicted everything else we'd seen (Problem). I checked the raw responses instead of trusting the aggregate, and found a filtering error was mixing two different survey versions together (Action). Once I separated them correctly, the result made sense and matched the rest of our findings (Result)."},
       {type:"behavioral", q:"Describe a project where you had to translate complex statistical or numerical insights to non-technical stakeholders.",
-        keywords:["translate","non-technical","simplified","visualization","stakeholder"],
+        keywords:["explain","simple chart","classmates","practical takeaway","recommendation"],
         modelAnswer:"I needed to explain a regression result to classmates without a stats background (Problem). I dropped the coefficient talk and instead showed a simple chart of 'for every extra hour of X, Y changes by this much' (Action). They understood the practical takeaway well enough to actually use it in our recommendation (Result)."},
       {type:"behavioral", q:"How do you determine when a dataset is 'clean enough' to analyze versus when deeper data hygiene is necessary?",
         keywords:["data cleaning","missing values","outliers","threshold","validate"],
@@ -647,15 +605,6 @@ const ROLES = [
       {type:"behavioral", q:"Tell me about a time a stakeholder requested an urgent dashboard or report with vague, ill-defined requirements. How did you clarify their needs?",
         keywords:["vague requirements","clarify","questions","scope","dashboard"],
         modelAnswer:"A group member asked for 'a dashboard on our marketing performance' with no further detail (Problem). I asked what decision the dashboard needed to support and who'd be looking at it, then sketched a mockup before building anything (Action). That five-minute conversation saved a full rebuild, since their actual need was one specific metric trend, not a dozen charts (Result)."},
-      {type:"behavioral", q:"Have you ever had your analytical methodology or conclusions challenged? How did you respond?",
-        keywords:["challenged","defended","methodology","evidence","open"],
-        modelAnswer:"A teammate questioned whether my sample size was large enough to support a conclusion in a class project (Problem). I walked through my methodology and reran the analysis with a larger pull to check if the result held (Action). It did, which strengthened the finding — but I made clear I'd have adjusted the conclusion if it hadn't (Result)."},
-      {type:"behavioral", q:"How do you prioritize multiple requests from different departments when facing tight deadlines?",
-        keywords:["prioritize","deadline","impact","stakeholder","tradeoff"],
-        modelAnswer:"I ask each requester what decision the analysis supports and by when, then prioritize by business impact and urgency rather than who asked first or loudest. When two requests are genuinely equal priority, I communicate the tradeoff openly instead of silently picking one."},
-      {type:"behavioral", q:"Share an example of how your data insights directly influenced an operational or business decision.",
-        keywords:["insight","decision","recommendation","impact","data-driven"],
-        modelAnswer:"For a class project, our data showed a marketing channel we assumed was underperforming was actually our best performer once seasonality was removed (Action: pulled and controlled the data). The team reallocated budget based on that finding, directly changing our final recommendation instead of going with the initial gut assumption (Result)."},
       {type:"technical", q:"What is the operational difference between WHERE and HAVING in SQL?",
         keywords:["where","having","group by","aggregate","filter"],
         modelAnswer:"WHERE filters individual rows before any grouping happens, and can't reference aggregate functions. HAVING filters groups after a GROUP BY, and is used specifically to filter on aggregate results, like keeping only groups where COUNT(*) > 5."},
@@ -667,19 +616,7 @@ const ROLES = [
         modelAnswer:"Correlation means two variables move together; causation means one actually drives the other, which correlation alone can't prove because a confounding variable could be driving both. To test significance, I'd run a hypothesis test — like a t-test or regression — and check whether the p-value is below my threshold (commonly 0.05), ideally alongside a controlled experiment like an A/B test rather than relying on observational data alone."},
       {type:"technical", q:"How do you handle missing, corrupted, or outlier values in a dataset using Python (Pandas) or SQL?",
         keywords:["missing values","outliers","pandas","imputation","dropna"],
-        modelAnswer:"For missing values I first check if they're random or systematic, since that changes the fix — I might drop rows, impute with a median/mean, or flag them explicitly rather than silently filling. For outliers, I investigate whether they're data errors or real extreme values before deciding to cap, remove, or keep them, since removing real outliers can hide the actual story."},
-      {type:"technical", q:"What are SQL window functions (e.g., ROW_NUMBER(), RANK(), DENSE_RANK()), and when would you use them over a GROUP BY?",
-        keywords:["window function","row_number","rank","partition by","group by"],
-        modelAnswer:"Window functions calculate a value across a set of rows related to the current row — like a running total or rank — without collapsing them into a single row like GROUP BY does. I'd use ROW_NUMBER() or RANK() over PARTITION BY when I need to keep every row but also know, say, each customer's most recent order, which a plain GROUP BY can't do."},
-      {type:"technical", q:"When designing a dashboard in Tableau or Power BI, what principles do you follow to ensure it remains intuitive and performant?",
-        keywords:["dashboard","tableau","power bi","intuitive","performance"],
-        modelAnswer:"I lead with the one or two metrics that matter most, avoid cramming in every possible chart, and use consistent colors/labels so the viewer isn't re-learning the dashboard each visit. For performance, I aggregate data upstream where possible instead of pulling raw row-level data into every visual, since that's usually what makes dashboards slow."},
-      {type:"technical", q:"What is the difference between structured and unstructured data, and how do you approach cleaning each?",
-        keywords:["structured data","unstructured data","schema","text data","cleaning"],
-        modelAnswer:"Structured data fits neatly into rows and columns with a defined schema, like a sales table — cleaning it means handling duplicates, nulls, and type mismatches. Unstructured data, like free-text survey responses or logs, has no fixed shape, so cleaning involves parsing, standardizing formats, and often some text processing before it can be analyzed at all."},
-      {type:"technical", q:"Can you explain the Central Limit Theorem and why it is foundational to hypothesis testing?",
-        keywords:["central limit theorem","sample","normal distribution","hypothesis testing"],
-        modelAnswer:"The Central Limit Theorem says that if you take sufficiently large random samples from a population, the distribution of the sample means will approximate a normal distribution, regardless of the population's original distribution. That matters because most hypothesis tests assume normality, so it's what lets us apply those standard statistical tests to real-world data that isn't normally distributed to begin with."}
+        modelAnswer:"For missing values I first check if they're random or systematic, since that changes the fix — I might drop rows, impute with a median/mean, or flag them explicitly rather than silently filling. For outliers, I investigate whether they're data errors or real extreme values before deciding to cap, remove, or keep them, since removing real outliers can hide the actual story."}
     ]
   },
   {
@@ -726,15 +663,6 @@ const ROLES = [
       {type:"behavioral", q:"Describe a time you made a mistake (e.g., misconfigured a setting or misread a log). How did you rectify it?",
         keywords:["mistake","misconfigured","corrected","owned it","documented"],
         modelAnswer:"While practicing firewall rules in a lab, I misconfigured a rule that blocked legitimate traffic instead of the intended malicious pattern (Problem). I caught it by checking the actual traffic logs against what I expected to see, corrected the rule, and documented what I'd misunderstood about the rule ordering (Action). It didn't recur, and I built a checklist for myself to avoid the same mistake (Result)."},
-      {type:"behavioral", q:"How do you prioritize alerts when your dashboard is flooded with notifications and potential false positives?",
-        keywords:["alert fatigue","prioritize","triage","severity","false positive"],
-        modelAnswer:"I triage by potential impact and likelihood first, using severity scoring rather than reacting to volume or recency. Alerts tied to sensitive systems or unusual patterns (like access outside normal hours) jump the queue over routine noise, and I look for ways to tune the rules generating repeated false positives so the signal doesn't get buried."},
-      {type:"behavioral", q:"Tell me about a project where you had to balance strict security controls with system usability.",
-        keywords:["usability","security controls","balance","tradeoff","friction"],
-        modelAnswer:"On a class project we debated requiring a complex password-change policy that would frustrate users (Problem). Instead of the strictest possible setting, I proposed multi-factor authentication paired with a reasonable password policy, based on current guidance that overly complex rotation rules often push users toward weaker, reused passwords (Action). It gave us stronger real-world security without the usability backlash (Result)."},
-      {type:"behavioral", q:"How would you handle a situation where a senior team member asks you to bypass security protocols for a temporary shortcut?",
-        keywords:["policy","bypass","escalate","risk","documented","pushback"],
-        modelAnswer:"I'd explain the specific risk the protocol addresses and ask if there's a faster, still-compliant path to what they actually need. If they insisted, I'd document the request and the risk in writing and escalate to whoever owns that risk decision, rather than quietly bypassing a control myself — the goal is protecting the org, not just following orders or refusing them."},
       {type:"technical", q:"What is the difference between asymmetric and symmetric encryption, and where is each typically used?",
         keywords:["symmetric encryption","asymmetric encryption","public key","private key"],
         modelAnswer:"Symmetric encryption uses one shared key for both encrypting and decrypting, which is fast and used for bulk data encryption (like disk or file encryption). Asymmetric encryption uses a public/private key pair — anyone can encrypt with the public key, but only the private key holder can decrypt — which is slower but solves the key-distribution problem, so it's used for things like TLS handshakes and digital signatures."},
@@ -746,19 +674,7 @@ const ROLES = [
         modelAnswer:"The handshake is SYN (client requests connection), SYN-ACK (server acknowledges and responds), ACK (client confirms) — establishing a reliable connection before data flows. A SYN flood attack exploits this by sending many SYN requests without completing the handshake, leaving the server holding half-open connections until it can't accept new legitimate ones."},
       {type:"technical", q:"What is the difference between a Vulnerability Assessment and a Penetration Test?",
         keywords:["vulnerability assessment","penetration test","scan","exploit"],
-        modelAnswer:"A Vulnerability Assessment scans and catalogs known weaknesses in a system without actively exploiting them, giving a broad inventory of risk. A Penetration Test goes further — actively attempting to exploit those weaknesses (with permission) to prove real-world impact and see how far an attacker could actually get."},
-      {type:"technical", q:"If a host on the network is suspected of being infected with ransomware, what are the immediate first three containment steps you take?",
-        keywords:["containment","isolate","incident response","ransomware","preserve evidence"],
-        modelAnswer:"First, isolate the host from the network immediately to stop lateral spread — pull the network cable or disable the network interface rather than shutting it down, which can destroy evidence in memory. Second, identify what else that host had access to, so you can check for spread. Third, preserve logs and evidence for investigation while notifying the incident response team, rather than trying to 'fix it' solo."},
-      {type:"technical", q:"Can you explain what SQL Injection (SQLi) and Cross-Site Scripting (XSS) are, along with how to remediate them?",
-        keywords:["sql injection","xss","input validation","parameterized queries","sanitize"],
-        modelAnswer:"SQL Injection happens when untrusted input is inserted directly into a SQL query, letting an attacker manipulate it — remediated with parameterized queries/prepared statements. Cross-Site Scripting happens when untrusted input is rendered as executable code in a browser, letting an attacker run malicious scripts in another user's session — remediated by properly encoding/escaping output and using a strong Content Security Policy."},
-      {type:"technical", q:"What are standard SIEM tools used for, and how do correlation rules help identify security incidents?",
-        keywords:["siem","correlation rules","log aggregation","incident detection"],
-        modelAnswer:"A SIEM aggregates logs from across the network — firewalls, servers, endpoints — into one place so you can search and monitor centrally instead of checking each system separately. Correlation rules tie together events that look harmless individually but form a pattern together, like a failed login followed by a successful one from a new location, which is what actually flags a likely incident instead of drowning analysts in raw logs."},
-      {type:"technical", q:"How does Multi-Factor Authentication (MFA) defend against credential stuffing and brute-force attacks?",
-        keywords:["mfa","credential stuffing","brute force","second factor"],
-        modelAnswer:"Credential stuffing and brute-force attacks rely on the password alone being enough to get in. MFA requires a second factor — something you have (a phone/authenticator app) or something you are (biometric) — so even a correct, stolen, or guessed password isn't sufficient on its own, which makes those large-scale automated attacks far less effective."}
+        modelAnswer:"A Vulnerability Assessment scans and catalogs known weaknesses in a system without actively exploiting them, giving a broad inventory of risk. A Penetration Test goes further — actively attempting to exploit those weaknesses (with permission) to prove real-world impact and see how far an attacker could actually get."}
     ]
   },
   {
@@ -797,7 +713,7 @@ const ROLES = [
         keywords:["user research","contradicted","data","presented","stakeholder"],
         modelAnswer:"Our team assumed users wanted more features on a dashboard, but usability testing showed they were overwhelmed and wanted less (Problem). I presented the session recordings and specific quotes rather than just a summary opinion, letting the evidence make the case (Action). The team agreed to simplify the design based on what we'd actually observed, not our initial assumption (Result)."},
       {type:"behavioral", q:"How do you manage situations where design constraints or engineering limitations prevent your recommended UX solution from being built?",
-        keywords:["constraint","engineering limitation","tradeoff","alternative","collaborated"],
+        keywords:["constraints","asked","scaled-down","isolation","engineering"],
         modelAnswer:"When engineering told me my ideal design wasn't feasible in our timeline, I asked what specifically made it hard rather than pushing back immediately (Action). We worked together to find a scaled-down version that preserved the core user benefit within the real constraints, which taught me to loop engineering in earlier next time instead of designing in isolation (Result)."},
       {type:"behavioral", q:"Walk me through a time when a usability test didn't go as planned. What happened, and what did you learn?",
         keywords:["usability test","unexpected","learned","adjusted","participants"],
@@ -805,15 +721,6 @@ const ROLES = [
       {type:"behavioral", q:"How do you balance advocating for user needs with meeting business objectives and timelines?",
         keywords:["user needs","business objectives","tradeoff","prioritize","balance"],
         modelAnswer:"I frame user needs and business goals as usually aligned, not opposed — a confusing checkout hurts both the user and revenue — so I look for the solution that serves both. When there's a genuine tradeoff and time is tight, I'm explicit about what we're deprioritizing and why, rather than quietly picking one side."},
-      {type:"behavioral", q:"Describe how you collaborate with UI designers, product managers, and developers during a product sprint.",
-        keywords:["collaborate","sprint","cross-functional","communication","alignment"],
-        modelAnswer:"I bring research findings and user needs into planning early so decisions are grounded before design starts, then stay in the loop during build to answer questions and catch scope drift. I try to keep the conversation focused on the user problem we're solving, which keeps designers, PMs, and developers aligned even when we disagree on the specific solution."},
-      {type:"behavioral", q:"How do you ensure your research samples are diverse, inclusive, and free from confirmation bias?",
-        keywords:["diverse","inclusive","confirmation bias","recruitment","sample"],
-        modelAnswer:"I actively recruit outside my easiest-to-reach circle — classmates or convenient contacts — since that skews the sample toward people like me. I write research questions that could disprove my hypothesis, not just confirm it, and I look for disconfirming evidence in the data rather than only noting what supports what I expected."},
-      {type:"behavioral", q:"Tell me about a time you turned qualitative user feedback into measurable, actionable product recommendations.",
-        keywords:["qualitative","actionable","recommendation","synthesized","measurable"],
-        modelAnswer:"After interviews surfaced a recurring complaint about a confusing signup flow, I coded the feedback into specific friction points rather than leaving it as a vague theme (Action). I turned the top pattern into a concrete recommendation — reduce the flow from 5 steps to 2 — with a proposed metric (completion rate) to measure whether it worked (Result)."},
       {type:"technical", q:"What is the difference between qualitative and quantitative UX research, and when should you use each?",
         keywords:["qualitative","quantitative","research method","why","how many"],
         modelAnswer:"Qualitative research — interviews, usability tests — tells you why users behave a certain way and surfaces issues you didn't anticipate, but with small sample sizes. Quantitative research — analytics, surveys, A/B tests — tells you how many users do something and at what scale, but not why. I'd use qualitative early to explore a problem and quantitative to validate a solution or measure impact at scale."},
@@ -825,19 +732,7 @@ const ROLES = [
         modelAnswer:"For task completion, I track success rate and time-to-completion (TTR) against a benchmark. For satisfaction, I use CSAT for a quick 'how satisfied were you' or the System Usability Scale (SUS) for a broader, standardized usability score. Customer Effort Score (CES) is useful specifically for flows like support or checkout, where the question is how much friction the user felt, not just whether they succeeded."},
       {type:"technical", q:"Walk me through the process of setting up and evaluating an A/B test for a key conversion workflow.",
         keywords:["a/b test","hypothesis","sample size","statistical significance","conversion"],
-        modelAnswer:"I'd start with a clear hypothesis — e.g., 'a shorter form increases signup completion' — and change only that one variable between the control and variant. I'd calculate the sample size needed for statistical significance before launching, run it long enough to avoid weekday/weekend skew, then evaluate the conversion metric with a significance test rather than just eyeballing which number is bigger."},
-      {type:"technical", q:"How do you create and validate user personas so they remain data-driven rather than stereotypical?",
-        keywords:["persona","data-driven","research-based","validated","stereotype"],
-        modelAnswer:"I build personas from patterns in actual research data — interviews, survey clusters, behavioral analytics — rather than from assumptions about who I imagine the user to be. I validate them by checking whether real user behavior in the data actually matches the persona's described goals and pain points, and I update personas when new research contradicts them."},
-      {type:"technical", q:"Explain the difference between card sorting and tree testing, and what stage of Information Architecture design uses them.",
-        keywords:["card sorting","tree testing","information architecture","navigation"],
-        modelAnswer:"Card sorting is a generative method — users group and label content themselves — used early to help design a navigation structure from scratch. Tree testing is an evaluative method — users try to find specific content within an existing structure, without any visual design — used later to validate whether a proposed navigation actually works before it's built."},
-      {type:"technical", q:"How do you design user journey maps and service blueprints to identify friction points?",
-        keywords:["journey map","service blueprint","friction","touchpoint"],
-        modelAnswer:"A journey map lays out every step a user takes to accomplish a goal, along with their emotions and pain points at each touchpoint, which surfaces where friction happens from the user's side. A service blueprint adds the 'backstage' layer — what systems and teams are operating behind each touchpoint — which helps identify whether the friction is a design problem or an operational one."},
-      {type:"technical", q:"What methods do you use to evaluate accessibility (WCAG compliance) in an existing interface?",
-        keywords:["accessibility","wcag","screen reader","contrast","keyboard navigation"],
-        modelAnswer:"I check color contrast ratios against WCAG's minimum thresholds, test keyboard-only navigation to make sure nothing requires a mouse, and run the interface through a screen reader to check that content and labels make sense out of visual context. For anything beyond a basic check, I'd bring in an automated scanner as a first pass and follow up with manual testing, since automated tools only catch a fraction of real accessibility issues."}
+        modelAnswer:"I'd start with a clear hypothesis — e.g., 'a shorter form increases signup completion' — and change only that one variable between the control and variant. I'd calculate the sample size needed for statistical significance before launching, run it long enough to avoid weekday/weekend skew, then evaluate the conversion metric with a significance test rather than just eyeballing which number is bigger."}
     ]
   },
   {
@@ -884,15 +779,6 @@ const ROLES = [
       {type:"behavioral", q:"Walk me through a time you automated a repetitive manual task in an infrastructure environment.",
         keywords:["automated","script","manual","efficiency","ci/cd"],
         modelAnswer:"I was manually redeploying a project after every small code change (Problem). I wrote a basic CI/CD script that ran tests and redeployed automatically on push (Action). It cut a five-minute manual process down to a few seconds and removed room for manual error (Result)."},
-      {type:"behavioral", q:"How do you keep up with the fast-evolving ecosystem of AWS, Azure, or GCP services?",
-        keywords:["stay updated","documentation","certification","hands-on"],
-        modelAnswer:"I follow release notes for the services I actually use rather than trying to track everything, and I learn best by building small hands-on projects with a new service rather than just reading about it. Working toward a cloud certification also forces structured, current knowledge rather than scattered familiarity."},
-      {type:"behavioral", q:"Tell me about a time you collaborated with software developers to help deploy their application into a staging or production cloud environment.",
-        keywords:["collaborated","deployment","staging","production","developers"],
-        modelAnswer:"A developer on a group project needed help getting their app past a local demo into something classmates could actually access (Problem). I set up a simple staging environment and walked them through the deployment pipeline so they could redeploy themselves going forward, instead of me being a bottleneck (Action). They were able to ship updates independently after that (Result)."},
-      {type:"behavioral", q:"What is your strategy when troubleshooting an issue where a server or container cannot connect to the internet or an internal database?",
-        keywords:["troubleshoot","connectivity","security group","dns","network"],
-        modelAnswer:"I work outward from the most likely cause: check the security group/firewall rules first, then DNS resolution, then whether the route table or subnet configuration allows the traffic, then the application-level connection string or credentials. Isolating each layer instead of guessing usually finds it faster than changing several things at once."},
       {type:"technical", q:"What is the core difference between IaaS, PaaS, and SaaS?",
         keywords:["iaas","paas","saas","infrastructure","platform"],
         modelAnswer:"IaaS gives you raw infrastructure — virtual machines, storage, networking — and you manage everything above that, like the OS and app. PaaS gives you a managed platform to deploy code onto without managing the underlying servers. SaaS gives you a finished, ready-to-use application, like Gmail, where the provider manages everything."},
@@ -904,19 +790,7 @@ const ROLES = [
         modelAnswer:"Vertical scaling adds more resources (CPU/RAM) to a single server. Horizontal scaling adds more servers and distributes load across them, typically behind a load balancer. Horizontal scaling generally offers better fault tolerance and near-limitless growth, since a load balancer can route around a failed instance, but it adds complexity around state and coordination that vertical scaling doesn't."},
       {type:"technical", q:"Explain the structure of a Virtual Private Cloud (VPC), including public vs. private subnets, NAT gateways, and internet gateways.",
         keywords:["vpc","public subnet","private subnet","nat gateway","internet gateway"],
-        modelAnswer:"A VPC is an isolated network you define in the cloud. Public subnets route through an internet gateway so resources there can be reached from the internet, like a web server. Private subnets have no direct internet route, keeping resources like databases isolated — but they can still reach out to the internet for updates through a NAT gateway, which allows outbound traffic without allowing inbound connections."},
-      {type:"technical", q:"What is the difference between a container (e.g., Docker) and a virtual machine (VM)?",
-        keywords:["container","docker","virtual machine","hypervisor","kernel"],
-        modelAnswer:"A VM virtualizes an entire machine, including its own OS kernel, managed by a hypervisor — heavier, but fully isolated. A container shares the host machine's OS kernel and only packages the application and its dependencies, making it much lighter and faster to start, though with a thinner isolation boundary than a full VM."},
-      {type:"technical", q:"How do object storage services (like AWS S3) differ from block storage (like EBS) and file storage (like EFS)?",
-        keywords:["object storage","s3","block storage","file storage"],
-        modelAnswer:"Object storage (S3) stores data as whole objects with metadata, accessed over HTTP — great for static files, backups, and massive scale, but not for a running database. Block storage (EBS) presents raw storage volumes a server attaches to like a hard drive, needed for things like a database that requires low-latency random read/write. File storage (EFS) provides a shared file system multiple servers can mount at once, useful when several instances need to read/write the same files concurrently."},
-      {type:"technical", q:"What is the Shared Responsibility Model in cloud security?",
-        keywords:["shared responsibility model","cloud provider","customer","security"],
-        modelAnswer:"The cloud provider is responsible for the security of the cloud — physical data centers, hardware, and the underlying infrastructure. The customer is responsible for security in the cloud — how they configure access controls, encrypt their data, and secure their own applications. A lot of real-world breaches come from customers misunderstanding where that line actually falls, like leaving an S3 bucket public."},
-      {type:"technical", q:"How do DNS, CDN (Content Delivery Networks), and edge computing optimize global application delivery and latency?",
-        keywords:["dns","cdn","edge computing","latency","caching"],
-        modelAnswer:"DNS resolves a domain name to the nearest or best-performing server rather than always the same one. A CDN caches static content at edge locations close to users around the world, so a user in Asia doesn't have to fetch an image from a server in the US every time. Edge computing pushes some actual processing to those nearby locations too, not just cached content, which further cuts the round-trip latency for time-sensitive operations."}
+        modelAnswer:"A VPC is an isolated network you define in the cloud. Public subnets route through an internet gateway so resources there can be reached from the internet, like a web server. Private subnets have no direct internet route, keeping resources like databases isolated — but they can still reach out to the internet for updates through a NAT gateway, which allows outbound traffic without allowing inbound connections."}
     ]
   }
 ];
@@ -1241,10 +1115,11 @@ function renderQuestion(role, qIndex){
 
   const textarea = document.getElementById("answer-input");
   const wc = document.getElementById("word-count");
+  const wordTarget = isNarrativeQuestion(q) ? 40 : 30;
   function updateWC(){
     const words = textarea.value.trim().split(/\s+/).filter(Boolean).length;
     wc.textContent = words + " words";
-    wc.classList.toggle("ok", words >= 35);
+    wc.classList.toggle("ok", words >= wordTarget);
   }
   textarea.addEventListener("input", updateWC);
   updateWC();
@@ -1263,52 +1138,101 @@ function renderQuestion(role, qIndex){
 }
 
 /* ---------- client-side evaluation logic ---------- */
+// PAR structure only applies to questions that ask for a specific past story ("Tell me
+// about a time...") — every model answer for those is written with literal (Problem)/
+// (Action)/(Result) tags, so we detect "is this a narrative question" straight off the
+// question's own model answer rather than guessing from the user's text.
 const PROBLEM_MARKERS = ["problem","challenge","issue","situation","goal","task","struggled","difficult","conflict"];
-const ACTION_MARKERS = ["i did","i built","i wrote","i created","i led","i analyzed","i developed","i designed","i implemented","i fixed","i automated","i collaborated","i managed","i decided","i reached out","i proposed","i tested"];
+const ACTION_MARKERS = ["i did","i built","i wrote","i created","i led","i analyzed","i developed","i designed","i implemented","i fixed","i automated","i collaborated","i managed","i decided","i reached out","i proposed","i tested","action"];
 const RESULT_MARKERS = ["result","resulted","outcome","improved","increased","decreased","reduced","saved","achieved","led to","which meant","ended up","successfully","on time","%"];
+// Broad fallback for first-person past-tense action verbs ("I isolated", "I documented",
+// "I'd explain") so a correctly-structured action isn't missed just for using a verb
+// that isn't in the explicit ACTION_MARKERS list above.
+const ACTION_VERB_PATTERN = /\bi\s+[a-z']+(ed|'d)\b/;
 
 function containsAny(text, list){
   return list.some(term => text.includes(term));
+}
+
+function isNarrativeQuestion(q){
+  return q.type === "behavioral" && /\(problem\)/i.test(q.modelAnswer);
+}
+
+// Keyword coverage is a supporting signal, not a pass/fail gate — an answer that covers
+// the topic well in its own words but happens to phrase things differently than our
+// keyword list shouldn't get crushed for it. keywordMatches() matches on the literal
+// phrase, on individual significant words within a multi-word phrase, or on a simple
+// stem (so "constraints" still matches the keyword "constraint").
+function keywordMatches(text, keyword){
+  const kw = keyword.toLowerCase();
+  if(text.includes(kw)) return true;
+  const kwWords = kw.split(/[\s/&-]+/).filter(w => w.length > 2);
+  if(kwWords.length > 1){
+    return kwWords.filter(w => text.includes(w)).length >= Math.ceil(kwWords.length * 0.6);
+  }
+  const stem = kw.replace(/(ing|ed|es|s)$/, "");
+  return stem.length >= 4 && text.includes(stem);
+}
+
+// Non-linear curve: covering half the listed terms already earns full credit for this
+// category, and even zero matches still earns a quarter of it — a real, on-topic answer
+// should never be scored as if it were blank just because it used different words.
+function keywordPoints(ratio, maxPts){
+  if(ratio >= 0.5) return maxPts;
+  if(ratio >= 0.3) return maxPts * 0.8;
+  if(ratio >= 0.15) return maxPts * 0.6;
+  if(ratio > 0) return maxPts * 0.4;
+  return maxPts * 0.25;
 }
 
 function evaluateAnswer(text, q){
   const lower = text.toLowerCase();
   const words = text.trim().split(/\s+/).filter(Boolean);
   const wordCount = words.length;
-  const lengthOK = wordCount >= 35;
+  const narrative = isNarrativeQuestion(q);
+
+  const matchedKeywords = q.keywords.filter(k => keywordMatches(lower, k));
+  const keywordRatio = matchedKeywords.length / q.keywords.length;
+  const missingKeywords = q.keywords.filter(k => !matchedKeywords.includes(k)).slice(0, 4);
 
   const hasProblem = containsAny(lower, PROBLEM_MARKERS);
-  const hasAction = containsAny(lower, ACTION_MARKERS);
+  const hasAction = containsAny(lower, ACTION_MARKERS) || ACTION_VERB_PATTERN.test(lower);
   const hasResult = containsAny(lower, RESULT_MARKERS);
   const parCount = [hasProblem, hasAction, hasResult].filter(Boolean).length;
 
-  const matchedKeywords = q.keywords.filter(k => lower.includes(k.toLowerCase()));
-  const keywordRatio = matchedKeywords.length / q.keywords.length;
-  const missingKeywords = q.keywords.filter(k => !lower.includes(k.toLowerCase())).slice(0, 4);
-
-  // scoring: 2 pts length, 4 pts PAR (up to), 4 pts keyword coverage
   let score = 0;
-  score += lengthOK ? 2 : (wordCount >= 15 ? 1 : 0);
-  score += parCount * 1.33;
-  score += keywordRatio * 4;
+  let lengthOK;
+  if(narrative){
+    // "Tell me about a time..." questions: 3 pts length, 4 pts PAR structure, 3 pts keywords.
+    lengthOK = wordCount >= 40;
+    const lengthPts = wordCount >= 40 ? 3 : (wordCount >= 20 ? 2 : (wordCount >= 8 ? 1 : 0));
+    score = lengthPts + (parCount * (4 / 3)) + keywordPoints(keywordRatio, 3);
+  } else {
+    // "How do you..." / technical questions: no forced STAR structure. 5 pts length/depth, 5 pts keywords.
+    lengthOK = wordCount >= 30;
+    const lengthPts = wordCount >= 30 ? 5 : (wordCount >= 15 ? 3 : (wordCount >= 5 ? 1 : 0));
+    score = lengthPts + keywordPoints(keywordRatio, 5);
+  }
   score = Math.max(1, Math.min(10, Math.round(score)));
 
   const strengths = [];
   const gaps = [];
   if(lengthOK) strengths.push(`Solid length (${wordCount} words) — enough room to show detail.`);
-  else gaps.push(`Answer is short (${wordCount} words). Aim for 35+ words to show real depth.`);
+  else gaps.push(`Answer is short (${wordCount} words). Aim for ${narrative ? "40+" : "30+"} words to show real depth.`);
 
-  if(hasProblem) strengths.push("Clearly frames a problem/situation.");
-  else gaps.push("Add a clear Problem/Situation statement up front.");
-  if(hasAction) strengths.push("Describes a specific action you personally took.");
-  else gaps.push("Be explicit about what YOU did (‘I did X’), not just what happened.");
-  if(hasResult) strengths.push("Includes a result or outcome.");
-  else gaps.push("Close with a concrete Result — ideally a number or measurable outcome.");
+  if(narrative){
+    if(hasProblem) strengths.push("Clearly frames a problem/situation.");
+    else gaps.push("Add a clear Problem/Situation statement up front.");
+    if(hasAction) strengths.push("Describes a specific action you personally took.");
+    else gaps.push("Be explicit about what YOU did (‘I did X’), not just what happened.");
+    if(hasResult) strengths.push("Includes a result or outcome.");
+    else gaps.push("Close with a concrete Result — ideally a number or measurable outcome.");
+  }
 
   if(matchedKeywords.length > 0) strengths.push(`Hits relevant terms: ${matchedKeywords.slice(0,4).join(", ")}.`);
   if(missingKeywords.length > 0) gaps.push(`Consider referencing: ${missingKeywords.join(", ")}.`);
 
-  return {score, strengths, gaps, wordCount, parCount};
+  return {score, strengths, gaps, wordCount, parCount, narrative};
 }
 
 function renderFeedback(role, qIndex, result){
@@ -1319,7 +1243,7 @@ function renderFeedback(role, qIndex, result){
     <div class="feedback-box">
       <div class="fb-score-row">
         <div class="fb-score">${result.score}/10</div>
-        <div class="fb-score-label">Automated Answer Score<br>${result.wordCount} words &middot; ${result.parCount}/3 PAR elements &middot; keyword match logged</div>
+        <div class="fb-score-label">Automated Answer Score<br>${result.wordCount} words${result.narrative ? ` &middot; ${result.parCount}/3 PAR elements` : ""} &middot; keyword match logged</div>
       </div>
       <div class="fb-cols">
         <div class="fb-col good"><h5>Strengths</h5><ul>${result.strengths.map(s=>`<li>${s}</li>`).join("")}</ul></div>
