@@ -171,8 +171,8 @@
   .pc-row{display:flex;gap:14px;margin-bottom:14px;}
   .pc-col{flex:1;min-width:0;}
   .pc-col .pc-label{font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
-  .pc-col.pro .pc-label{color:var(--success);}
-  .pc-col.con .pc-label{color:var(--danger);}
+  .pc-col.pro .pc-label{color:#3ecf8e;}
+  .pc-col.con .pc-label{color:#ff5c5c;}
   .pc-col ul{margin:0;padding-left:14px;font-size:11.5px;color:var(--text-dim);overflow-wrap:break-word;}
   .pc-col li{margin-bottom:3px;}
   .flip-face.back .btn{margin-top:auto;flex-shrink:0;}
@@ -455,8 +455,8 @@ const ROLES = [
     hook:"You write the code that turns requirements into a working product.",
     description:"Software Developers are the makers of the digital world — writing the code that powers everything from mobile apps to enterprise systems, and turning business requirements into working software.",
     intro:"While Business Analysts design the blueprints, Software Developers are the ones who actually build the house. As an IS student going into development, you understand the business reasons why a piece of software is being built, which makes you valuable when writing the code — you'll focus on full-stack web apps, enterprise software, and backend systems that are both functional and scalable.",
-    pros:["High demand across every industry, with a clear, learnable skill progression","IS background gives you an edge — you understand why the software is being built, not just how"],
-    cons:["Code breaks often; expect to spend hours hunting a single logic error","Constant tool/framework churn means continuous self-teaching"],
+    benefits:["High demand across every industry, with a clear, learnable skill progression","IS background gives you an edge — you understand why the software is being built, not just how"],
+    expectations:["Code breaks constantly — expect to spend real hours isolating a single logic error before you ship","The tool and framework landscape shifts fast, so continuous self-teaching is part of the job, not an occasional extra"],
     dayToDay:[
       "Start the day in a stand-up meeting to align with the team on what you're building",
       "Write new features and hunt down and fix bugs",
@@ -514,8 +514,8 @@ const ROLES = [
     hook:"You translate between what the business needs and what developers can build.",
     description:"Business/Systems Analysts act as the translator between stakeholders and engineering — analyzing the business problem, pulling data, and designing a technical solution developers can actually build.",
     intro:"A Business or Systems Analyst acts as the ultimate translator within a company. Business leaders know what they want to achieve, and developers know how to build it, but the two groups often speak completely different languages — Analysts sit in the middle, turning a vague business ask into a solution engineering can execute.",
-    pros:["Incredibly flexible career path into PM, data analytics, or IT leadership","Sits at the center of every major decision, with constant stakeholder exposure"],
-    cons:["Success depends on communication as much as analysis — technical skill alone isn't enough","Mediating scope disagreements between stakeholders is a recurring part of the job"],
+    benefits:["Incredibly flexible career path into PM, data analytics, or IT leadership","Sits at the center of every major decision, with constant stakeholder exposure"],
+    expectations:["Success depends as much on communication as on analysis — technical skill alone won't carry you","Expect to regularly mediate scope disagreements between stakeholders; it's a recurring part of the job"],
     dayToDay:[
       "Interview a business team to understand why their current process or software is slowing them down",
       "Map out the current workflow and design a more efficient process",
@@ -573,8 +573,8 @@ const ROLES = [
     hook:"You turn raw numbers into decisions someone can act on.",
     description:"Data Analysts and Scientists act as digital detectives — sifting through datasets to find hidden trends, building predictive models, and telling a clear story that helps leaders decide what to do next.",
     intro:"Every time a user clicks a button, makes a purchase, or abandons a cart, they generate data. Companies are drowning in it, and they need Data Analysts and Scientists to make sense of it — sifting through massive datasets, building predictive models, and telling a compelling story that helps business leaders know exactly what to do next.",
-    pros:["Extremely transferable across every industry","Work is directly tied to measurable business decisions"],
-    cons:["Extracting and cleaning data often takes up the majority of the job","A single data error can lead to an expensive business mistake"],
+    benefits:["Extremely transferable skill set across every industry","Your work ties directly to measurable business decisions"],
+    expectations:["Expect data extraction and cleaning to eat the majority of your time, not the modeling","A single data error can cascade into an expensive business mistake, so accuracy is non-negotiable"],
     dayToDay:[
       "Write complex SQL queries to pull customer or operational data from a database",
       "Load data into Python to run statistical models",
@@ -632,8 +632,8 @@ const ROLES = [
     hook:"You find the gaps before someone else exploits them.",
     description:"Cybersecurity Analysts are the digital defenders of an organization — monitoring networks for vulnerabilities, analyzing system architecture, and responding to active threats to keep sensitive data safe.",
     intro:"As a Cybersecurity Analyst, you are the digital bodyguard for your organization. While developers build the applications and cloud engineers set up the servers, your job is to ensure the data flowing through those systems stays out of the hands of malicious actors — a high-stakes, fast-paced environment where the rules of the game change daily.",
-    pros:["Extremely high demand with low unemployment in the field","Work has clear, tangible stakes — you can point to what you protected"],
-    cons:["Dashboards can flood you with alerts and false positives to triage","The threat landscape evolves constantly, demanding ongoing self-directed learning"],
+    benefits:["Extremely high demand with low unemployment in the field","Your work has clear, tangible stakes — you can point to exactly what you protected"],
+    expectations:["Expect alert dashboards to flood you with noise and false positives you have to triage","The threat landscape shifts constantly, so ongoing self-directed learning is part of the role, not extra credit"],
     dayToDay:[
       "Watch a SIEM dashboard (Splunk, Sentinel, QRadar) to detect unusual traffic or unauthorized logins",
       "Investigate triggered alerts to determine false alarm vs. real breach",
@@ -691,8 +691,8 @@ const ROLES = [
     hook:"You research what users need and shape how the product delivers it.",
     description:"UX Designers and Product Managers bridge the end-user and the engineering team — researching user needs, wireframing interfaces, and guiding a product from idea to launched solution.",
     intro:"Though often split into two distinct roles at larger companies, UX Design and Product Management share a core mission: making sure the software being built actually solves the user's problem while meeting business goals. IS students thrive here because they understand both the technical constraints of developers and the strategic goals of the business.",
-    pros:["High influence over what actually gets built, from research through launch","Sits at the intersection of business strategy and user experience"],
-    cons:["Rarely writing production code, so impact often runs through other people's work","Design and feature decisions get contested and have to be defended with data"],
+    benefits:["High influence over what actually gets built, from research through launch","Sits at the intersection of business strategy and user experience"],
+    expectations:["You'll rarely write production code, so your impact runs through influencing other people's work","Expect design and feature decisions to be contested — be ready to defend them with data, not preference"],
     dayToDay:[
       "Talk to users to understand their pain points and map out their journeys",
       "Create wireframes or prototypes for new features",
@@ -750,8 +750,8 @@ const ROLES = [
     hook:"You build and run the systems everything else depends on.",
     description:"Cloud and Infrastructure Engineers design and maintain the invisible backbone of modern tech — managing servers, automating deployments, and keeping networks running so applications stay online at scale.",
     intro:"If software developers build the house, Cloud and Infrastructure Engineers build the foundation, the plumbing, and the electrical grid it sits on. As companies move away from owning physical servers, they need engineers who can design, deploy, and maintain massive, scalable networks in the cloud — keeping an application online, fast, and able to handle a sudden spike of a million users without crashing.",
-    pros:["One of the highest-paying entry technical fields, with strong demand as companies go cloud-first","Deep, transferable technical foundation across any employer"],
-    cons:["On-call rotations for outages are common","A single misconfigured security group can expose a database to the public internet"],
+    benefits:["One of the highest-paying entry technical fields, with strong demand as companies go cloud-first","Deep, transferable technical foundation across any employer"],
+    expectations:["On-call rotations for outages are a standard part of the job","One misconfigured security group can expose a database to the public internet, so precision matters"],
     dayToDay:[
       "Write scripts to automatically spin up new web servers ahead of a big product launch",
       "Configure load balancers to distribute traffic evenly",
@@ -896,8 +896,8 @@ function renderFlashcards(){
         <div class="flip-face back">
           <p class="desc">${r.description}</p>
           <div class="pc-row">
-            <div class="pc-col pro"><div class="pc-label">Pros</div><ul>${r.pros.map(p=>`<li>${p}</li>`).join("")}</ul></div>
-            <div class="pc-col con"><div class="pc-label">Cons</div><ul>${r.cons.map(c=>`<li>${c}</li>`).join("")}</ul></div>
+            <div class="pc-col pro"><div class="pc-label">Benefits</div><ul>${r.benefits.map(p=>`<li>${p}</li>`).join("")}</ul></div>
+            <div class="pc-col con"><div class="pc-label">Expectations</div><ul>${r.expectations.map(c=>`<li>${c}</li>`).join("")}</ul></div>
           </div>
           <button class="btn amber block" data-detail="${r.id}">View Full Career Details</button>
         </div>
