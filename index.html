@@ -147,6 +147,13 @@
   .stat-cell .label{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
 
   /* ---------- discovery ---------- */
+  .jump-nav{display:flex;justify-content:center;gap:10px;margin-bottom:32px;flex-wrap:wrap;}
+  .jump-link{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;
+    color:var(--text-dim);border:1px solid var(--border-hi);padding:9px 20px;border-radius:var(--r-pill);
+    background:var(--card);transition:border-color 0.15s,color 0.15s,transform 0.15s;
+  }
+  .jump-link:hover, .jump-link:focus-visible{border-color:var(--cyan);color:var(--text);transform:translateY(-1px);outline:none;}
   .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:10px;}
   .section-header h2{font-size:22px;margin:0;}
 
@@ -232,11 +239,23 @@
   .par-item{flex:1;min-width:150px;}
   .par-item .pk{font-family:var(--mono);color:var(--cyan);font-size:12px;letter-spacing:1px;}
   .par-item p{font-size:12.5px;margin:4px 0 0;}
+  .par-example{margin-top:18px;padding-top:16px;border-top:1px solid var(--border);}
+  .par-example-label{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
+  .par-example-q{font-size:12.5px;font-weight:600;margin:0 0 6px;color:var(--text);}
+  .par-example-a{font-size:12.5px;margin:0;color:var(--text-dim);}
+  .par-tag{font-family:var(--mono);font-size:11px;color:var(--cyan);}
 
   .kw-cloud-box{border:1px solid var(--border);background:var(--card);padding:16px 20px;margin-bottom:20px;border-radius:var(--r-md);box-shadow:var(--shadow-soft);}
   .kw-cloud-label{font-family:var(--mono);font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--text-faint);margin-bottom:10px;}
+  .kw-cloud-hint{text-transform:none;letter-spacing:0;font-family:var(--sans);color:var(--text-faint);font-size:11px;}
   .kw-cloud-tags{display:flex;flex-wrap:wrap;gap:8px;}
-  .kw-tag{display:inline-block;font-size:12px;padding:5px 12px;border:1px solid var(--border-hi);color:var(--text-dim);border-radius:var(--r-pill);background:rgba(169,39,23,0.08);}
+  .kw-tag-wrap{position:relative;}
+  .kw-tag{display:inline-block;font:inherit;font-size:12px;padding:5px 12px;border:1px solid var(--border-hi);color:var(--text-dim);border-radius:var(--r-pill);background:rgba(169,39,23,0.08);cursor:pointer;transition:border-color 0.15s,color 0.15s;}
+  .kw-tag:hover, .kw-tag:focus-visible{border-color:var(--cyan);color:var(--text);outline:none;}
+  .kw-def{display:none;position:absolute;top:calc(100% + 8px);left:0;z-index:30;width:max-content;max-width:240px;
+    background:var(--bg-alt);border:1px solid var(--border-hi);border-radius:var(--r-sm);padding:10px 12px;
+    font-size:11.5px;line-height:1.45;color:var(--text-dim);box-shadow:var(--shadow-pop);pointer-events:none;}
+  .kw-tag-wrap:hover .kw-def, .kw-tag-wrap.active .kw-def, .kw-tag:focus-visible ~ .kw-def{display:block;}
 
   .role-select-row{display:flex;align-items:center;gap:14px;margin-bottom:32px;flex-wrap:wrap;}
   .role-select-row label{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;}
@@ -360,10 +379,15 @@
     <!-- ================= VIEW 2: DISCOVERY ================= -->
     <section id="view-discovery" class="view hidden">
 
+      <div class="jump-nav">
+        <a href="#section-flashcards" class="jump-link" data-scroll-to="section-flashcards">Career Paths</a>
+        <a href="#section-quiz" class="jump-link" data-scroll-to="section-quiz">Career Quiz</a>
+      </div>
+
       <div class="section-header" id="section-flashcards">
         <div>
           <div class="eyebrow">Section A</div>
-          <h2>Career Path Flashcards</h2>
+          <h2>Career Paths</h2>
         </div>
       </div>
       <div class="card-grid" id="flashcard-grid"></div>
@@ -371,7 +395,7 @@
       <div class="section-header" id="section-quiz">
         <div>
           <div class="eyebrow">Section B</div>
-          <h2>Role Match Quiz</h2>
+          <h2>Career Quiz</h2>
         </div>
       </div>
       <div class="quiz-panel">
@@ -386,7 +410,7 @@
       <div class="section-header">
         <div>
           <div class="eyebrow">Interview Prep Module</div>
-          <h2>Mock Interview Practice</h2>
+          <h2>Before You Start...</h2>
         </div>
       </div>
 
@@ -398,6 +422,11 @@
           <div class="par-item"><div class="pk">P — PROBLEM</div><p>The situation or challenge you faced. Set the scene in about 15–20 seconds — just enough for the interviewer to get the stakes.</p></div>
           <div class="par-item"><div class="pk">A — ACTION</div><p>What you specifically did about it. Be concrete — name the tools, decisions, and steps. Say "I," not "we."</p></div>
           <div class="par-item"><div class="pk">R — RESULT</div><p>The outcome, ideally with a number — time saved, errors reduced, users served. No number? Describe the outcome concretely instead.</p></div>
+        </div>
+        <div class="par-example">
+          <div class="par-example-label">Example — even a technical question can use PAR</div>
+          <p class="par-example-q">"How would you approach optimizing a slow-running SQL query?"</p>
+          <p class="par-example-a">"Our reporting dashboard's main query was timing out during peak hours <span class="par-tag">(Problem)</span>. I ran EXPLAIN on the query, found it was doing a full table scan because a join column wasn't indexed, and added the missing index along with a covering index for the most common filter <span class="par-tag">(Action)</span>. Query time dropped from 12 seconds to under 200ms, and the dashboard stopped timing out <span class="par-tag">(Result)</span>."</p>
         </div>
       </div>
 
@@ -412,6 +441,13 @@
           <li style="margin-bottom:6px;"><strong style="color:var(--text);">Draw from non-tech jobs</strong> — de-escalating a frustrated customer transfers directly to IT support or stakeholder management.</li>
           <li><strong style="color:var(--text);">Focus on the how, not the what</strong> — narrate your specific troubleshooting steps, not just the final answer.</li>
         </ul>
+      </div>
+
+      <div class="section-header">
+        <div>
+          <div class="eyebrow">Let's Go</div>
+          <h2>Mock Interview Practice</h2>
+        </div>
       </div>
 
       <div class="role-select-row">
@@ -879,6 +915,16 @@ document.querySelectorAll("[data-goto]").forEach(b => {
   }
 });
 
+// In-page jump links (e.g. the Career Paths / Career Quiz nav within the Discovery view)
+// just smooth-scroll to a section on the same view — no view switch needed.
+document.querySelectorAll(".jump-link[data-scroll-to]").forEach(a => {
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    const target = document.getElementById(a.dataset.scrollTo);
+    if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+});
+
 /* =====================================================================
    SECTION A — FLASHCARDS + MODAL
    ===================================================================== */
@@ -1092,16 +1138,134 @@ function getCurrentQIndex(roleId){
   return role.questions.length; // all answered -> scorecard
 }
 
+const KEYWORD_DEFS = {
+  // app-dev
+  "Git/GitHub":"A version-control system (Git) and hosting platform (GitHub) for tracking code changes and collaborating with a team without overwriting each other's work.",
+  "Data Structures":"Ways of organizing data (arrays, lists, trees, hash maps) that determine how efficiently a program can store, search, and modify information.",
+  "Algorithms":"Step-by-step procedures for solving a problem or completing a task, typically judged by how fast and memory-efficient they are.",
+  "REST APIs":"A standard way for applications to communicate over HTTP using resources and methods like GET, POST, PUT, and DELETE.",
+  "OOP":"Object-Oriented Programming — organizing code around objects that bundle data and behavior together, using concepts like inheritance and encapsulation.",
+  "CI/CD":"Continuous Integration/Continuous Deployment — automatically testing and shipping code changes so new work reaches production quickly and safely.",
+  "Unit Testing":"Automated tests that check a small, isolated piece of code (like one function) behaves correctly on its own.",
+  "Debugging":"The process of finding and fixing the root cause of an error or unexpected behavior in code.",
+  "Microservices":"An architecture style where an application is split into small, independently deployable services instead of one large monolith.",
+  "Relational Databases":"Databases that store data in structured tables with defined relationships, queried using SQL (e.g. MySQL, PostgreSQL).",
+  "Refactoring":"Restructuring existing code to improve its readability or design without changing what it actually does.",
+  "Asynchronous":"Code that can keep running while a slow operation (like a network request) completes in the background, instead of blocking everything else.",
+  "Design Patterns":"Reusable, proven solutions to common software design problems, like Singleton or Observer.",
+  "Big-O":"Notation that describes how an algorithm's runtime or memory use grows as the input size grows.",
+  "Pull Requests":"A request to merge code changes from one branch into another, giving teammates a chance to review before it ships.",
+  // biz-analyst
+  "Requirements Gathering":"The process of collecting what stakeholders actually need from a system, through interviews, workshops, or observation.",
+  "User Stories":"Short, plain-language descriptions of a feature from the user's perspective, usually formatted 'As a [user], I want [goal], so that [benefit].'",
+  "Acceptance Criteria":"The specific, testable conditions that must be true for a user story to be considered complete.",
+  "BPMN":"Business Process Model and Notation — a standardized set of symbols for diagramming how a business process actually flows.",
+  "Gap Analysis":"Comparing the current ('As-Is') state of a process to the desired ('To-Be') state to identify exactly what needs to change.",
+  "Agile/Scrum":"An iterative project framework built around short sprints, a prioritized backlog, and frequent check-ins rather than one big upfront plan.",
+  "Stakeholder Management":"Identifying who has a stake in a project and actively keeping their needs, expectations, and buy-in aligned throughout it.",
+  "Scope Creep":"When a project's requirements keep expanding beyond what was originally agreed on, often without a matching adjustment to time or budget.",
+  "Use Cases":"A description of a specific interaction between a user (actor) and a system to accomplish a goal, including alternate paths.",
+  "SWOT Analysis":"A strategic framework for evaluating a project's Strengths, Weaknesses, Opportunities, and Threats.",
+  "Feasibility Study":"An early assessment of whether a proposed project is realistically achievable given technical, financial, and time constraints.",
+  "Process Mapping":"Visually diagramming the steps of a business process to spot bottlenecks, redundancies, or inefficiencies.",
+  "Jira":"A widely used project and issue-tracking tool for managing Agile backlogs, sprints, and tasks.",
+  "Cost-Benefit Analysis":"Weighing a project's total costs against its expected benefits, often to justify or prioritize an investment.",
+  "UAT (User Acceptance Testing)":"The final testing phase where actual end users verify a system works for their real-world needs before it goes live.",
+  // data
+  "SQL":"Structured Query Language — the standard language for querying, joining, and manipulating data in relational databases.",
+  "Python (Pandas)":"Python's most widely used library for loading, cleaning, and manipulating tabular data before analysis.",
+  "Tableau":"A data visualization tool used to build interactive dashboards and charts from raw data.",
+  "Power BI":"Microsoft's business intelligence tool for building reports and dashboards, tightly integrated with the Microsoft ecosystem.",
+  "ETL":"Extract, Transform, Load — the process of pulling data from a source, cleaning/reshaping it, and loading it into a destination system.",
+  "Data Cleansing":"Fixing or removing incorrect, incomplete, duplicate, or inconsistent data before it's analyzed.",
+  "Data Modeling":"Designing how data is structured and related within a database or dataset so it can be queried effectively.",
+  "Regression":"A statistical method for measuring the relationship between variables, often used to predict an outcome from one or more inputs.",
+  "Aggregation":"Summarizing many rows of data into a single value, like a sum, average, or count, usually with a GROUP BY.",
+  "KPIs":"Key Performance Indicators — the specific, measurable metrics a team tracks to judge success against a goal.",
+  "A/B Testing":"Comparing two versions of something (a page, a feature) by showing each to a different user group and measuring which performs better.",
+  "Data Wrangling":"The hands-on work of cleaning, restructuring, and merging raw data into a usable, analysis-ready format.",
+  "PivotTables":"A spreadsheet tool for quickly summarizing and cross-tabulating large datasets without writing formulas.",
+  "Dashboards":"A visual, at-a-glance display of key metrics and charts, built for quick decision-making rather than deep analysis.",
+  "Hypothesis Testing":"A statistical method for determining whether an observed result is likely real or could have happened by chance.",
+  // cyber
+  "SIEM":"Security Information and Event Management — a tool that aggregates logs from across a network into one place to monitor and detect threats.",
+  "Zero Trust":"A security model that assumes no user or device should be trusted by default, even inside the network — every request is verified.",
+  "Firewall":"A network security device or software that filters incoming and outgoing traffic based on defined rules.",
+  "Incident Response":"The structured process an organization follows to detect, contain, and recover from a security breach.",
+  "Phishing":"A social engineering attack that tricks a user into revealing credentials or installing malware, usually via a deceptive email or link.",
+  "SOC":"Security Operations Center — the team and facility responsible for continuously monitoring and responding to security threats.",
+  "MITRE ATT&CK":"A publicly available knowledge base of real-world attacker tactics and techniques, used to map defenses against actual threats.",
+  "Encryption":"Converting data into a coded form so only someone with the correct key can read it.",
+  "Penetration Testing":"Actively and ethically attempting to exploit a system's weaknesses, with permission, to prove real-world impact.",
+  "Vulnerability":"A weakness in a system that could be exploited to compromise its confidentiality, integrity, or availability.",
+  "Endpoint Detection (EDR)":"Tools that monitor individual devices (laptops, servers) in real time for malicious activity and enable a fast response.",
+  "Threat Hunting":"Proactively searching a network for signs of a threat that automated tools haven't already flagged.",
+  "Least Privilege":"The principle that a user or system should only have the minimum access necessary to do its job, nothing more.",
+  "IDS/IPS":"Intrusion Detection/Prevention Systems — tools that monitor network traffic for malicious activity and either alert on it (IDS) or actively block it (IPS).",
+  "CIA Triad":"The three core goals of security: Confidentiality (data stays private), Integrity (data isn't tampered with), and Availability (systems stay accessible).",
+  // ux-pm
+  "Usability Testing":"Watching real users attempt tasks on a product to identify where they get confused or stuck.",
+  "Information Architecture":"The way content and features are structured and labeled so users can find what they need intuitively.",
+  "Wireframing":"Creating a simple, low-fidelity layout of a screen to plan structure and flow before visual design begins.",
+  "User Journey":"A map of every step a user takes, and how they feel at each step, while trying to accomplish a goal with a product.",
+  "Heuristic Evaluation":"An expert review of an interface against established usability principles, without needing real users.",
+  "Personas":"Fictional but research-based profiles representing a key user group's goals, behaviors, and pain points.",
+  "Accessibility (WCAG)":"Web Content Accessibility Guidelines — the standard for making digital products usable by people with disabilities.",
+  "Figma":"A collaborative design tool used to create wireframes, prototypes, and high-fidelity UI mockups.",
+  "Card Sorting":"A research method where users group and label content themselves, used to design a navigation structure from scratch.",
+  "Qualitative":"Research that explains why users behave a certain way, gathered through methods like interviews or usability tests.",
+  "Quantitative":"Research that measures how many users do something and at what scale, gathered through analytics or surveys.",
+  "Prototyping":"Building an interactive, testable mockup of a product before real development begins.",
+  "User Empathy":"Genuinely understanding and prioritizing a user's needs, frustrations, and context when making product decisions.",
+  "Conversion Rate":"The percentage of users who complete a desired action, like signing up or checking out.",
+  // cloud
+  "Terraform (IaC)":"A popular Infrastructure as Code tool for defining and provisioning cloud resources through version-controlled config files.",
+  "Docker":"A platform for packaging an application and its dependencies into a lightweight, portable container.",
+  "Kubernetes":"A system for automating the deployment, scaling, and management of containerized applications.",
+  "VPC":"Virtual Private Cloud — an isolated network you define within a cloud provider to control how your resources connect.",
+  "AWS/Azure/GCP":"The three dominant cloud platforms — Amazon Web Services, Microsoft Azure, and Google Cloud Platform — offering on-demand compute, storage, and networking.",
+  "CI/CD Pipelines":"Automated workflows that test and deploy infrastructure or application changes consistently every time code is pushed.",
+  "Load Balancing":"Distributing incoming traffic across multiple servers so no single one gets overwhelmed and the app stays available.",
+  "Serverless":"A cloud model where you deploy code without managing the underlying servers — the provider handles scaling automatically.",
+  "S3 Storage":"AWS's object storage service, used for storing files, backups, and static assets at massive scale.",
+  "IAM Roles":"Identity and Access Management roles — permissions that define exactly what a user or service is allowed to do in the cloud.",
+  "High Availability":"Designing a system so it keeps running with minimal downtime, even if part of it fails.",
+  "Auto-Scaling":"Automatically adding or removing compute resources based on real-time demand.",
+  "Monitoring (CloudWatch)":"Continuously tracking system metrics and logs to catch performance issues or outages early; CloudWatch is AWS's built-in tool for this.",
+  "Subnets":"Smaller, segmented sections of a network (public or private) used to control what can and can't be reached from the internet.",
+  "Cost Optimization":"Actively managing cloud spend by right-sizing resources, shutting down idle ones, and avoiding unexpected billing spikes."
+};
+
 function renderKeywordCloud(role){
   const area = document.getElementById("keyword-cloud-area");
   if(!role.keywordCloud || role.keywordCloud.length === 0){ area.innerHTML = ""; return; }
   area.innerHTML = `
     <div class="kw-cloud-box">
-      <div class="kw-cloud-label">Keyword Cloud — ${role.title}</div>
-      <div class="kw-cloud-tags">${role.keywordCloud.map(k => `<span class="kw-tag">${k}</span>`).join("")}</div>
+      <div class="kw-cloud-label">Keyword Cloud — ${role.title} <span class="kw-cloud-hint">(hover or tap a term for its definition)</span></div>
+      <div class="kw-cloud-tags">${role.keywordCloud.map(k => `
+        <span class="kw-tag-wrap">
+          <button type="button" class="kw-tag">${k}</button>
+          <div class="kw-def" role="tooltip">${KEYWORD_DEFS[k] || "Definition coming soon."}</div>
+        </span>
+      `).join("")}</div>
     </div>
   `;
+
+  area.querySelectorAll(".kw-tag").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const wrap = btn.closest(".kw-tag-wrap");
+      const wasActive = wrap.classList.contains("active");
+      area.querySelectorAll(".kw-tag-wrap.active").forEach(w => w.classList.remove("active"));
+      if(!wasActive) wrap.classList.add("active");
+    });
+  });
 }
+// Tapping/clicking anywhere outside a keyword bubble closes any open definition.
+// Bound once at load, not per-render, so switching roles doesn't stack up listeners.
+document.addEventListener("click", () => {
+  document.querySelectorAll(".kw-tag-wrap.active").forEach(w => w.classList.remove("active"));
+});
 
 function renderInterview(){
   document.getElementById("role-select").value = appState.currentRole;
